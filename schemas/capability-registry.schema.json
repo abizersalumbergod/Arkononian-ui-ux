@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ultimate-uiux.local/schemas/capability-registry.schema.json",
+  "title": "Capability registry",
+  "description": "Capabilities (runtimes, CLIs, browsers, MCP servers, generators, skills, libraries, services) with an honest availability status. Accepts either the curated registry (references/capability-registry.json: an array of entries) or the output of scripts/environment-audit.mjs (an object with entries[] plus platform, skills, project and notes).",
+  "anyOf": [
+    {
+      "title": "Curated registry",
+      "type": "array",
+      "items": { "$ref": "#/$defs/entry" }
+    },
+    {
+      "title": "Environment audit output",
+      "type": "object",
+      "required": ["entries"],
+      "properties": {
+        "$schema": { "type": "string" },
+        "generatedAt": { "type": "string", "format": "date-time", "description": "ISO 8601 timestamp of the audit run." },
+        "platform": {
+          "description": "Operating system / shell / architecture summary.",
+          "type": ["string", "object"]
+        },
+        "entries": { "type": "array", "items": { "$ref": "#/$defs/entry" } },
+        "skills": {
+          "description": "Installed skills found on disk (list of skill records or a map keyed by skill root).",
+          "type": ["array", "object"]
+        },
+        "project": {
+          "description": "Project profile from package.json and lockfiles, or null when no project was audited.",
+          "type": ["object", "null"]
+        },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  ],
+  "$defs": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "available-verified",
+        "available-untested",
+        "available-with-prerequisites",
+        "unavailable",
+        "requires-credentials",
+        "requires-approval",
+        "unknown"
+      ]
+    },
+    "textOrList": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } },
+        { "type": "null" }
+      ]
+    },
+    "entry": {
+      "type": "object",
+      "required": ["id", "name", "category", "status", "evidence"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "description": "Stable identifier, e.g. cli:ffmpeg or mcp:higgsfield." },
+        "name": { "type": "string", "minLength": 1 },
+        "category": {
+          "type": "string",
+          "enum": ["runtime", "cli", "browser", "mcp", "generator", "skill", "library", "service"]
+        },
+        "status": { "$ref": "#/$defs/status" },
+        "provider": { "type": ["string", "null"] },
+        "auth": {
+          "description": "Authentication needed (none, api-key, oauth, ...). Never the credential itself.",
+          "type": ["string", "object", "null"]
+        },
+        "environment": {
+          "description": "Where the capability exists (main session, subagent, local CLI, project dependency, ...).",
+          "type": ["string", "object", "array", "null"]
+        },
+        "dependencies": { "type": "array", "items": { "type": "string" } },
+        "cost": {
+          "description": "free, paid credits, metered API, unknown ... Any non-free cost implies requires-approval before use.",
+          "type": ["string", "object", "null"]
+        },
+        "network": {
+          "description": "Network use: none, local, external (sends data to a third party), or a boolean.",
+          "type": ["string", "boolean", "null"]
+        },
+        "io": {
+          "type": "object",
+          "properties": {
+            "input": { "$ref": "#/$defs/textOrList" },
+            "output": { "$ref": "#/$defs/textOrList" }
+          }
+        },
+        "failureModes": { "type": "array", "items": { "type": "string" } },
+        "fallback": {
+          "description": "What to do when the capability is unavailable or not approved.",
+          "type": ["string", "object", "null"]
+        },
+        "evidence": {
+          "description": "How the status was established (command + result, probe, documentation). Required: no status without evidence.",
+          "anyOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+            { "type": "object", "minProperties": 1 }
+          ]
+        },
+        "verifiedOn": {
+          "description": "Date the status was last verified (YYYY-MM-DD), or null when never verified.",
+          "type": ["string", "null"],
+          "format": "date"
+        }
+      }
+    }
+  }
+}

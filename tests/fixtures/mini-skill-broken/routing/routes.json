@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "always": ["alpha"],
+  "routes": [
+    {
+      "id": "demo",
+      "workflow": "demo-flow",
+      "triggers": [{ "pattern": "\\bdemo\\b", "weight": 2 }],
+      "modules": ["alpha", "beta"]
+    }
+  ],
+  "fallback": "demo"
+}

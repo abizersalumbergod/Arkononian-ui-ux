@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ultimate-uiux.local/schemas/preset.schema.json",
+  "title": "Design preset",
+  "description": "A suggested (never forced) visual direction expressed as design tokens: light/dark colour roles, typography, radius, spacing, shadow, motion and the contrast pairs scripts/build-tokens.mjs must verify.",
+  "type": "object",
+  "required": ["name", "description", "intendedFor", "notFor", "color", "typography", "radius", "space", "shadow", "motion", "contrastPairs"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "$comment": { "type": "string" },
+    "name": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "description": { "type": "string", "minLength": 1 },
+    "intendedFor": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "notFor": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "color": {
+      "type": "object",
+      "required": ["light"],
+      "properties": {
+        "light": { "$ref": "#/$defs/palette" },
+        "dark": { "$ref": "#/$defs/palette" }
+      }
+    },
+    "typography": {
+      "type": "object",
+      "required": ["display", "text", "scale", "lineHeights", "tracking"],
+      "properties": {
+        "display": { "$ref": "#/$defs/fontRole" },
+        "text": { "$ref": "#/$defs/fontRole" },
+        "mono": { "$ref": "#/$defs/fontRole" },
+        "scale": {
+          "type": "object",
+          "required": ["xs", "sm", "base", "lg", "xl", "display"],
+          "additionalProperties": { "$ref": "#/$defs/size" }
+        },
+        "lineHeights": {
+          "type": "object",
+          "additionalProperties": { "type": ["number", "string"] }
+        },
+        "tracking": {
+          "type": "object",
+          "additionalProperties": { "type": ["number", "string"] }
+        }
+      }
+    },
+    "radius": { "$ref": "#/$defs/stringMap" },
+    "space": { "$ref": "#/$defs/stringMap" },
+    "shadow": { "$ref": "#/$defs/stringMap" },
+    "motion": {
+      "type": "object",
+      "required": ["durations", "easings"],
+      "properties": {
+        "durations": {
+          "type": "object",
+          "required": ["fast", "base", "slow"],
+          "additionalProperties": { "$ref": "#/$defs/duration" }
+        },
+        "easings": {
+          "type": "object",
+          "required": ["standard", "emphasized", "exit"],
+          "additionalProperties": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "contrastPairs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["fg", "bg", "min"],
+        "properties": {
+          "fg": { "type": "string", "minLength": 1, "description": "Colour role name (e.g. \"text\") or colour value." },
+          "bg": { "type": "string", "minLength": 1 },
+          "min": { "type": "number", "minimum": 1, "maximum": 21, "description": "Minimum WCAG contrast ratio, e.g. 4.5 for body text, 3 for large text and UI components." },
+          "theme": { "type": "string", "enum": ["light", "dark"] },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "sourceSkill": { "type": "string", "description": "Installed skill the preset was derived from, if any." }
+  },
+  "$defs": {
+    "color": {
+      "type": "string",
+      "pattern": "^(#([0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(rgb|rgba|hsl|hsla|oklch|oklab|lab|lch|color)\\(.+\\))$"
+    },
+    "palette": {
+      "type": "object",
+      "required": ["background", "surface", "surfaceRaised", "text", "textMuted", "border", "accent", "accentContrast", "focusRing", "success", "warning", "danger"],
+      "properties": {
+        "background": { "$ref": "#/$defs/color" },
+        "surface": { "$ref": "#/$defs/color" },
+        "surfaceRaised": { "$ref": "#/$defs/color" },
+        "text": { "$ref": "#/$defs/color" },
+        "textMuted": { "$ref": "#/$defs/color" },
+        "border": { "$ref": "#/$defs/color" },
+        "accent": { "$ref": "#/$defs/color" },
+        "accentContrast": { "$ref": "#/$defs/color" },
+        "focusRing": { "$ref": "#/$defs/color" },
+        "success": { "$ref": "#/$defs/color" },
+        "warning": { "$ref": "#/$defs/color" },
+        "danger": { "$ref": "#/$defs/color" }
+      },
+      "additionalProperties": { "$ref": "#/$defs/color" }
+    },
+    "fontRole": {
+      "type": "object",
+      "required": ["family", "fallback", "weights"],
+      "properties": {
+        "family": { "type": "string", "minLength": 1 },
+        "fallback": {
+          "anyOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+          ]
+        },
+        "weights": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "integer", "minimum": 100, "maximum": 1000 }
+        },
+        "source": { "type": "string", "description": "Where the font comes from (Google Fonts, self-hosted, system)." },
+        "license": { "type": "string" }
+      }
+    },
+    "size": {
+      "type": "string",
+      "pattern": "^(-?\\d*\\.?\\d+(rem|px|em)|(clamp|calc|min|max)\\(.+\\))$"
+    },
+    "duration": {
+      "anyOf": [
+        { "type": "string", "pattern": "^\\d*\\.?\\d+(ms|s)$" },
+        { "type": "number", "minimum": 0 }
+      ]
+    },
+    "stringMap": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "type": ["string", "number"] }
+    }
+  }
+}

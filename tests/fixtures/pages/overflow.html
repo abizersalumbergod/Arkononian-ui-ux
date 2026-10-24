@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fixture: overflow page</title>
+  <link rel="icon" href="data:,">
+  <style>
+    body { margin: 0; font: 16px/1.5 system-ui, sans-serif; }
+    .too-wide { width: 2000px; height: 40px; background: #f0c0c0; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Broken fixture page</h1>
+    <div class="too-wide">This element is 2000 px wide and forces horizontal scrolling.</div>
+    <img src="missing-image-does-not-exist.png" width="120" height="80" alt="Image that fails to load">
+  </main>
+  <script>console.error('fixture: deliberate console error');</script>
+</body>
+</html>

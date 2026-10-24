@@ -1,0 +1,122 @@
+{
+  "$schema": "../schemas/quality-report.schema.json",
+  "$comment": "EXAMPLE ONLY (example: true). Shows the shape of a filled report: PASS only with evidence from a real run, every other status with a reason, findings with ids and status. Start a real report with: node <skill>/scripts/quality-report.mjs --init --project <name> --out quality-report.json. Never copy example evidence into a real report.",
+  "example": true,
+  "project": "example-landing-page",
+  "scope": "Example: marketing landing page (/, /pricing) from the production build, viewports 375x812, 768x1024, 1280x800 and 1920x1080, Chromium only.",
+  "generatedOn": "2026-10-24",
+  "environment": {
+    "os": "example: Windows 11",
+    "node": "example: v24",
+    "browsers": ["example: Chromium via Playwright"],
+    "tools": ["npm run build", "npm test", "scripts/visual-check.mjs", "scripts/asset-validation.mjs"]
+  },
+  "gates": {
+    "A": {
+      "name": "Skill package integrity",
+      "status": "NOT_TESTED",
+      "required": false,
+      "evidence": [],
+      "findings": [],
+      "reason": "The example deliverable is a website, not a skill package. For a skill package set required to true and run node scripts/validate-skill.mjs."
+    },
+    "B": {
+      "name": "Functional correctness",
+      "status": "PASS",
+      "required": true,
+      "evidence": [
+        {
+          "check": "Production build compiles without type errors",
+          "tool": "npm run build",
+          "result": "EXAMPLE: exit 0; 0 type errors; 2 routes generated"
+        },
+        {
+          "check": "Unit and component tests",
+          "tool": "npm test",
+          "result": "EXAMPLE: 42 passed, 0 failed, 0 skipped",
+          "artifact": "qa/test-output.txt"
+        }
+      ],
+      "findings": []
+    },
+    "C": {
+      "name": "Visual quality",
+      "status": "NOT_TESTED",
+      "required": true,
+      "evidence": [],
+      "findings": [],
+      "reason": "Screenshots not captured yet: run scripts/visual-check.mjs at the four viewports, then critique them against references/visual-critique.md."
+    },
+    "D": {
+      "name": "Accessibility",
+      "status": "FAIL",
+      "required": true,
+      "evidence": [
+        {
+          "check": "axe-core scan of /pricing at 1280x800",
+          "tool": "node scripts/visual-check.mjs --url http://localhost:3000/pricing --viewports 1280x800 --axe",
+          "result": "EXAMPLE: 1 critical violation (button-name), 0 serious",
+          "artifact": "qa/visual-check/pricing-1280x800.json"
+        }
+      ],
+      "findings": [
+        {
+          "id": "D-1",
+          "severity": "critical",
+          "location": "/pricing, billing period toggle",
+          "issue": "Icon-only toggle button has no accessible name",
+          "impact": "Screen-reader users cannot tell what the control does or which billing period is active",
+          "cause": "Button renders only an SVG icon without aria-label or visible text",
+          "fix": "Add a visible label or aria-label plus aria-pressed reflecting the selected period",
+          "status": "open",
+          "verification": null
+        }
+      ],
+      "reason": "Open critical finding D-1 (unnamed billing toggle); re-run the axe scan after the fix."
+    },
+    "E": {
+      "name": "Performance",
+      "status": "NOT_TESTED",
+      "required": true,
+      "evidence": [],
+      "findings": [],
+      "reason": "No performance trace or Lighthouse run against the production build yet."
+    },
+    "F": {
+      "name": "Responsive behavior",
+      "status": "NOT_TESTED",
+      "required": true,
+      "evidence": [],
+      "findings": [],
+      "reason": "Overflow and layout checks at 375x812 and 768x1024 have not been run."
+    },
+    "G": {
+      "name": "Asset integrity",
+      "status": "BLOCKED",
+      "required": true,
+      "evidence": [
+        {
+          "check": "Asset manifest validation",
+          "tool": "node scripts/asset-validation.mjs --manifest asset-manifest.json --root .",
+          "result": "EXAMPLE: exit 2 (INCOMPLETE); 0 critical failures; hero-loop duration not-tested because ffprobe is not installed"
+        }
+      ],
+      "findings": [],
+      "reason": "Video duration cannot be verified until ffprobe is installed or the duration is checked another way."
+    },
+    "H": {
+      "name": "Reliability and security",
+      "status": "NOT_TESTED",
+      "required": true,
+      "evidence": [],
+      "findings": [],
+      "reason": "Console errors, failed requests, CSP and secret exposure in the client bundle not checked yet."
+    }
+  },
+  "overall": "FAIL",
+  "limitations": [
+    "EXAMPLE ONLY: every evidence result above is illustrative, not from a real run.",
+    "Chromium only; Safari/WebKit and Firefox were not tested.",
+    "Real-device touch behavior was not tested."
+  ]
+}

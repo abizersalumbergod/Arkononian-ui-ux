@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ultimate-uiux.local/schemas/asset-manifest.schema.json",
+  "title": "Asset manifest",
+  "description": "Every media asset a UI ships (images, video, audio, 3D, icons, fonts, procedural graphics) with provenance, license, budgets, loading strategy, fallback and validation state. Checked by scripts/asset-validation.mjs (Gate G).",
+  "type": "object",
+  "required": ["version", "project", "assets"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "$comment": { "type": "string" },
+    "version": { "type": ["string", "integer"], "description": "Manifest format version, e.g. \"1.0\"." },
+    "project": { "type": "string", "minLength": 1 },
+    "example": {
+      "type": "boolean",
+      "description": "true when this manifest is an illustrative example whose files do not exist."
+    },
+    "notes": { "type": "array", "items": { "type": "string" } },
+    "budgets": {
+      "description": "Byte budgets per category. Defaults when omitted: image 512000 (500 KiB), imageHero 819200 (800 KiB, roles containing hero/background), video 6291456 (6 MiB), audio 1572864 (1.5 MiB), model3d 5242880 (5 MiB). font has no default.",
+      "type": "object",
+      "properties": {
+        "image": { "type": "integer", "minimum": 1 },
+        "imageHero": { "type": "integer", "minimum": 1 },
+        "video": { "type": "integer", "minimum": 1 },
+        "audio": { "type": "integer", "minimum": 1 },
+        "model3d": { "type": "integer", "minimum": 1 },
+        "font": { "type": "integer", "minimum": 1 },
+        "total": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": { "type": "integer", "minimum": 1 }
+    },
+    "assets": { "type": "array", "items": { "$ref": "#/$defs/asset" } }
+  },
+  "$defs": {
+    "asset": {
+      "type": "object",
+      "required": ["id", "type", "role", "source", "format", "license", "critical", "loading", "optimization", "validation"],
+      "anyOf": [
+        { "required": ["path"] },
+        { "required": ["uri"] }
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
+        "type": {
+          "type": "string",
+          "enum": ["image", "video", "audio", "model3d", "icon", "illustration", "texture", "font", "procedural"]
+        },
+        "role": { "type": "string", "minLength": 1, "description": "hero, background, poster, product, avatar, ambient-loop, ui-sound, ..." },
+        "path": { "type": "string", "minLength": 1, "description": "File path relative to the project root (validated with --root)." },
+        "uri": { "type": "string", "minLength": 1, "description": "Remote or runtime URI when there is no local file (not fetched by the validator)." },
+        "source": { "type": "string", "enum": ["generated", "procedural", "retrieved", "original"] },
+        "generator": {
+          "description": "Tool/model that produced the asset. Never put credentials here.",
+          "anyOf": [
+            { "type": "string" },
+            {
+              "type": "object",
+              "properties": {
+                "tool": { "type": "string" },
+                "model": { "type": "string" },
+                "seed": { "type": ["integer", "string"] },
+                "prompt": { "type": "string" },
+                "params": { "type": "object" },
+                "costApprovedBy": { "type": "string", "description": "Who approved the paid generation, and when." }
+              }
+            }
+          ]
+        },
+        "promptRef": { "type": "string", "description": "Path (relative to the root) or id of the stored prompt." },
+        "dimensions": {
+          "type": "object",
+          "required": ["width", "height"],
+          "properties": {
+            "width": { "type": "integer", "minimum": 1 },
+            "height": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "aspectRatio": {
+          "description": "\"16:9\", \"4/5\" or a positive number (width / height). Checked with 1% tolerance.",
+          "anyOf": [
+            { "type": "string", "pattern": "^\\d+(\\.\\d+)?\\s*[:/]\\s*\\d+(\\.\\d+)?$" },
+            { "type": "number", "exclusiveMinimum": 0 }
+          ]
+        },
+        "durationSec": { "type": "number", "minimum": 0 },
+        "bytes": { "type": "integer", "minimum": 0 },
+        "format": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9.+/-]+$",
+          "description": "png, jpeg, webp, avif, gif, svg, mp4, webm, mov, mp3, ogg, wav, m4a, glb, woff2, ..."
+        },
+        "license": {
+          "type": "string",
+          "minLength": 1,
+          "description": "License or ownership statement, e.g. \"CC0-1.0\", \"original (project-owned)\", \"generated; provider terms reviewed\". \"unknown\" fails validation."
+        },
+        "usageRestrictions": { "type": ["string", "null"] },
+        "fallback": {
+          "description": "What renders when the asset fails or is disabled (required for critical assets).",
+          "anyOf": [
+            { "type": "string", "minLength": 1 },
+            {
+              "type": "object",
+              "minProperties": 1,
+              "properties": {
+                "type": { "type": "string" },
+                "assetId": { "type": "string" },
+                "path": { "type": "string" },
+                "value": { "type": "string" },
+                "note": { "type": "string" }
+              }
+            },
+            { "type": "null" }
+          ]
+        },
+        "critical": { "type": "boolean", "description": "true when the page is broken or misleading without this asset." },
+        "loading": { "type": "string", "enum": ["eager", "lazy", "on-interaction", "preload"] },
+        "optimization": { "type": "string", "enum": ["none", "optimized", "pending"] },
+        "alt": { "type": "string", "description": "Alternative text, or empty string for decorative assets." },
+        "validation": {
+          "type": "object",
+          "required": ["status"],
+          "properties": {
+            "status": { "type": "string", "enum": ["pending", "passed", "failed", "not-tested"] },
+            "checkedOn": { "type": ["string", "null"], "format": "date" },
+            "notes": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

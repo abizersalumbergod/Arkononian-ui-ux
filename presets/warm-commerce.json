@@ -1,0 +1,143 @@
+{
+  "$schema": "../schemas/preset.schema.json",
+  "$comment": "Terracotta is the single primary accent (buttons, links, focus); olive is a secondary accent for badges and supporting highlights, never for primary actions. Prices and quantities use the text face with font-variant-numeric: tabular-nums.",
+  "name": "warm-commerce",
+  "description": "Warm, trustworthy commerce: off-white paper surfaces, deep warm ink, a soft serif display (Fraunces) with a humanist sans for UI and prices (Source Sans 3), a terracotta primary accent with an olive secondary, gentle radii and warm-tinted shadows. Light and dark palettes.",
+  "intendedFor": [
+    "direct-to-consumer and independent online stores",
+    "food, beverage, homeware, craft and wellness brands",
+    "product detail, collection, cart and checkout flows that need warmth and trust",
+    "hospitality, restaurant and booking sites"
+  ],
+  "notFor": [
+    "dense dashboards and admin tools",
+    "developer or high-tech products that want a precise, neutral tone",
+    "dark-first cinematic showcases"
+  ],
+  "color": {
+    "light": {
+      "background": "#FBF7F1",
+      "surface": "#FFFDF9",
+      "surfaceRaised": "#FFFFFF",
+      "surfaceSunken": "#F3ECE2",
+      "text": "#1F1A17",
+      "textMuted": "#5E544C",
+      "border": "#E6DCCF",
+      "borderStrong": "#8C7E70",
+      "accent": "#A9461F",
+      "accentHover": "#8E3A19",
+      "accentContrast": "#FFFFFF",
+      "accentSecondary": "#5B6531",
+      "focusRing": "#A9461F",
+      "success": "#2F6B3A",
+      "warning": "#8A5300",
+      "danger": "#B42318"
+    },
+    "dark": {
+      "background": "#171310",
+      "surface": "#201B17",
+      "surfaceRaised": "#2A241F",
+      "surfaceSunken": "#120F0C",
+      "text": "#F5EEE6",
+      "textMuted": "#C9BCAE",
+      "border": "#3A322B",
+      "borderStrong": "#857565",
+      "accent": "#E2805A",
+      "accentHover": "#EA9473",
+      "accentContrast": "#1A120D",
+      "accentSecondary": "#A8B472",
+      "focusRing": "#E2805A",
+      "success": "#8DC79A",
+      "warning": "#E8AE4C",
+      "danger": "#F28B7D"
+    }
+  },
+  "typography": {
+    "display": {
+      "family": "Fraunces",
+      "fallback": ["Iowan Old Style", "Palatino Linotype", "Georgia", "serif"],
+      "weights": [400, 600],
+      "source": "Google Fonts",
+      "license": "OFL-1.1"
+    },
+    "text": {
+      "family": "Source Sans 3",
+      "fallback": ["Segoe UI", "Gill Sans", "Helvetica Neue", "Arial", "sans-serif"],
+      "weights": [400, 600, 700],
+      "source": "Google Fonts",
+      "license": "OFL-1.1"
+    },
+    "scale": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.5rem",
+      "2xl": "2rem",
+      "price": "1.25rem",
+      "display": "clamp(2.5rem, 4vw + 1rem, 4.5rem)"
+    },
+    "lineHeights": {
+      "display": 1.05,
+      "2xl": 1.15,
+      "xl": 1.25,
+      "tight": 1.2,
+      "body": 1.6
+    },
+    "tracking": {
+      "display": "-0.015em",
+      "body": "0em",
+      "caps": "0.08em"
+    }
+  },
+  "radius": {
+    "sm": "6px",
+    "md": "10px",
+    "lg": "16px",
+    "full": "9999px"
+  },
+  "space": {
+    "gutter": "1.25rem",
+    "card": "1.25rem",
+    "stack": "1.5rem",
+    "section": "5rem",
+    "sectionLg": "7.5rem",
+    "container": "80rem"
+  },
+  "shadow": {
+    "sm": "0 1px 2px 0 rgb(60 40 20 / 0.06)",
+    "md": "0 6px 16px -4px rgb(60 40 20 / 0.12)",
+    "lg": "0 18px 40px -12px rgb(60 40 20 / 0.18)"
+  },
+  "motion": {
+    "durations": {
+      "fast": "150ms",
+      "base": "240ms",
+      "slow": "400ms"
+    },
+    "easings": {
+      "standard": "cubic-bezier(0.2, 0, 0, 1)",
+      "emphasized": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "exit": "cubic-bezier(0.4, 0, 1, 1)"
+    }
+  },
+  "contrastPairs": [
+    { "fg": "text", "bg": "background", "min": 4.5 },
+    { "fg": "text", "bg": "surface", "min": 4.5 },
+    { "fg": "text", "bg": "surfaceSunken", "min": 4.5 },
+    { "fg": "textMuted", "bg": "background", "min": 4.5, "note": "product metadata and helper text" },
+    { "fg": "textMuted", "bg": "surface", "min": 4.5 },
+    { "fg": "textMuted", "bg": "surfaceSunken", "min": 4.5 },
+    { "fg": "accent", "bg": "background", "min": 4.5, "note": "links and accent text" },
+    { "fg": "accent", "bg": "surface", "min": 4.5 },
+    { "fg": "accentContrast", "bg": "accent", "min": 4.5, "note": "add-to-cart and checkout button label" },
+    { "fg": "accentContrast", "bg": "accentHover", "min": 4.5 },
+    { "fg": "accentSecondary", "bg": "background", "min": 4.5, "note": "olive badge text" },
+    { "fg": "focusRing", "bg": "background", "min": 3 },
+    { "fg": "borderStrong", "bg": "background", "min": 3, "note": "input and control boundaries (WCAG 1.4.11)" },
+    { "fg": "borderStrong", "bg": "surface", "min": 3 },
+    { "fg": "success", "bg": "background", "min": 4.5 },
+    { "fg": "warning", "bg": "background", "min": 4.5 },
+    { "fg": "danger", "bg": "background", "min": 4.5, "note": "errors and sale prices" }
+  ]
+}

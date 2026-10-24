@@ -1,0 +1,157 @@
+{
+  "$schema": "../schemas/preset.schema.json",
+  "$comment": "Derived from ../../monochrome-editorial-portfolio/SKILL.md (sections 2 and 4). Additions and accessibility adjustments: borderStrong (#8A8A8A light, #7A7A7A dark) is the boundary colour for inputs and controls that must reach 3:1, while the reference hair-strong value is kept as hairStrong for decorative outlines; the status colours are desaturated additions (the source allows one desaturated tint); the exit easing is an addition. The source asks for weight 900 on room titles; the display role lists 800 because the URL fails if a family lacks a requested weight, so confirm the family's weights on Google Fonts before adding 900.",
+  "name": "monochrome-editorial",
+  "description": "Achromatic editorial system: light gallery sections on warm-neutral paper with near-black ink, dark scroll-driven 'rooms', one geometric grotesk set uppercase and extra-bold for titles, mono metadata, 1px hairlines, and soft layered shadows only on lifted objects. Scope a dark room with data-theme=\"dark\" on its section; pin the light gallery with <html data-theme=\"light\">.",
+  "sourceSkill": "../../monochrome-editorial-portfolio/SKILL.md",
+  "intendedFor": [
+    "designer, photographer, architect and studio portfolios",
+    "editorial case studies and project archives",
+    "personal sites where type scale and imagery carry the brand",
+    "magazine-style landing pages with scroll-driven sections"
+  ],
+  "notFor": [
+    "products that rely on colour coding (charts, status-heavy dashboards)",
+    "e-commerce that needs promotional colour",
+    "playful or children's brands",
+    "data-dense tools"
+  ],
+  "color": {
+    "light": {
+      "background": "#FAFAFA",
+      "surface": "#FFFFFF",
+      "surfaceRaised": "#FFFFFF",
+      "well": "#EFEFEF",
+      "text": "#121212",
+      "textMuted": "#525252",
+      "textSubtle": "#737373",
+      "border": "#E5E5E5",
+      "hairStrong": "#D4D4D4",
+      "borderStrong": "#8A8A8A",
+      "accent": "#000000",
+      "accentContrast": "#FFFFFF",
+      "focusRing": "#000000",
+      "success": "#2F6B4F",
+      "warning": "#86601A",
+      "danger": "#A63A32"
+    },
+    "dark": {
+      "background": "#0D0D0D",
+      "surface": "#151515",
+      "surfaceRaised": "#1C1C1C",
+      "well": "#070709",
+      "text": "#FFFFFF",
+      "textMuted": "#D4D4D4",
+      "textSubtle": "#A3A3A3",
+      "border": "rgb(255 255 255 / 0.1)",
+      "hairStrong": "rgb(255 255 255 / 0.2)",
+      "borderStrong": "#7A7A7A",
+      "accent": "#FFFFFF",
+      "accentContrast": "#000000",
+      "focusRing": "#FFFFFF",
+      "success": "#7FC8A0",
+      "warning": "#E0B260",
+      "danger": "#F2877E"
+    }
+  },
+  "typography": {
+    "display": {
+      "family": "Plus Jakarta Sans",
+      "fallback": ["Manrope", "system-ui", "-apple-system", "Segoe UI", "Helvetica Neue", "Arial", "sans-serif"],
+      "weights": [800],
+      "source": "Google Fonts",
+      "license": "OFL-1.1"
+    },
+    "text": {
+      "family": "Plus Jakarta Sans",
+      "fallback": ["system-ui", "-apple-system", "Segoe UI", "Helvetica Neue", "Arial", "sans-serif"],
+      "weights": [400, 500, 600, 700],
+      "source": "Google Fonts",
+      "license": "OFL-1.1"
+    },
+    "mono": {
+      "family": "JetBrains Mono",
+      "fallback": ["ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
+      "weights": [400, 500],
+      "source": "Google Fonts",
+      "license": "OFL-1.1"
+    },
+    "scale": {
+      "micro": "0.625rem",
+      "xs": "0.6875rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.25rem",
+      "xl": "clamp(1.875rem, 4vw, 3rem)",
+      "display": "clamp(2.75rem, 9.5vw, 9.5rem)",
+      "room": "clamp(3rem, 8vw, 8rem)",
+      "ghost": "clamp(4rem, 14vw, 16rem)"
+    },
+    "lineHeights": {
+      "display": 0.85,
+      "room": 0.88,
+      "xl": 1.05,
+      "tight": 0.92,
+      "body": 1.625
+    },
+    "tracking": {
+      "tight": "-0.025em",
+      "tighter": "-0.05em",
+      "wider": "0.05em",
+      "widest": "0.1em",
+      "label": "0.18em"
+    }
+  },
+  "radius": {
+    "xl": "12px",
+    "2xl": "16px",
+    "3xl": "24px",
+    "modal": "32px",
+    "full": "9999px"
+  },
+  "space": {
+    "gutter": "1.5rem",
+    "gutterMd": "3.5rem",
+    "section": "4rem",
+    "sectionLg": "5rem",
+    "container": "1400px"
+  },
+  "shadow": {
+    "sm": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+    "card": "0 20px 45px -15px rgb(0 0 0 / 0.12), 0 4px 12px rgb(0 0 0 / 0.06)",
+    "cardHover": "0 28px 50px -10px rgb(0 0 0 / 0.22)",
+    "media": "0 25px 60px -15px rgb(0 0 0 / 0.9)",
+    "modal": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
+    "inner": "inset 0 2px 4px 0 rgb(0 0 0 / 0.05)"
+  },
+  "motion": {
+    "durations": {
+      "fast": "250ms",
+      "base": "440ms",
+      "slow": "600ms",
+      "hover": "700ms",
+      "snap": "140ms"
+    },
+    "easings": {
+      "standard": "cubic-bezier(0.16, 1, 0.3, 1)",
+      "emphasized": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "exit": "cubic-bezier(0.4, 0, 1, 1)"
+    }
+  },
+  "contrastPairs": [
+    { "fg": "text", "bg": "background", "min": 4.5 },
+    { "fg": "text", "bg": "surfaceRaised", "min": 4.5 },
+    { "fg": "text", "bg": "well", "min": 4.5 },
+    { "fg": "textMuted", "bg": "background", "min": 4.5, "note": "captions and nav links" },
+    { "fg": "textMuted", "bg": "surface", "min": 4.5 },
+    { "fg": "textSubtle", "bg": "background", "min": 4.5, "note": "metadata and inactive index items" },
+    { "fg": "textSubtle", "bg": "surface", "min": 4.5 },
+    { "fg": "accentContrast", "bg": "accent", "min": 4.5, "note": "inverted active state (pill accordion, toast)" },
+    { "fg": "focusRing", "bg": "background", "min": 3 },
+    { "fg": "borderStrong", "bg": "background", "min": 3, "note": "input and control boundaries (WCAG 1.4.11)" },
+    { "fg": "borderStrong", "bg": "surface", "min": 3 },
+    { "fg": "success", "bg": "background", "min": 4.5 },
+    { "fg": "warning", "bg": "background", "min": 4.5 },
+    { "fg": "danger", "bg": "background", "min": 4.5 }
+  ]
+}

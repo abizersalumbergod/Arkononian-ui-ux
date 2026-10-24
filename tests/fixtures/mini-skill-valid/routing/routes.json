@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "description": "Routing table for the valid fixture. Module references use the three supported forms: id, id.md and a root-relative path.",
+  "always": ["alpha"],
+  "routes": [
+    {
+      "id": "demo",
+      "workflow": "demo-flow",
+      "triggers": [{ "pattern": "\\bdemo\\b", "weight": 2 }],
+      "modules": ["alpha", "beta.md"]
+    }
+  ],
+  "modifiers": [
+    { "id": "motion", "patterns": ["\\banimat(e|ion)\\b"], "modules": ["references/beta.md"] }
+  ],
+  "fallback": "demo"
+}

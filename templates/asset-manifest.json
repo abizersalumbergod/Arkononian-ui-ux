@@ -1,0 +1,118 @@
+{
+  "$schema": "../schemas/asset-manifest.schema.json",
+  "$comment": "EXAMPLE ONLY (example: true). The files under public/ do not exist; asset-validation reports their file checks as not-tested. Copy this file to the project root, delete \"example\", replace every entry with real assets, then run: node <skill>/scripts/asset-validation.mjs --manifest asset-manifest.json --root .",
+  "version": "1.0",
+  "project": "example-landing-page",
+  "example": true,
+  "notes": [
+    "Paths are relative to the project root passed with --root; never use ../ or absolute paths.",
+    "generator.prompt must never contain API keys or tokens; costApprovedBy records who approved a paid generation and when.",
+    "Budgets below repeat the defaults (bytes); tighten them per project. Every critical asset needs a fallback."
+  ],
+  "budgets": {
+    "image": 512000,
+    "imageHero": 819200,
+    "video": 6291456,
+    "audio": 1572864,
+    "model3d": 5242880,
+    "total": 8388608
+  },
+  "assets": [
+    {
+      "id": "hero-image",
+      "type": "image",
+      "role": "hero",
+      "path": "public/images/hero.avif",
+      "source": "generated",
+      "generator": {
+        "tool": "example-image-generator",
+        "model": "example-model-v1",
+        "seed": 4127,
+        "prompt": "Editorial product photograph of a ceramic desk lamp on a linen table, soft window light from the left, muted warm palette, generous negative space on the right for the headline",
+        "params": { "width": 2400, "height": 1350, "steps": 30 },
+        "costApprovedBy": "example: user approved one paid generation in chat on 2026-10-24"
+      },
+      "promptRef": "prompts/hero-image.txt",
+      "dimensions": { "width": 2400, "height": 1350 },
+      "aspectRatio": "16:9",
+      "bytes": 412000,
+      "format": "avif",
+      "license": "generated; provider terms reviewed for commercial use (example)",
+      "usageRestrictions": null,
+      "fallback": {
+        "type": "color",
+        "value": "#1f1d1a",
+        "note": "Solid surface color keeps the headline readable while the image loads or fails"
+      },
+      "critical": true,
+      "loading": "preload",
+      "optimization": "optimized",
+      "alt": "Ceramic desk lamp glowing on a linen-covered table",
+      "validation": { "status": "pending", "checkedOn": null, "notes": "Example entry: run scripts/asset-validation.mjs on the real file." }
+    },
+    {
+      "id": "background-grid",
+      "type": "procedural",
+      "role": "background",
+      "path": "public/images/background-grid.svg",
+      "source": "procedural",
+      "generator": {
+        "tool": "hand-authored SVG pattern",
+        "params": { "cell": 48, "strokeWidth": 1, "opacity": 0.08 }
+      },
+      "dimensions": { "width": 1440, "height": 900 },
+      "aspectRatio": "16:10",
+      "bytes": 3200,
+      "format": "svg",
+      "license": "original (project-owned)",
+      "usageRestrictions": null,
+      "fallback": { "type": "css", "value": "background-color: var(--color-surface)" },
+      "critical": false,
+      "loading": "eager",
+      "optimization": "optimized",
+      "alt": "",
+      "validation": { "status": "pending", "checkedOn": null, "notes": "Decorative: rendered with an empty alt / aria-hidden." }
+    },
+    {
+      "id": "hero-video-poster",
+      "type": "image",
+      "role": "poster",
+      "path": "public/video/hero-loop-poster.jpg",
+      "source": "original",
+      "generator": "first frame exported from public/video/hero-loop.mp4",
+      "dimensions": { "width": 1920, "height": 1080 },
+      "aspectRatio": "16:9",
+      "bytes": 186000,
+      "format": "jpeg",
+      "license": "original (project-owned)",
+      "usageRestrictions": null,
+      "fallback": { "type": "color", "value": "#1f1d1a" },
+      "critical": false,
+      "loading": "eager",
+      "optimization": "optimized",
+      "alt": "",
+      "validation": { "status": "pending", "checkedOn": null, "notes": "Shown before playback, under prefers-reduced-motion, and when the video fails." }
+    },
+    {
+      "id": "hero-loop",
+      "type": "video",
+      "role": "ambient-loop",
+      "path": "public/video/hero-loop.mp4",
+      "source": "original",
+      "generator": "screen capture of the product UI, trimmed and encoded with H.264 (example)",
+      "dimensions": { "width": 1920, "height": 1080 },
+      "aspectRatio": "16:9",
+      "durationSec": 8,
+      "bytes": 2900000,
+      "format": "mp4",
+      "license": "original (project-owned)",
+      "usageRestrictions": null,
+      "fallback": { "type": "asset", "assetId": "hero-video-poster", "note": "Poster image replaces the loop when video is disabled or fails" },
+      "critical": false,
+      "loading": "lazy",
+      "optimization": "optimized",
+      "alt": "",
+      "validation": { "status": "pending", "checkedOn": null, "notes": "Muted, no audio track; paused under prefers-reduced-motion." }
+    }
+  ]
+}

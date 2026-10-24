@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ultimate-uiux.local/schemas/quality-report.schema.json",
+  "title": "Quality report",
+  "description": "Gate-by-gate verification report (gates A-H). PASS requires at least one evidence item; every other status requires a reason. Evaluated by scripts/quality-report.mjs, which also enforces that a gate with an open critical finding cannot pass.",
+  "type": "object",
+  "required": ["project", "scope", "generatedOn", "environment", "gates", "limitations"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "$comment": { "type": "string" },
+    "example": { "type": "boolean", "description": "true when this report is an illustrative example." },
+    "project": { "type": "string", "minLength": 1 },
+    "scope": { "type": "string", "minLength": 1, "description": "What was reviewed: pages, components, viewports, build." },
+    "generatedOn": {
+      "description": "Date (YYYY-MM-DD) or timestamp (ISO 8601) of the report.",
+      "anyOf": [
+        { "type": "string", "format": "date" },
+        { "type": "string", "format": "date-time" }
+      ]
+    },
+    "environment": {
+      "description": "OS, browsers, tools and versions actually used. Never include secrets or environment variable values.",
+      "type": ["string", "object"]
+    },
+    "gates": {
+      "type": "object",
+      "required": ["A", "B", "C", "D", "E", "F", "G", "H"],
+      "additionalProperties": false,
+      "properties": {
+        "A": { "$ref": "#/$defs/gate", "description": "Skill package integrity" },
+        "B": { "$ref": "#/$defs/gate", "description": "Functional correctness" },
+        "C": { "$ref": "#/$defs/gate", "description": "Visual quality" },
+        "D": { "$ref": "#/$defs/gate", "description": "Accessibility" },
+        "E": { "$ref": "#/$defs/gate", "description": "Performance" },
+        "F": { "$ref": "#/$defs/gate", "description": "Responsive behavior" },
+        "G": { "$ref": "#/$defs/gate", "description": "Asset integrity" },
+        "H": { "$ref": "#/$defs/gate", "description": "Reliability and security" }
+      }
+    },
+    "overall": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "INCOMPLETE"],
+      "description": "Optional declared result. scripts/quality-report.mjs recomputes it: FAIL if any gate fails, INCOMPLETE if any required gate is BLOCKED or NOT_TESTED, else PASS."
+    },
+    "limitations": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+  },
+  "$defs": {
+    "gate": {
+      "type": "object",
+      "required": ["name", "status", "required", "evidence", "findings"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["PASS", "FAIL", "BLOCKED", "NOT_TESTED", "NOT_APPLICABLE"] },
+        "required": { "type": "boolean" },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } },
+        "findings": { "type": "array", "items": { "$ref": "#/$defs/finding" } },
+        "reason": { "type": "string" }
+      },
+      "if": {
+        "properties": { "status": { "const": "PASS" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": { "evidence": { "minItems": 1 } }
+      },
+      "else": {
+        "required": ["reason"],
+        "properties": { "reason": { "minLength": 1 } }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["check", "tool", "result"],
+      "properties": {
+        "check": { "type": "string", "minLength": 1, "description": "What was checked." },
+        "tool": { "type": "string", "minLength": 1, "description": "Command, script or tool actually run." },
+        "result": { "type": "string", "minLength": 1, "description": "Observed result (numbers, exit code, counts)." },
+        "artifact": { "type": "string", "description": "Optional path to a screenshot, log or JSON output." }
+      }
+    },
+    "finding": {
+      "type": "object",
+      "required": ["id", "severity", "location", "issue", "status"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "severity": { "type": "string", "enum": ["critical", "high", "medium", "low"] },
+        "location": { "type": "string", "minLength": 1 },
+        "issue": { "type": "string", "minLength": 1 },
+        "impact": { "type": "string" },
+        "cause": { "type": "string" },
+        "fix": { "type": "string" },
+        "status": { "type": "string", "enum": ["open", "fixed", "accepted"] },
+        "verification": { "type": ["string", "null"], "description": "How the fix was verified (required in practice for status fixed)." }
+      }
+    }
+  }
+}

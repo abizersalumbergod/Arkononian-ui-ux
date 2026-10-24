@@ -1,0 +1,213 @@
+#!/usr/bin/env node
+// Generates derived documentation so it can never drift from its sources:
+//   references/capability-registry.md  <- references/capability-registry.json
+//   MASTER_INSTRUCTIONS.md              <- SKILL.md + every module's "## Decision rules" + every workflow's "## Steps"
+// Usage: node scripts/build-docs.mjs [--root <skill-dir>] [--only registry|master] [--check]
+//   --check  write nothing; exit 1 if a generated file is missing or stale.
+import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
+import { join, dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const HELP = `build-docs.mjs — regenerate derived docs for the ultimate-uiux skill
+
+Usage: node scripts/build-docs.mjs [--root <skill-dir>] [--only registry|master] [--check]
+
+  --root <dir>   skill directory (default: the parent of this scripts/ folder)
+  --only <name>  generate only "registry" or "master"
+  --check        do not write; exit 1 when a generated file is missing or out of date
+  --help         show this help
+
+Exit codes: 0 ok, 1 stale/missing (with --check) or source error, 2 bad arguments.`;
+
+const MODULE_ORDER = [
+  'capability-registry', 'skill-delegation', 'product-discovery', 'design-intelligence', 'visual-systems',
+  'typography-and-layout', 'design-tokens', 'interaction-design', 'motion-engineering', 'responsive-design',
+  'landing-page-engineering', 'dashboard-engineering', 'three-dimensional-web', 'shader-and-creative-coding',
+  'asset-generation', 'image-pipelines', 'video-pipelines', 'audio-pipelines', 'accessibility', 'performance',
+  'visual-testing', 'visual-critique', 'frontend-architecture', 'security-and-privacy', 'troubleshooting',
+  'quality-gates', 'skill-audit',
+];
+const WORKFLOW_ORDER = [
+  'new-product', 'existing-project', 'landing-page', 'dashboard', 'ecommerce', 'cinematic-3d', 'design-system',
+  'asset-production', 'visual-regression',
+];
+
+function parseArgs(argv) {
+  const opts = { root: resolve(dirname(fileURLToPath(import.meta.url)), '..'), only: null, check: false };
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i];
+    if (a === '--help' || a === '-h') { console.log(HELP); process.exit(0); }
+    else if (a === '--check') opts.check = true;
+    else if (a === '--root') opts.root = resolve(argv[++i] ?? '');
+    else if (a === '--only') opts.only = argv[++i];
+    else { console.error(`Unknown argument: ${a}\n\n${HELP}`); process.exit(2); }
+  }
+  if (opts.only && !['registry', 'master'].includes(opts.only)) {
+    console.error('--only must be "registry" or "master"'); process.exit(2);
+  }
+  return opts;
+}
+
+const read = (p) => readFileSync(p, 'utf8').replace(/\r\n/g, '\n');
+const cell = (v) => {
+  if (v === null || v === undefined) return '—';
+  const s = Array.isArray(v) ? v.join('; ') : typeof v === 'object' ? Object.entries(v).map(([k, x]) => `${k}: ${x}`).join('; ') : String(v);
+  return s.replace(/\|/g, '\\|').replace(/\n+/g, ' ');
+};
+
+/** Extract the body of a level-2 section (without its heading) from markdown text. */
+export function extractSection(markdown, heading) {
+  const lines = markdown.split('\n');
+  const isFence = (l) => /^\s*(```|~~~)/.test(l);
+  const target = `## ${heading}`.toLowerCase();
+  let start = -1;
+  let inFence = false;
+  for (let i = 0; i < lines.length; i++) {
+    if (isFence(lines[i])) inFence = !inFence;
+    else if (!inFence && lines[i].trim().toLowerCase() === target) { start = i; break; }
+  }
+  if (start === -1) return null;
+  let end = lines.length;
+  inFence = false;
+  for (let i = start + 1; i < lines.length; i++) {
+    if (isFence(lines[i])) inFence = !inFence;
+    if (!inFence && /^##\s/.test(lines[i])) { end = i; break; }
+  }
+  return lines.slice(start + 1, end).join('\n').trim();
+}
+
+/** Demote headings by one level and rewrite relative links so they resolve from the skill root. */
+function relocate(body, fromDir) {
+  return body
+    .split('\n')
+    .map((l) => (/^#{3,5}\s/.test(l) ? `#${l}` : l))
+    .join('\n')
+    .replace(/\]\((?!https?:|mailto:|#|\/)([^)\s]+)\)/g, (_m, target) => {
+      if (fromDir === '.') return `](${target})`;
+      const parts = `${fromDir}/${target}`.split('/');
+      const out = [];
+      for (const p of parts) { if (p === '..') out.pop(); else if (p !== '.') out.push(p); }
+      return `](${out.join('/')})`;
+    });
+}
+
+export function renderRegistry(root) {
+  const entries = JSON.parse(read(join(root, 'references', 'capability-registry.json')));
+  if (!Array.isArray(entries)) throw new Error('references/capability-registry.json must be an array of entries');
+  const order = ['available-verified', 'available-untested', 'available-with-prerequisites', 'requires-approval', 'requires-credentials', 'unknown', 'unavailable'];
+  const sorted = [...entries].sort((a, b) => order.indexOf(a.status) - order.indexOf(b.status) || a.id.localeCompare(b.id));
+  const out = [];
+  out.push('# Capability registry', '');
+  out.push('<!-- GENERATED by scripts/build-docs.mjs from capability-registry.json. Edit the JSON, then run: node scripts/build-docs.mjs -->', '');
+  out.push('What this environment can really do, with evidence. Never rely on a capability whose status is not `available-verified` without a fallback, and never treat a tool name in an instruction as proof that the tool exists.', '');
+  out.push('**Load when:** every task, during Stage 1 (Discover). **Owns:** status vocabulary, known capabilities, failure modes, fallbacks and re-verification.');
+  out.push('**Related:** [skill-delegation](skill-delegation.md), [asset-generation](asset-generation.md), [visual-testing](visual-testing.md), [security-and-privacy](security-and-privacy.md)', '');
+  out.push('## Decision rules', '');
+  out.push('1. Re-verify before relying on anything: this registry is a snapshot (see each entry\'s `verifiedOn`). Machines and sessions differ.');
+  out.push('2. `available-verified` means you may use it. `available-untested` means try it once harmlessly, then upgrade it or fall back. `available-with-prerequisites` means install or configure first (ordinary project dependencies are autonomous; system-wide installs need approval).');
+  out.push('3. `requires-approval` covers anything that costs money or credits, publishes, or sends data to a third party. Ask the user before every such use, and state the cost or data involved.');
+  out.push('4. `requires-credentials` means tell the user exactly which credential is needed, by name only. Never ask them to paste secrets into chat when an env var or connector login exists.');
+  out.push('5. `unavailable` or `unknown` means use the listed fallback and record the limitation in the final report.');
+  out.push('6. Never generate content just to test a generator. Use read-only probes (balance, model listing, schema loading).', '');
+  out.push('## Status vocabulary', '');
+  out.push('| Status | Meaning | May use? |', '|---|---|---|');
+  out.push('| `available-verified` | Ran successfully in this environment with evidence | Yes |');
+  out.push('| `available-untested` | Present but not yet exercised | After one harmless check |');
+  out.push('| `available-with-prerequisites` | Needs install/config first | After the prerequisite is met |');
+  out.push('| `requires-approval` | Costs money/credits, publishes, or sends data externally | Only after explicit user approval |');
+  out.push('| `requires-credentials` | Needs a login or key the session lacks | After the user provides access |');
+  out.push('| `unknown` | Cannot be determined from here | Probe first; otherwise fall back |');
+  out.push('| `unavailable` | Absent or broken | No; use the fallback |', '');
+  out.push('## Specifications', '');
+  out.push('| ID | Capability | Category | Status | Cost | Evidence | Verified | Fallback |', '|---|---|---|---|---|---|---|---|');
+  for (const e of sorted) {
+    out.push(`| \`${cell(e.id)}\` | ${cell(e.name)} | ${cell(e.category)} | \`${cell(e.status)}\` | ${cell(e.cost)} | ${cell(e.evidence)} | ${cell(e.verifiedOn)} | ${cell(e.fallback)} |`);
+  }
+  out.push('', '### Known failure modes', '');
+  for (const e of sorted) {
+    if (Array.isArray(e.failureModes) && e.failureModes.length) out.push(`- **${cell(e.id)}**: ${cell(e.failureModes)}`);
+  }
+  out.push('', '## Verification', '');
+  out.push('- **Runtimes, CLIs, browsers, installed skills and project stack:** `node scripts/environment-audit.mjs --project <dir> --out <file>`. Its output validates against `schemas/capability-registry.schema.json`.');
+  out.push('- **MCP servers:** load tool schemas with ToolSearch, then make one harmless read-only call (for example open `about:blank`, list pages, read docs).');
+  out.push('- **Paid generators:** check auth and credits with read-only calls only (balance, model listing). Generation needs approval.');
+  out.push('- **Browser automation:** `node scripts/visual-check.mjs --url <file-or-url>`. Exit code 4 means BLOCKED (Playwright not resolvable).');
+  out.push('- **After updating `capability-registry.json`:** run `node scripts/build-docs.mjs` and `node scripts/validate-skill.mjs`.', '');
+  out.push('## Sources', '');
+  out.push('- Direct probes in the authoring session (2026-10-23): command version checks, Chrome DevTools MCP `new_page`, Three.js view `learn_threejs`, Higgsfield `balance` and `models_explore` (read-only), session connector notices.');
+  out.push('- Re-run the probes above on any new machine. Statuses are environment-specific.', '');
+  return out.join('\n');
+}
+
+export function renderMaster(root) {
+  const skill = read(join(root, 'SKILL.md'));
+  const body = skill.replace(/^---\n[\s\S]*?\n---\n/, '').trim();
+  const out = [];
+  out.push('# Master instructions (consolidated)', '');
+  out.push('<!-- GENERATED by scripts/build-docs.mjs from SKILL.md, references/*.md (## Decision rules) and workflows/*.md (## Steps). Do not edit by hand. -->', '');
+  out.push('This document is the complete logical instruction set of the `ultimate-uiux` skill in one place. The operational entry point is [SKILL.md](SKILL.md). Specifications, code and verification details stay in each module. Follow the links when executing.', '');
+  out.push('## Part 1 — Orchestration (SKILL.md)', '');
+  out.push(relocate(body.replace(/^# .*\n/, '').trim(), '.'), '');
+  out.push('## Part 2 — Module decision rules', '');
+  const missing = [];
+  for (const name of MODULE_ORDER) {
+    const p = join(root, 'references', `${name}.md`);
+    if (!existsSync(p)) { missing.push(`references/${name}.md`); continue; }
+    const md = read(p);
+    const title = (md.match(/^# (.+)$/m) || [null, name])[1];
+    const rules = extractSection(md, 'Decision rules');
+    out.push(`### ${title} — [references/${name}.md](references/${name}.md)`, '');
+    out.push(rules ? relocate(rules, 'references') : '_This module has no "Decision rules" section. See the module itself._', '');
+  }
+  const extra = existsSync(join(root, 'references'))
+    ? readdirSync(join(root, 'references')).filter((f) => f.endsWith('.md') && !MODULE_ORDER.includes(f.replace(/\.md$/, '')))
+    : [];
+  for (const f of extra.sort()) {
+    const md = read(join(root, 'references', f));
+    const rules = extractSection(md, 'Decision rules');
+    out.push(`### ${(md.match(/^# (.+)$/m) || [null, f])[1]} — [references/${f}](references/${f})`, '');
+    out.push(rules ? relocate(rules, 'references') : '_No "Decision rules" section._', '');
+  }
+  out.push('## Part 3 — Workflow steps', '');
+  for (const name of WORKFLOW_ORDER) {
+    const p = join(root, 'workflows', `${name}.md`);
+    if (!existsSync(p)) { missing.push(`workflows/${name}.md`); continue; }
+    const md = read(p);
+    const title = (md.match(/^# (.+)$/m) || [null, name])[1];
+    const steps = extractSection(md, 'Steps');
+    out.push(`### ${title} — [workflows/${name}.md](workflows/${name}.md)`, '');
+    out.push(steps ? relocate(steps, 'workflows') : '_This workflow has no "Steps" section. See the file itself._', '');
+  }
+  if (missing.length) out.push('## Missing source files', '', ...missing.map((m) => `- ${m}`), '');
+  return { text: out.join('\n'), missing };
+}
+
+function main() {
+  const opts = parseArgs(process.argv.slice(2));
+  if (!existsSync(join(opts.root, 'SKILL.md'))) { console.error(`No SKILL.md in ${opts.root}`); process.exit(1); }
+  const jobs = [];
+  if (!opts.only || opts.only === 'registry') jobs.push(['references/capability-registry.md', () => renderRegistry(opts.root)]);
+  if (!opts.only || opts.only === 'master') {
+    jobs.push(['MASTER_INSTRUCTIONS.md', () => {
+      const { text, missing } = renderMaster(opts.root);
+      if (missing.length) console.warn(`warning: ${missing.length} source file(s) missing: ${missing.join(', ')}`);
+      return text;
+    }]);
+  }
+  let stale = 0;
+  for (const [rel, render] of jobs) {
+    let text;
+    try { text = render(); } catch (err) { console.error(`error rendering ${rel}: ${err.message}`); process.exit(1); }
+    const target = join(opts.root, rel);
+    const current = existsSync(target) ? read(target) : null;
+    if (opts.check) {
+      if (current !== text) { stale++; console.log(`STALE  ${rel}`); } else console.log(`OK     ${rel}`);
+    } else {
+      writeFileSync(target, text);
+      console.log(`wrote  ${rel} (${text.split('\n').length} lines)`);
+    }
+  }
+  if (opts.check && stale) { console.log(`${stale} generated file(s) out of date. Run: node scripts/build-docs.mjs`); process.exit(1); }
+}
+
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
