@@ -1,0 +1,83 @@
+name: Publish arkononion-ui-ux to GitHub Packages
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+env:
+  SKILL_NAME: arkononion-ui-ux
+
+jobs:
+  validate-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Verify SKILL.md frontmatter name is arkononion-ui-ux
+        run: |
+          node -e '
+            const fs = require("node:fs");
+            const skill = fs.readFileSync("SKILL.md", "utf8");
+            if (!/^---\r?\n[\s\S]*?^name:\s*arkononion-ui-ux\s*$/m.test(skill)) {
+              console.error("ERROR: SKILL.md frontmatter name must be set to arkononion-ui-ux");
+              process.exit(1);
+            }
+          '
+
+      - name: Gate A - Validate skill structure, links, schemas and secrets
+        run: node scripts/validate-skill.mjs
+
+      - name: Check generated docs for drift
+        run: node scripts/build-docs.mjs --check
+
+      - name: Run unit and integration test suites
+        run: node --test "tests/*.test.mjs"
+
+  publish-gpr:
+    needs: validate-and-test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js for GitHub Packages
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://npm.pkg.github.com/
+          scope: '@${{ github.repository_owner }}'
+
+      - name: Set package.json name to @owner/arkononion-ui-ux
+        env:
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.repository }}
+        run: |
+          node -e '
+            const fs = require("node:fs");
+            const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+            const owner = process.env.OWNER.toLowerCase();
+            pkg.name = `@${owner}/${process.env.SKILL_NAME}`;
+            pkg.repository = {
+              type: "git",
+              url: `git+https://github.com/${process.env.REPO}.git`
+            };
+            pkg.publishConfig = {
+              registry: "https://npm.pkg.github.com/"
+            };
+            fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2) + "\n");
+          '
+
+      - name: Publish to GitHub Packages
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
