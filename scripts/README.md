@@ -1,6 +1,6 @@
 # scripts/
 
-Tooling for the `arkononion-ui-ui` skill. Every script is plain Node.js ESM with **zero npm dependencies**.
+Tooling for the `arkononion-ui-ux` skill. Every script is plain Node.js ESM with **zero npm dependencies**.
 
 **Supported environments (all scripts):** Node.js 18 or newer on Windows (PowerShell, cmd, Git Bash), macOS and Linux. Verified on Node 24.13 / Windows 11. Run them from any directory. Paths are resolved relative to the current directory unless stated otherwise.
 

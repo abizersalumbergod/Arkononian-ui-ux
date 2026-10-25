@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://arkononion-ui-ui.local/schemas/capability-registry.schema.json",
+  "$id": "https://arkononion-ui-ux.local/schemas/capability-registry.schema.json",
   "title": "Capability registry",
   "description": "Capabilities (runtimes, CLIs, browsers, MCP servers, generators, skills, libraries, services) with an honest availability status. Accepts either the curated registry (references/capability-registry.json: an array of entries) or the output of scripts/environment-audit.mjs (an object with entries[] plus platform, skills, project and notes).",
   "anyOf": [

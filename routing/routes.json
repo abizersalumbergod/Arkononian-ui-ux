@@ -2,7 +2,7 @@
   "$schema": "../schemas/routes.schema.json",
   "$comment": "Read by scripts/route.mjs. Patterns are JavaScript regular-expression sources compiled with the case-insensitive flag and matched against whitespace-normalised request text; every pattern is word-boundary anchored. A route's score is the sum of the weights of its matched triggers (each trigger counts once). Extension fields beyond the schema minimum: modifiers[].delegateSkills, approvalTriggers[].modules and warningPatterns[].modules are merged into the result like modifier modules. delegateSkills are 'use if installed' (see references/skill-delegation.md); presets are suggestions, never forced.",
   "version": "1.0.0",
-  "description": "Routing table for the arkononion-ui-ui skill: weighted trigger patterns per route, always-loaded modules, keyword modifiers, approval checkpoints, warning patterns and the fallback route.",
+  "description": "Routing table for the arkononion-ui-ux skill: weighted trigger patterns per route, always-loaded modules, keyword modifiers, approval checkpoints, warning patterns and the fallback route.",
   "always": [
     "references/quality-gates.md",
     "references/capability-registry.md"

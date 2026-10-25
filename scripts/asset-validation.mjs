@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Gate G (asset integrity) validator for the arkononion-ui-ui skill.
+// Gate G (asset integrity) validator for the arkononion-ui-ux skill.
 // Zero dependencies; Node >= 18 ESM; Windows and POSIX.
 //
 // Checks every asset in an asset manifest (schemas/asset-manifest.schema.json): path confined to

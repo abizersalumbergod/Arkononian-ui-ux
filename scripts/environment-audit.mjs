@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Environment audit for the arkononion-ui-ui skill (build spec section 7).
+// Environment audit for the arkononion-ui-ux skill (build spec section 7).
 // Zero dependencies; Node >= 18 ESM; Windows and POSIX.
 //
 // Detects runtimes and CLIs (where/which + a version probe, 5 s timeout each), Chrome/Edge at

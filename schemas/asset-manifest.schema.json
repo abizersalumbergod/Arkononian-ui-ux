@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://arkononion-ui-ui.local/schemas/asset-manifest.schema.json",
+  "$id": "https://arkononion-ui-ux.local/schemas/asset-manifest.schema.json",
   "title": "Asset manifest",
   "description": "Every media asset a UI ships (images, video, audio, 3D, icons, fonts, procedural graphics) with provenance, license, budgets, loading strategy, fallback and validation state. Checked by scripts/asset-validation.mjs (Gate G).",
   "type": "object",

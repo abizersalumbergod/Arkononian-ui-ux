@@ -2,7 +2,7 @@
 
 ## This package
 
-The original text, scripts, schemas and data in `arkononion-ui-ui` were written for this project. No licence has been declared yet. Do not redistribute the package until the maintainer selects a licence for original material and confirms that the adapted third-party material may be distributed under those terms.
+The original text, scripts, schemas and data in `arkononion-ui-ux` were written for this project. No licence has been declared yet. Do not redistribute the package until the maintainer selects a licence for original material and confirms that the adapted third-party material may be distributed under those terms.
 
 ## Policy for third-party material
 

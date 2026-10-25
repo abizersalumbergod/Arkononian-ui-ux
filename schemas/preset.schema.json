@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://arkononion-ui-ui.local/schemas/preset.schema.json",
+  "$id": "https://arkononion-ui-ux.local/schemas/preset.schema.json",
   "title": "Design preset",
   "description": "A suggested (never forced) visual direction expressed as design tokens: light/dark colour roles, typography, radius, spacing, shadow, motion and the contrast pairs scripts/build-tokens.mjs must verify.",
   "type": "object",

@@ -1,5 +1,5 @@
 ---
-name: arkononion-ui-ui
+name: arkononion-ui-ux
 description: Plan, build, redesign, or audit web interfaces using a complete UI/UX engineering workflow. Use for landing pages, dashboards, e-commerce, portfolios, design systems, responsive UI, 3D experiences, and accessibility or visual QA. Routes to focused references, checks available tools, and reports verification honestly.
 compatibility: Node.js 18 or newer is required for bundled scripts; the documented manual workflow works without Node.js.
 ---

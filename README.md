@@ -1,4 +1,4 @@
-# arkononion-ui-ui
+# arkononion-ui-ux
 
 An Agent Skills-compatible UI/UX engineering skill for Claude Code, Codex, and other clients that load a complete skill folder. It turns a product brief, or an existing frontend, into a design direction, a design system, a working implementation, an asset pipeline and a verified interface, and it reports honestly what was and was not verified.
 
@@ -46,15 +46,15 @@ The agent then writes a motion and interaction plan before any code. It picks th
 
 ## Supported environments
 
-- **Claude Code:** install as a personal skill under `~/.claude/skills/arkononion-ui-ui/` or commit it to a project under `.claude/skills/arkononion-ui-ui/`.
-- **Codex:** install as a personal skill under `~/.agents/skills/arkononion-ui-ui/` or commit it to a project under `.agents/skills/arkononion-ui-ui/`.
+- **Claude Code:** install as a personal skill under `~/.claude/skills/arkononion-ui-ux/` or commit it to a project under `.claude/skills/arkononion-ui-ux/`.
+- **Codex:** install as a personal skill under `~/.agents/skills/arkononion-ui-ux/` or commit it to a project under `.agents/skills/arkononion-ui-ux/`.
 - **Other Agent Skills-compatible clients:** use the skill folder location documented by that client. Copy the complete folder so `SKILL.md`, references, workflows, schemas, templates and scripts stay together. Clients vary in which tools they expose and how they invoke skills.
 - **Scripts:** Node.js 18 or newer on Windows, macOS or Linux; no npm install is required for the bundled scripts. Browser checks also need Playwright with Chromium, resolved from the project or global npm root.
 - **Clients without filesystem or script access:** provide the complete skill folder when supported. If only Markdown can be attached, include `SKILL.md` and the routed modules; run no scripts and report unavailable checks as `NOT_TESTED`.
 
 ## Installation
 
-The skill folder name must be `arkononion-ui-ui` to match the `name` in `SKILL.md`. Clone the repository directly into the target folder, or rename the downloaded folder before installing it. Replace `<repository-url>` with the URL for your copy of this repository.
+The skill folder name must be `arkononion-ui-ux` to match the `name` in `SKILL.md`. Clone the repository directly into the target folder, or rename the downloaded folder before installing it. Replace `<repository-url>` with the URL for your copy of this repository.
 
 ### Claude Code, personal install
 
@@ -63,7 +63,7 @@ PowerShell:
 ```powershell
 $repositoryUrl = "https://github.com/OWNER/REPOSITORY.git" # Replace OWNER/REPOSITORY
 New-Item -ItemType Directory -Force "$HOME\.claude\skills" | Out-Null
-git clone $repositoryUrl "$HOME\.claude\skills\arkononion-ui-ui"
+git clone $repositoryUrl "$HOME\.claude\skills\arkononion-ui-ux"
 ```
 
 macOS or Linux:
@@ -71,7 +71,7 @@ macOS or Linux:
 ```bash
 repository_url="https://github.com/OWNER/REPOSITORY.git" # Replace OWNER/REPOSITORY
 mkdir -p "$HOME/.claude/skills"
-git clone "$repository_url" "$HOME/.claude/skills/arkononion-ui-ui"
+git clone "$repository_url" "$HOME/.claude/skills/arkononion-ui-ux"
 ```
 
 ### Codex, personal install
@@ -81,7 +81,7 @@ PowerShell:
 ```powershell
 $repositoryUrl = "https://github.com/OWNER/REPOSITORY.git" # Replace OWNER/REPOSITORY
 New-Item -ItemType Directory -Force "$HOME\.agents\skills" | Out-Null
-git clone $repositoryUrl "$HOME\.agents\skills\arkononion-ui-ui"
+git clone $repositoryUrl "$HOME\.agents\skills\arkononion-ui-ux"
 ```
 
 macOS or Linux:
@@ -89,14 +89,14 @@ macOS or Linux:
 ```bash
 repository_url="https://github.com/OWNER/REPOSITORY.git" # Replace OWNER/REPOSITORY
 mkdir -p "$HOME/.agents/skills"
-git clone "$repository_url" "$HOME/.agents/skills/arkononion-ui-ui"
+git clone "$repository_url" "$HOME/.agents/skills/arkononion-ui-ux"
 ```
 
 Replace `OWNER/REPOSITORY` with the published repository path.
 
-For a project-scoped install, copy this skill folder to `.claude/skills/arkononion-ui-ui/` for Claude Code or `.agents/skills/arkononion-ui-ui/` for Codex, then commit that folder with the project. For another client, follow its documented skill location.
+For a project-scoped install, copy this skill folder to `.claude/skills/arkononion-ui-ux/` for Claude Code or `.agents/skills/arkononion-ui-ux/` for Codex, then commit that folder with the project. For another client, follow its documented skill location.
 
-Start a new agent session if the skill does not appear. Invoke it as `/arkononion-ui-ui` in Claude Code or `$arkononion-ui-ui` in Codex; other clients use their own invocation syntax.
+Start a new agent session if the skill does not appear. Invoke it as `/arkononion-ui-ux` in Claude Code or `$arkononion-ui-ux` in Codex; other clients use their own invocation syntax.
 
 This repository follows the [Agent Skills format](https://agentskills.io/specification). Claude Code and Codex document their skill locations in their [Claude Code skills guide](https://code.claude.com/docs/en/skills) and [Codex skills guide](https://learn.chatgpt.com/docs/build-skills). For broader public distribution through the OpenAI ecosystem, package it as a plugin or hosted skill according to that platform's current requirements.
 
