@@ -8,7 +8,7 @@ How to render the real UI in a browser, capture it across viewports, states and 
 ## Decision rules
 
 1. Never mark Gates C, F or the rendered parts of D and H as PASS from source inspection alone. A PASS needs a capture or measurement taken in this session, recorded as evidence `{check, tool, result, artifact}`.
-2. Pick the browser tool by capability status, in this order: `scripts/visual-check.mjs` (Playwright) → Chrome DevTools MCP → built-in browser pane (`mcp__Claude_Browser__*`) → computer-use screenshots of a local dev build. Use a tool only when its status is `available-verified`; if `available-untested`, run one cheap probe first and record the result.
+2. Pick the browser tool by capability status, in this order: project Playwright → `scripts/visual-check.mjs` → a verified browser MCP exposed by the current host → computer-use screenshots of a local dev build. Use a tool only when its status is `available-verified`; if `available-untested`, run one cheap probe first and record the result.
 3. If `visual-check.mjs` exits 4 (BLOCKED) and no MCP browser probe succeeds, mark every visual check NOT_TESTED with reason "no browser capability in this session", list the exact command the user can run, and continue the rest of the task. Never describe how the page "looks".
 4. Run the default viewport matrix 375x812, 768x1024, 1280x800, 1920x1080 for every page in scope, plus a 320 px-wide reflow check. One mobile capture never covers a desktop target, and the reverse.
 5. Capture every applicable state of each critical component, not only the resting page: hover, focus-visible, active/pressed, disabled, error, empty, loading, partial data, long content, success. A state that exists in code but was not captured is NOT_TESTED, not PASS.
@@ -28,14 +28,14 @@ How to render the real UI in a browser, capture it across viewports, states and 
 
 ### Tool selection by capability status
 
-Check status in [capability-registry](capability-registry.md) and with `node ../scripts/environment-audit.mjs` (CLI tools, Playwright browsers). MCP tools cannot be detected by script: probe with ToolSearch (`select:` the tool names) in-session.
+Check status in [capability-registry](capability-registry.md) and with `node ../scripts/environment-audit.mjs` (CLI tools, Playwright browsers). MCP tools cannot be detected by script: use the host's tool-discovery interface to find and probe them in-session.
 
 | Tool | How to verify | Strengths | Limits |
 |---|---|---|---|
 | `scripts/visual-check.mjs` (Playwright, headless Chromium) | Run it; exit 4 = BLOCKED. environment-audit lists the playwright CLI and ms-playwright browsers dir | Repeatable matrix, overflow, console, failed requests, broken images, reduced motion, optional axe; JSON summary | No hover/focus/form states; Chromium only |
 | Project Playwright tests (`@playwright/test`) | `package.json` devDependencies, `npx playwright --version` | States, flows, `toHaveScreenshot`, `emulateMedia`, multi-browser, traces | Needs a spec file; browsers must be installed |
-| Chrome DevTools MCP (`take_screenshot`, `resize_page`, `emulate`, `hover`, `click`, `list_console_messages`, `list_network_requests`, `lighthouse_audit`) | ToolSearch probe, then `list_pages`/`new_page` | Interactive states, console/network inspection, Lighthouse, traces | Manual steps; the installed version may lack some media emulation (brief: upstream has equivalents, installed may not) |
-| Built-in browser pane (`mcp__Claude_Browser__*`: `navigate`, `resize_window`, `computer` screenshot/hover/click, `read_console_messages`, `read_network_requests`, `javascript_tool`) | ToolSearch probe; read the built-in-browser skill if installed | Visible to the user, `colorScheme` emulation, JS inspection | Hidden pane can skew timings; no reduced-motion emulation flag (inject via script or use Playwright) |
+| Browser MCP exposed by the current host | Use the host's tool-discovery interface, then make a harmless read-only call before interacting with a page | Interactive states, console/network inspection, accessibility snapshots, performance traces (depending on tools) | Tool names and features differ by host; keep unsupported checks NOT_TESTED |
+| Computer-use or screenshot tool exposed by the current host | Verify availability in the host's tool list, then capture a local dev build | Visible layout and interaction checks | May not expose console, network, viewport, reduced-motion or timing controls |
 | computer-use screenshots | Only for a locally running dev build started this session | Native/Electron apps | Pixel-level only; no DOM metrics |
 
 ### Viewport matrix

@@ -1,9 +1,10 @@
 ---
-name: ultimate-uiux
-description: Unified UI/UX engineering skill that turns a product brief or an existing frontend into a design direction, design system, working implementation, asset pipeline and verified interface. Use for landing pages and marketing sites, SaaS dashboards and admin panels, e-commerce, portfolios and editorial sites, mobile-first responsive UIs, cinematic/3D/WebGL experiences, design systems and tokens, redesigns of existing projects, UI asset production (image, video, audio, 3D) and UI audits (accessibility, performance, visual QA). It routes each task to specialist modules, detects which tools really exist before relying on them, asks before paid or external actions, and enforces measurable quality gates (WCAG 2.2 AA, Core Web Vitals, responsive, asset integrity) with honest PASS/FAIL/NOT TESTED reporting.
+name: arkononion-ui-ui
+description: Plan, build, redesign, or audit web interfaces using a complete UI/UX engineering workflow. Use for landing pages, dashboards, e-commerce, portfolios, design systems, responsive UI, 3D experiences, and accessibility or visual QA. Routes to focused references, checks available tools, and reports verification honestly.
+compatibility: Node.js 18 or newer is required for bundled scripts; the documented manual workflow works without Node.js.
 ---
 
-# Ultimate UI/UX engineering
+# Arkononion UI/UX engineering
 
 This file is the orchestrator. It decides what kind of task this is, which specialist modules to read, which tools exist, what needs the user's approval, and how the result is verified.
 
@@ -83,11 +84,11 @@ node <skill-dir>/scripts/environment-audit.mjs --project <project-dir> --out <sc
 
 This detects runtimes, CLIs (ffmpeg, Blender, Playwright and so on), browsers, installed skills, and the project's framework, styling, animation, 3D and test stack. It cannot see MCP tools. Probe those in-session:
 
-- **Browser and screenshots:** look for the built-in browser tools (`mcp__Claude_Browser__*`), Chrome DevTools MCP tools (`take_screenshot`, `lighthouse_audit`, `performance_start_trace`) or Playwright via `scripts/visual-check.mjs`.
-- **Generators (image, video, audio, 3D):** load their schemas with ToolSearch. Check cost and credits only through read-only calls (balance or model listing). **Never generate anything as a "test".** Any spend needs approval.
+- **Browser and screenshots:** use a browser or browser-automation tool exposed by the current agent, or Playwright via `scripts/visual-check.mjs`. Do not assume a tool name or availability from another agent platform.
+- **Generators (image, video, audio, 3D):** use the host's tool-discovery interface when available. Check cost and credits only through read-only calls (balance or model listing). **Never generate anything as a "test".** Any spend needs approval.
 - **Design tools** (such as Figma MCP): probe the same way. Record the auth state.
 
-Then read [capability-registry](references/capability-registry.md) for the status vocabulary, known failure modes and fallbacks. Record what you verified and how. That record becomes the "Capabilities" part of the final report.
+Then read [capability-registry](references/capability-registry.md) for the status vocabulary, known failure modes and fallbacks. Treat the bundled registry as a catalog, not evidence that a capability is installed. Probe tools in the current host and record what you verified and how. That record becomes the "Capabilities" part of the final report.
 
 ## 5. Routing table (mirror of `routing/routes.json`)
 

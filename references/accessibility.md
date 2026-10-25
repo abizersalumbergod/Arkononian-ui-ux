@@ -271,7 +271,7 @@ Feeds **Gate D** (and contributes to F for reflow/zoom). Definitions and report 
 
 ### Gate D procedure
 
-1. **Capabilities.** Read [capability-registry](capability-registry.md) and the `../scripts/environment-audit.mjs` output. Probe browser tools with ToolSearch (`mcp__Claude_Browser__*`, Chrome DevTools MCP `lighthouse_audit`, `take_snapshot`). Use only `available-verified` tools; record the rest.
+1. **Capabilities.** Read [capability-registry](capability-registry.md) and the `../scripts/environment-audit.mjs` output. Use the current host's tool-discovery interface to check browser tools and their available actions. Use only `available-verified` tools; record the rest.
 2. **Static review.** Run the anti-pattern scan over changed components. Check contrast pairs with `../scripts/build-tokens.mjs` when tokens come from a preset; otherwise compute ratios for each text/UI pair per theme.
 3. **Automated scan.** If Playwright resolves: `node ../scripts/visual-check.mjs --url <url> --axe` (exit 4 = BLOCKED, Playwright not resolvable). If Chrome DevTools MCP `lighthouse_audit` is available-verified: run it (covers Accessibility, SEO, Best Practices; mode `navigation` or `snapshot`, device `mobile`/`desktop`). Record each violation with rule id, SC and node. Axe tag `EN-301-549v4` exists for EU-oriented runs. A failing critical/serious rule in a tested flow is a critical or high finding.
 4. **Keyboard pass.** Tab through every tested flow (Playwright `keyboard.press('Tab')` or browser tool key presses), screenshot each stop, and assert: ring visible, not obscured, order logical, no trap. Open and close every dialog/menu with keyboard; assert focus returns to the trigger. Exercise Enter, Space, Escape, arrows on each composite widget.

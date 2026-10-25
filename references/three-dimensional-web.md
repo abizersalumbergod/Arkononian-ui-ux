@@ -328,7 +328,7 @@ Fallback ladder, applied in order: (1) simplify (drop post-processing, shadows, 
 
 ## Verification
 
-Feeds gates **E** (performance), **D** (accessibility), **F** (responsive), **G** (asset integrity), **H** (reliability: console errors, cleanup) and **C** (visual). Check the browser capability first ([capability-registry](capability-registry.md), ToolSearch for `mcp__Claude_Browser__*` or Chrome DevTools tools, or `scripts/visual-check.mjs`); if none is `available-verified`, mark the render checks NOT_TESTED with the reason.
+Feeds gates **E** (performance), **D** (accessibility), **F** (responsive), **G** (asset integrity), **H** (reliability: console errors, cleanup) and **C** (visual). Check the browser capability first ([capability-registry](capability-registry.md), the host's tool-discovery interface, or `scripts/visual-check.mjs`); if none is `available-verified`, mark the render checks NOT_TESTED with the reason.
 
 1. **Build:** the project's build command passes with the 3D route included.
 2. **Render:** wait for `[data-ready="true"]`, then screenshot. Freeze time for determinism: expose a `?still` (or test-only) flag that sets `frameloop="never"` after one frame at a fixed time, or step the clock to a fixed value before capture ([visual-testing](visual-testing.md)). Headless Chromium may use software GL (SwiftShader): valid for visuals, never for frame-rate claims.

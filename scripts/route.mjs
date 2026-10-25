@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Deterministic request router for the ultimate-uiux skill (BUILD-SPEC section 6).
+// Deterministic request router for the arkononion-ui-ui skill (BUILD-SPEC section 6).
 //
 // Scores every route in routing/routes.json by the summed weights of its matched trigger
 // patterns (each trigger counts once), picks the primary route (highest score >= 1, ties go

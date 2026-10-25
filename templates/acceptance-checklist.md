@@ -26,7 +26,7 @@ Per-project checklist that maps every acceptance item to quality gates A-H. Copy
 | Tools unavailable or awaiting approval | |
 | Date | |
 
-## A. Skill package integrity (only when changing the ultimate-uiux skill itself; otherwise N/A)
+## A. Skill package integrity (only when changing the arkononion-ui-ui skill itself; otherwise N/A)
 
 | # | Item | Status | Evidence |
 |---|---|---|---|

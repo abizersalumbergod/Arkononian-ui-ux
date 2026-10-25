@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Gate A (skill package integrity) validator for the ultimate-uiux skill.
+// Gate A (skill package integrity) validator for the arkononion-ui-ui skill.
 // Zero dependencies; Node >= 18 ESM; Windows and POSIX.
 //
 // Checks: required files (build spec section 3), SKILL.md front matter, empty files, JSON parsing,

@@ -2,7 +2,7 @@
 
 ## This package
 
-The original text, scripts, schemas and data in `ultimate-uiux` were written for this project. No licence has been declared yet. Add one (for example MIT) before publishing or sharing the skill.
+The original text, scripts, schemas and data in `arkononion-ui-ui` were written for this project. No licence has been declared yet. Do not redistribute the package until the maintainer selects a licence for original material and confirms that the adapted third-party material may be distributed under those terms.
 
 ## Policy for third-party material
 
@@ -69,7 +69,7 @@ The original text, scripts, schemas and data in `ultimate-uiux` were written for
 | product-lens (ECC) | No frontmatter license (metadata.origin: ECC); covered by E… | Techniques adapted |
 | emil-design-eng | none found (no frontmatter license, no LICENSE file). Prove… | Techniques adapted |
 | transitions-dev | none found (no frontmatter license, no LICENSE file in the … | Delegated at runtime |
-| ecc:motion-foundations | MIT (ECC plugin LICENSE at C:/Users/abize/.claude/plugins/c… | Techniques adapted |
+| ecc:motion-foundations | MIT (ECC plugin LICENSE in the user plugin cache) | Techniques adapted |
 | ecc:motion-patterns | MIT (ECC plugin LICENSE, Copyright 2026 Affaan Mustafa). Fr… | Techniques adapted |
 | ecc:motion-advanced | MIT (ECC plugin LICENSE, Copyright 2026 Affaan Mustafa). Fr… | Techniques adapted |
 | ui-ux-pro-max (local, data-backed) | none found (no frontmatter license, no LICENSE file; data-p… | Delegated at runtime |

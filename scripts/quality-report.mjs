@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Quality report validator and template generator for gates A-H (ultimate-uiux skill).
+// Quality report validator and template generator for gates A-H (arkononion-ui-ui skill).
 // Zero dependencies; Node >= 18.
 
 import { readFileSync } from 'node:fs';

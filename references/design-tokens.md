@@ -244,7 +244,7 @@ v3: keep the same CSS variables and point `theme.extend.colors` at them (`surfac
 
 ### 7. Interchange format and brand sync
 
-When tokens must travel (Figma, other platforms), store them as W3C DTCG JSON (`$value`, `$type`) and generate CSS from it; keep one canonical brand source and regenerate token files from it rather than editing outputs (brand; design-system ECC). Probe for a design-tool MCP (ToolSearch) before promising Figma sync; status must be `available-verified` in [capability-registry](capability-registry.md), and pushing to a third-party file needs user approval.
+When tokens must travel (Figma, other platforms), store them as W3C DTCG JSON (`$value`, `$type`) and generate CSS from it; keep one canonical brand source and regenerate token files from it rather than editing outputs (brand; design-system ECC). Check for a design-tool MCP with the current host's tool-discovery interface before promising Figma sync; status must be `available-verified` in [capability-registry](capability-registry.md), and pushing to a third-party file needs user approval.
 
 ### 8. Drift audit
 

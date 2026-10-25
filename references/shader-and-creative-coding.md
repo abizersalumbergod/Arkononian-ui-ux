@@ -285,7 +285,7 @@ Fallback order: reduce octaves/passes → lower DPR → render one still frame �
 
 ## Verification
 
-Feeds gates **C** (visual), **E** (performance), **D** (accessibility: contrast over the effect, reduced motion), **H** (no console errors, listeners and GL objects released). Check browser capability first ([capability-registry](capability-registry.md), ToolSearch for browser tools, or `scripts/visual-check.mjs`); without one, mark visual checks NOT_TESTED with the reason.
+Feeds gates **C** (visual), **E** (performance), **D** (accessibility: contrast over the effect, reduced motion), **H** (no console errors, listeners and GL objects released). Check browser capability first ([capability-registry](capability-registry.md), the host's tool-discovery interface, or `scripts/visual-check.mjs`); without one, mark visual checks NOT_TESTED with the reason.
 
 1. **Deterministic screenshot:** load with the fixed-time hook (for example `?t=4`) and wait for `[data-ready="true"]`; capture at each viewport ([visual-testing](visual-testing.md)). Repeat twice; the two captures must match exactly on the same machine. Across machines or software GL (SwiftShader in headless Chromium), compare with a pixel tolerance, because GPU precision differs.
 2. **Reduced motion:** `node <skill-dir>/scripts/visual-check.mjs --url <url> --reduced-motion` → no running loop (two captures 1 s apart are identical), still frame present.

@@ -244,7 +244,7 @@ When the browser tooling needed to check these is unavailable, keep the structur
 
 Feeds Gate F (responsive) and parts of Gate D (reflow, target size, orientation, resize text) and Gate C (layout quality). Definitions in [quality-gates](quality-gates.md).
 
-1. **Check tooling honestly:** read [capability-registry](capability-registry.md) or run `node ../scripts/environment-audit.mjs --project <dir>`; probe in-session browser tools with ToolSearch. Use only tools whose status is `available-verified`.
+1. **Check tooling honestly:** read [capability-registry](capability-registry.md) or run `node ../scripts/environment-audit.mjs --project <dir>`; check in-session browser tools with the host's tool-discovery interface. Use only tools whose status is `available-verified`.
 2. **Matrix screenshots and overflow:** `node ../scripts/visual-check.mjs --url <url> --viewports 320x568,375x812,768x1024,1280x800,1920x1080 --out <dir>` (add `844x390` when fixed chrome or full-height sections exist). It reports horizontal overflow and elements wider than the viewport. Exit 4 means BLOCKED (Playwright not resolvable); then use verified browser MCP tools (resize + screenshot) or mark Gate F NOT_TESTED.
 3. **Overflow probe** (run in any verified browser tool):
 

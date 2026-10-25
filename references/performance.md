@@ -214,7 +214,7 @@ Feeds **Gate E** (also supports C, F and H). Status rules and report format: [qu
 
 ### Tools (check before use)
 
-Read [capability-registry](capability-registry.md) and run `../scripts/environment-audit.mjs`; MCP tools are invisible to the script, so probe them with ToolSearch. Use a tool only when its status is `available-verified`.
+Read [capability-registry](capability-registry.md) and run `../scripts/environment-audit.mjs`; MCP tools are invisible to the script, so check them with the current host's tool-discovery interface. Use a tool only when its status is `available-verified`.
 
 | Tool | Gives | Known limits (r01, verify in-session) |
 |---|---|---|

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Environment audit for the ultimate-uiux skill (build spec section 7).
+// Environment audit for the arkononion-ui-ui skill (build spec section 7).
 // Zero dependencies; Node >= 18 ESM; Windows and POSIX.
 //
 // Detects runtimes and CLIs (where/which + a version probe, 5 s timeout each), Chrome/Edge at
@@ -39,7 +39,7 @@ export const STATUSES = Object.freeze([
 ]);
 
 /** Evidence text for capabilities a script cannot see. */
-export const IN_SESSION_EVIDENCE = 'probe in-session via ToolSearch';
+export const IN_SESSION_EVIDENCE = 'probe the current agent session with its available tool-discovery interface';
 
 const IS_WIN = process.platform === 'win32';
 const SAFE_NAME = /^[A-Za-z0-9][A-Za-z0-9._+-]{0,63}$/;
@@ -452,7 +452,7 @@ export function detectPlaywrightBrowsers() {
 
 const IN_SESSION = Object.freeze([
   { id: 'mcp:chrome-devtools', name: 'Chrome DevTools MCP', category: 'mcp', cost: 'free', network: 'local', fallback: 'scripts/visual-check.mjs (Playwright) or manual DevTools.' },
-  { id: 'mcp:claude-browser', name: 'Built-in browser pane tools', category: 'mcp', cost: 'free', network: 'local', fallback: 'Chrome DevTools MCP or scripts/visual-check.mjs.' },
+  { id: 'mcp:browser', name: 'Browser tools exposed by the agent platform', category: 'mcp', cost: 'unknown', network: 'local or external', fallback: 'Chrome DevTools MCP or scripts/visual-check.mjs.' },
   { id: 'mcp:threejs-view', name: 'Three.js scene preview MCP', category: 'mcp', cost: 'free', network: 'local', fallback: 'Run the scene in the project dev server.' },
   { id: 'mcp:figma', name: 'Figma MCP', category: 'mcp', cost: 'unknown', network: 'external', fallback: 'Work from screenshots or exported tokens supplied by the user.' },
   { id: 'mcp:vercel', name: 'Vercel MCP', category: 'mcp', cost: 'unknown', network: 'external', fallback: 'Hand the user the build output; deploying needs approval.' },
@@ -463,7 +463,7 @@ const IN_SESSION = Object.freeze([
 ]);
 
 function inSessionEntries() {
-  return IN_SESSION.map((e) => ({ ...e, status: 'unknown', evidence: IN_SESSION_EVIDENCE, environment: 'Claude session (not visible to scripts)', verifiedOn: null }));
+  return IN_SESSION.map((e) => ({ ...e, status: 'unknown', evidence: IN_SESSION_EVIDENCE, environment: 'Current agent session (not visible to scripts)', verifiedOn: null }));
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -488,18 +488,26 @@ function skillNamesIn(root, maxDepth = 3) {
 }
 
 /**
- * Installed skills: ~/.claude/skills, ~/.agents/skills, <project>/.claude/skills and plugin caches
+ * Installed skills: Claude, Codex and Agent Skills-compatible user/project directories and plugin caches
  * (~/.claude/plugins/cache/<marketplace>/<plugin>/<version>/skills/<skill>/SKILL.md). Names only;
  * no file contents are read.
  * @param {{project?: string|null, home?: string}} [options]
  */
 export function detectSkills(options = {}) {
   const home = options.home ?? os.homedir();
-  const roots = [path.join(home, '.claude', 'skills'), path.join(home, '.agents', 'skills')];
-  if (options.project) roots.push(path.join(options.project, '.claude', 'skills'));
-  const rootRecords = roots.map((r) => {
-    const found = isDir(r);
-    return { root: displayPath(r), found, names: found ? skillNamesIn(r) : [] };
+  const codexHome = process.env.CODEX_HOME || path.join(home, '.codex');
+  const roots = [
+    { path: path.join(home, '.claude', 'skills'), label: '~/.claude/skills' },
+    { path: path.join(home, '.agents', 'skills'), label: '~/.agents/skills' },
+    { path: path.join(codexHome, 'skills'), label: process.env.CODEX_HOME ? '$CODEX_HOME/skills' : '~/.codex/skills' },
+  ];
+  if (options.project) {
+    roots.push({ path: path.join(options.project, '.claude', 'skills'), label: '<project>/.claude/skills' });
+    roots.push({ path: path.join(options.project, '.agents', 'skills'), label: '<project>/.agents/skills' });
+  }
+  const rootRecords = roots.map(({ path: rootPath, label }) => {
+    const found = isDir(rootPath);
+    return { root: label, found, names: found ? skillNamesIn(rootPath) : [] };
   });
   const plugins = [];
   const cache = path.join(home, '.claude', 'plugins', 'cache');
@@ -724,11 +732,11 @@ project, notes). Read-only and offline.
              ffprobe, blender, magick, playwright, lighthouse, vercel) located with where/which
              and probed with their version flag (5 s timeout each); Chrome and Edge at known
              install paths; Playwright browser downloads (ms-playwright); MCP servers and
-             generators as "unknown" (probe in-session via ToolSearch)
+             generators as "unknown" (probe with the current host's tool-discovery interface)
   status     found + version = available-verified; found, version failed = available-untested;
              not found = unavailable
-  skills     names of installed skills in ~/.claude/skills, ~/.agents/skills,
-             <project>/.claude/skills and ~/.claude/plugins/cache/*/*/*/skills (names only)
+  skills     names of installed skills in ~/.claude/skills, ~/.agents/skills, $CODEX_HOME/skills,
+             <project>/.claude/skills, <project>/.agents/skills and supported Claude plugin caches
   project    with --project: framework + version, router, styling + Tailwind major, UI kits,
              animation and 3D libraries, test tools, package manager (package.json + lockfiles)
 

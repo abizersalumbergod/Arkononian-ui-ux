@@ -23,7 +23,7 @@ Produce UI media (images, illustrations, icons, video, audio, textures, 3D model
 
 1. **Discover capabilities (stage 1).**
    - Read [capability-registry](../references/capability-registry.md). Run `node <skill-dir>/scripts/environment-audit.mjs --project <dir> --out <scratch>/env-audit.json` ([environment-audit.mjs](../scripts/environment-audit.mjs)) for local tools (ffmpeg, ffprobe, Blender, ImageMagick).
-   - Probe generator MCP tools with ToolSearch (load schemas only). Check cost or credits only with read-only calls such as balance or model listing. Never generate anything as a test.
+   - Use the host's tool-discovery interface to inspect generator MCP tools (load schemas only). Check cost or credits only with read-only calls such as balance or model listing. Never generate anything as a test.
    - Record each candidate's status (`available-verified`, `available-untested`, `requires-credentials`, `requires-approval`, `unavailable`, `unknown`) and known cost.
    - **Exit check:** a capability table per asset type with status, how it was verified, and cost (or "cost unknown").
 2. **Understand the need (stage 2).**

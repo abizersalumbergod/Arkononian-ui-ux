@@ -1,4 +1,4 @@
-// Zero-dependency JSON Schema validator (draft 2020-12 subset) for the ultimate-uiux skill.
+// Zero-dependency JSON Schema validator (draft 2020-12 subset) for the arkononion-ui-ui skill.
 //
 // Supported keywords: type (single or array), properties, required, additionalProperties
 // (boolean or schema), patternProperties, propertyNames, minProperties, maxProperties,

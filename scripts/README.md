@@ -1,6 +1,6 @@
 # scripts/
 
-Tooling for the `ultimate-uiux` skill. Every script is plain Node.js ESM with **zero npm dependencies**.
+Tooling for the `arkononion-ui-ui` skill. Every script is plain Node.js ESM with **zero npm dependencies**.
 
 **Supported environments (all scripts):** Node.js 18 or newer on Windows (PowerShell, cmd, Git Bash), macOS and Linux. Verified on Node 24.13 / Windows 11. Run them from any directory. Paths are resolved relative to the current directory unless stated otherwise.
 
@@ -40,8 +40,8 @@ node --test "tests/*.test.mjs"
 
 - **CLIs and runtimes:** node, npm, pnpm, yarn, bun, python, python3, git, gh, ffmpeg, ffprobe, blender, magick, playwright, lighthouse, vercel. Each is located with `where` (Windows, restricted to PATH) or `which` (POSIX), falling back to a PATH scan. Then its version flag runs with a 5 s timeout. Status: found + version = `available-verified`. Found but the version probe failed = `available-untested`. Not found = `unavailable`. Windows `.cmd` shims run through `cmd.exe` with a validated, quoted path and constant flags only.
 - **Browsers:** Chrome and Edge at known install paths. On Windows the version comes from the versioned folder next to the executable, so the browser is never launched. Playwright browser downloads come from `%LOCALAPPDATA%/ms-playwright`, `~/Library/Caches/ms-playwright`, `~/.cache/ms-playwright` or `$PLAYWRIGHT_BROWSERS_PATH`. These are `available-untested` until visual-check runs.
-- **MCP servers and generators:** always `unknown` with evidence `probe in-session via ToolSearch`. A script cannot see session tools. Generators are treated as paid until proven otherwise.
-- **Skills (names only):** `~/.claude/skills`, `~/.agents/skills`, `<project>/.claude/skills`, and `~/.claude/plugins/cache/*/*/*/skills/*/SKILL.md`. Only the presence of `SKILL.md` is checked. No file contents are read.
+- **MCP servers and generators:** always `unknown` until probed with the current host's tool-discovery interface. A script cannot see session tools. Treat generators as paid until verified otherwise.
+- **Skills (names only):** `~/.claude/skills`, `~/.agents/skills`, `$CODEX_HOME/skills` (or `~/.codex/skills`), project `.claude/skills` and `.agents/skills`, plus supported Claude plugin caches. Only the presence of `SKILL.md` is checked. No file contents are read.
 - **Project profile** (with `--project`): framework + version (from `node_modules`, then the lockfile, then the declared range), router, styling + Tailwind major, UI kits (shadcn via `components.json`, Radix, MUI, ...), animation libraries, 3D libraries, test tools, TypeScript, package manager (`packageManager` field, then the lockfile).
 - **Privacy:** paths under the home directory print as `~` (`%LOCALAPPDATA%` on Windows).
 

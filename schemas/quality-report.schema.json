@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ultimate-uiux.local/schemas/quality-report.schema.json",
+  "$id": "https://arkononion-ui-ui.local/schemas/quality-report.schema.json",
   "title": "Quality report",
   "description": "Gate-by-gate verification report (gates A-H). PASS requires at least one evidence item; every other status requires a reason. Evaluated by scripts/quality-report.mjs, which also enforces that a gate with an open critical finding cannot pass.",
   "type": "object",

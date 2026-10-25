@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ultimate-uiux.local/schemas/routes.schema.json",
+  "$id": "https://arkononion-ui-ui.local/schemas/routes.schema.json",
   "title": "Request routes",
   "description": "Routing table used by scripts/route.mjs: weighted trigger patterns per route, always-loaded modules, keyword modifiers, approval triggers, untrusted-instruction warning patterns and the fallback route. Patterns are case-insensitive JavaScript regular expression sources.",
   "type": "object",

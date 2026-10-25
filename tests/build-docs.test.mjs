@@ -17,7 +17,7 @@ let copy;
 
 const REGISTRY = [
   { id: 'cli:alpha', name: 'Alpha CLI', category: 'cli', status: 'available-verified', evidence: 'alpha --version -> 1.0.0', verifiedOn: '2026-10-23', fallback: 'none needed' },
-  { id: 'mcp:beta|pipe', name: 'Beta MCP', category: 'mcp', status: 'unknown', evidence: 'probe in-session via ToolSearch', verifiedOn: null, failureModes: ['auth expired'] },
+  { id: 'mcp:beta|pipe', name: 'Beta MCP', category: 'mcp', status: 'unknown', evidence: 'probe with the current agent tool-discovery interface', verifiedOn: null, failureModes: ['auth expired'] },
   { id: 'generator:gamma', name: 'Gamma', category: 'generator', status: 'requires-approval', evidence: ['balance read', 'models listed'], cost: 'credits' },
 ];
 

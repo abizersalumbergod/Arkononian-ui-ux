@@ -1,6 +1,13 @@
 # Changelog
 
-All notable changes to the `ultimate-uiux` skill. Dates are ISO 8601.
+All notable changes to the `arkononion-ui-ui` skill. Dates are ISO 8601.
+
+## Unreleased
+
+### Changed
+- Renamed the skill to `arkononion-ui-ui` and aligned install instructions with the Agent Skills folder-name requirement.
+- Documented personal and project installation for Claude Code and Codex, plus the constraints of other compatible clients.
+- Made capability discovery agent-neutral and changed the bundled capability registry to unverified defaults.
 
 ## 0.1.0 — 2026-10-24
 

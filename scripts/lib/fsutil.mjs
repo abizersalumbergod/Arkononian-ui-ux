@@ -1,4 +1,4 @@
-// Zero-dependency file-system and Markdown helpers for the ultimate-uiux skill scripts.
+// Zero-dependency file-system and Markdown helpers for the arkononion-ui-ui skill scripts.
 // Node >= 18, ESM. Cross-platform: all returned paths are absolute native paths unless noted;
 // helpers named *Posix return forward-slash relative paths for stable reporting.
 

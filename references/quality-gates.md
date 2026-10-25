@@ -16,7 +16,7 @@ Defines gates A-H, what each one accepts, how to run it with the tools that real
 7. Record the evaluation mode that actually ran for C, D, F and H: `live-browser`, `screenshots-only` or `code-only`. Never present a code-only review as a browser evaluation.
 8. Never report a UI as "accessible" from automated scans alone. Gate D needs an automated scan plus a manual keyboard and focus pass; mark the screen-reader spot check NOT_TESTED if it was not done.
 9. Label every performance number `lab` or `field`. Gate E thresholds are field (p75) targets; a lab run can show FAIL risk but cannot prove a field PASS. Say so in the evidence.
-10. Before running any check, look up the tool's status in [capability-registry](capability-registry.md) or the `scripts/environment-audit.mjs` output, or probe MCP tools with ToolSearch. Use only `available-verified` tools; otherwise use the fallback in the gate table or mark the gate BLOCKED.
+10. Before running any check, look up the tool's status in [capability-registry](capability-registry.md) or the `scripts/environment-audit.mjs` output, or check MCP tools with the current host's tool-discovery interface. Use only `available-verified` tools; otherwise use the fallback in the gate table or mark the gate BLOCKED.
 11. Never upload a client or unreleased site to a public report host (for example LHCI `temporary-public-storage`) without explicit user approval. Default to local or filesystem output.
 12. Assign severity with the definitions in Specifications. If unsure between two levels, ask "would a user contact support or abandon the task?"; if yes, it is at least `high`. Never mark everything `critical`.
 13. Accept an exception only with a recorded justification, scope and owner. A `critical` finding may be `accepted` only with the user's explicit approval quoted in the reason; never accept a critical security, secret-exposure or data-loss finding.
@@ -122,7 +122,7 @@ The shape is in [quality-report.json](../templates/quality-report.json) (an exam
 | Gate | Preferred tool (if `available-verified`) | Fallback | If no fallback |
 |---|---|---|---|
 | A | `node scripts/validate-skill.mjs --root <skill-dir>` then `node --test tests/` | none needed (Node only) | BLOCKED: Node missing |
-| B | project scripts from `package.json` (`build`, `typecheck` or `tsc --noEmit`, `lint`, `test`); Playwright journey tests if the project has them; built-in browser tools (`mcp__Claude_Browser__*`) to click through journeys | Chrome DevTools MCP click/fill; manual code trace of each handler (label `code-only`) | Journeys NOT_TESTED; build/test evidence still counts for its own item |
+| B | project scripts from `package.json` (`build`, `typecheck` or `tsc --noEmit`, `lint`, `test`); Playwright journey tests if the project has them; browser tools exposed by the current host to click through journeys | Browser MCP click/fill; manual code trace of each handler (label `code-only`) | Journeys NOT_TESTED; build/test evidence still counts for its own item |
 | C | `scripts/visual-check.mjs` screenshots, then critique per [visual-critique](visual-critique.md) | browser MCP screenshots (`take_screenshot`, `computer screenshot`) | NOT_TESTED (code-only review recorded as limitation) |
 | D | `visual-check.mjs --axe` or `@axe-core/playwright` in project tests; manual keyboard pass in a live browser | Chrome DevTools `lighthouse_audit` accessibility category; static review of names, roles, labels | Automated part BLOCKED; manual part NOT_TESTED |
 | E | Lighthouse 13.x CLI or Chrome DevTools `performance_start_trace` / `lighthouse_audit` on the production build; field data (CrUX / RUM) if the site is public and the user approves access | bundle and media weight from build output | NOT_TESTED; never estimate metrics |
@@ -224,7 +224,7 @@ Justified exception: set `status: "accepted"` and put in the gate `reason` (or `
 | Build fails | Continue with screenshots of the dev server only | Fix the build first; label any dev-server evidence `dev` and keep B FAIL |
 | A gate cannot meet its threshold for a sound product reason | Lower the number | Record a justified exception (rule 13) or keep FAIL |
 | Dev server, not production build, measured for E | Report it as production | Label `lab, dev build`; it cannot pass E |
-| Tool status `unknown` | Assume it works | Probe it once (read-only call, `--version`, ToolSearch); record the result |
+| Tool status `unknown` | Assume it works | Probe it once (read-only call, `--version`, or the host's tool-discovery interface); record the result |
 
 ## Verification
 

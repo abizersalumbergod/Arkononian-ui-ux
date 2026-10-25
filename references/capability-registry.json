@@ -1,319 +1,928 @@
 [
   {
-    "id": "runtime:node", "name": "Node.js", "category": "runtime", "status": "available-verified",
-    "provider": "nodejs.org", "auth": "none", "environment": "local machine (Windows 11, Git Bash + PowerShell)",
-    "dependencies": [], "cost": "free", "network": "none",
-    "io": { "input": "JS/ESM scripts", "output": "process exit code, stdout" },
-    "failureModes": ["version below 18 breaks node:test and ESM scripts"],
+    "id": "runtime:node",
+    "name": "Node.js",
+    "category": "runtime",
+    "status": "unknown",
+    "provider": "nodejs.org",
+    "auth": "none",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "free",
+    "network": "none",
+    "io": {
+      "input": "JS/ESM scripts",
+      "output": "process exit code, stdout"
+    },
+    "failureModes": [
+      "version below 18 breaks node:test and ESM scripts"
+    ],
     "fallback": "Route manually with the SKILL.md routing table and run checks by hand.",
-    "evidence": "node --version -> v24.13.0", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "cli:npm", "name": "npm", "category": "cli", "status": "available-verified",
-    "provider": "npm", "auth": "none (public registry)", "environment": "local", "dependencies": ["runtime:node"],
-    "cost": "free", "network": "external (package registry)",
-    "io": { "input": "package names", "output": "node_modules" },
-    "failureModes": ["registry/network failure", "peer dependency conflicts"],
+    "id": "cli:npm",
+    "name": "npm",
+    "category": "cli",
+    "status": "unknown",
+    "provider": "npm",
+    "auth": "none (public registry)",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [
+      "runtime:node"
+    ],
+    "cost": "free",
+    "network": "external (package registry)",
+    "io": {
+      "input": "package names",
+      "output": "node_modules"
+    },
+    "failureModes": [
+      "registry/network failure",
+      "peer dependency conflicts"
+    ],
     "fallback": "Use pnpm, or reuse what the project already has installed.",
-    "evidence": "npm --version -> 11.6.2", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "cli:pnpm", "name": "pnpm", "category": "cli", "status": "available-verified",
-    "provider": "pnpm", "auth": "none", "environment": "local (global npm install)", "dependencies": ["runtime:node"],
-    "cost": "free", "network": "external (package registry)",
-    "io": { "input": "package names", "output": "node_modules" }, "failureModes": ["lockfile mismatch with the project's package manager"],
+    "id": "cli:pnpm",
+    "name": "pnpm",
+    "category": "cli",
+    "status": "unknown",
+    "provider": "pnpm",
+    "auth": "none",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [
+      "runtime:node"
+    ],
+    "cost": "free",
+    "network": "external (package registry)",
+    "io": {
+      "input": "package names",
+      "output": "node_modules"
+    },
+    "failureModes": [
+      "lockfile mismatch with the project's package manager"
+    ],
     "fallback": "Use the package manager the project's lockfile indicates.",
-    "evidence": "pnpm --version -> 11.5.3", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "cli:yarn", "name": "Yarn", "category": "cli", "status": "unavailable",
-    "provider": null, "auth": null, "environment": "local", "dependencies": [], "cost": "free", "network": null,
-    "io": { "input": null, "output": null }, "failureModes": ["projects with yarn.lock cannot be installed as-is"],
+    "id": "cli:yarn",
+    "name": "Yarn",
+    "category": "cli",
+    "status": "unknown",
+    "provider": null,
+    "auth": null,
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "free",
+    "network": null,
+    "io": {
+      "input": null,
+      "output": null
+    },
+    "failureModes": [
+      "projects with yarn.lock cannot be installed as-is"
+    ],
     "fallback": "Enable via corepack (ask first: it changes global tooling) or use npm/pnpm for read-only inspection.",
-    "evidence": "command -v yarn -> not found", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "runtime:bun", "name": "Bun", "category": "runtime", "status": "unavailable",
-    "provider": null, "auth": null, "environment": "local", "dependencies": [], "cost": "free", "network": null,
-    "io": { "input": null, "output": null }, "failureModes": ["bun-only projects cannot run"],
+    "id": "runtime:bun",
+    "name": "Bun",
+    "category": "runtime",
+    "status": "unknown",
+    "provider": null,
+    "auth": null,
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "free",
+    "network": null,
+    "io": {
+      "input": null,
+      "output": null
+    },
+    "failureModes": [
+      "bun-only projects cannot run"
+    ],
     "fallback": "Use Node.js; ask before installing Bun system-wide.",
-    "evidence": "command -v bun -> not found", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "runtime:python", "name": "Python 3.10 (command: python)", "category": "runtime", "status": "available-verified",
-    "provider": "python.org", "auth": "none", "environment": "local; no python3 alias", "dependencies": [],
-    "cost": "free", "network": "none",
-    "io": { "input": "Python scripts", "output": "stdout/files" },
-    "failureModes": ["Pillow (PIL) is NOT installed, so Python image processing fails", "scripts calling python3 fail"],
+    "id": "runtime:python",
+    "name": "Python",
+    "category": "runtime",
+    "status": "unknown",
+    "provider": "python.org",
+    "auth": "none",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "free",
+    "network": "none",
+    "io": {
+      "input": "Python scripts",
+      "output": "stdout/files"
+    },
+    "failureModes": [
+      "Pillow (PIL) is NOT installed, so Python image processing fails",
+      "scripts calling python3 fail"
+    ],
     "fallback": "Prefer the Node scripts in scripts/; for images use sharp (npm) instead of Pillow.",
-    "evidence": "python --version -> Python 3.10.10; python -I -c 'import PIL' -> ModuleNotFoundError", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "cli:git", "name": "Git", "category": "cli", "status": "available-verified",
-    "provider": "git-scm", "auth": "none for local use", "environment": "local", "dependencies": [], "cost": "free", "network": "none",
-    "io": { "input": "repository", "output": "history, diffs" }, "failureModes": ["workspace may not be a git repository"],
+    "id": "cli:git",
+    "name": "Git",
+    "category": "cli",
+    "status": "unknown",
+    "provider": "git-scm",
+    "auth": "none for local use",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "free",
+    "network": "none",
+    "io": {
+      "input": "repository",
+      "output": "history, diffs"
+    },
+    "failureModes": [
+      "workspace may not be a git repository"
+    ],
     "fallback": "Copy files before risky edits when no git history exists.",
-    "evidence": "git --version -> 2.52.0.windows.1", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "cli:gh", "name": "GitHub CLI", "category": "cli", "status": "available-verified",
-    "provider": "GitHub", "auth": "gh auth (state not checked)", "environment": "local", "dependencies": ["cli:git"],
-    "cost": "free", "network": "external (github.com)",
-    "io": { "input": "commands", "output": "GitHub API results" }, "failureModes": ["not authenticated"],
+    "id": "cli:gh",
+    "name": "GitHub CLI",
+    "category": "cli",
+    "status": "unknown",
+    "provider": "GitHub",
+    "auth": "gh auth (state not checked)",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [
+      "cli:git"
+    ],
+    "cost": "free",
+    "network": "external (github.com)",
+    "io": {
+      "input": "commands",
+      "output": "GitHub API results"
+    },
+    "failureModes": [
+      "not authenticated"
+    ],
     "fallback": "Local git only; publishing actions need user approval anyway.",
-    "evidence": "gh --version -> 2.96.0", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "cli:ffmpeg", "name": "ffmpeg / ffprobe", "category": "cli", "status": "unavailable",
-    "provider": null, "auth": null, "environment": "local", "dependencies": [], "cost": "free", "network": "none",
-    "io": { "input": "video/audio", "output": "encoded media, metadata" },
-    "failureModes": ["no transcoding, poster extraction or duration probing", "the Playwright-bundled ffmpeg (ms-playwright/ffmpeg-1011) is an internal build for Playwright video capture, not a general-purpose CLI"],
+    "id": "cli:ffmpeg",
+    "name": "ffmpeg / ffprobe",
+    "category": "cli",
+    "status": "unknown",
+    "provider": null,
+    "auth": null,
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "free",
+    "network": "none",
+    "io": {
+      "input": "video/audio",
+      "output": "encoded media, metadata"
+    },
+    "failureModes": [
+      "no transcoding, poster extraction or duration probing",
+      "the Playwright-bundled ffmpeg (ms-playwright/ffmpeg-1011) is an internal build for Playwright video capture, not a general-purpose CLI"
+    ],
     "fallback": "Use media already encoded to target formats; add ffmpeg-static as a project dev dependency (check its licence) or ask the user to install ffmpeg; asset-validation marks durations NOT TESTED.",
-    "evidence": "command -v ffmpeg / ffprobe -> not found", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "cli:blender", "name": "Blender", "category": "cli", "status": "unavailable",
-    "provider": null, "auth": null, "environment": "local", "dependencies": [], "cost": "free", "network": "none",
-    "io": { "input": ".blend/.py", "output": "GLB/renders" }, "failureModes": ["no offline 3D modelling or baking"],
+    "id": "cli:blender",
+    "name": "Blender",
+    "category": "cli",
+    "status": "unknown",
+    "provider": null,
+    "auth": null,
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "free",
+    "network": "none",
+    "io": {
+      "input": ".blend/.py",
+      "output": "GLB/renders"
+    },
+    "failureModes": [
+      "no offline 3D modelling or baking"
+    ],
     "fallback": "Procedural geometry in Three.js, gltf-transform (npm) for optimisation, or user-supplied GLB files.",
-    "evidence": "command -v blender -> not found; C:/Program Files/Blender Foundation absent", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "cli:imagemagick", "name": "ImageMagick (magick)", "category": "cli", "status": "unavailable",
-    "provider": null, "auth": null, "environment": "local", "dependencies": [], "cost": "free", "network": "none",
-    "io": { "input": "images", "output": "images" }, "failureModes": ["no CLI image conversion"],
+    "id": "cli:imagemagick",
+    "name": "ImageMagick (magick)",
+    "category": "cli",
+    "status": "unknown",
+    "provider": null,
+    "auth": null,
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "free",
+    "network": "none",
+    "io": {
+      "input": "images",
+      "output": "images"
+    },
+    "failureModes": [
+      "no CLI image conversion"
+    ],
     "fallback": "sharp (npm) for resize/encode; scripts/asset-validation.mjs reads dimensions without dependencies.",
-    "evidence": "command -v magick -> not found", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "cli:playwright", "name": "Playwright 1.62.1 (global) + Chromium", "category": "cli", "status": "available-verified",
-    "provider": "Microsoft", "auth": "none", "environment": "local global npm install; browsers in %LOCALAPPDATA%/ms-playwright (chromium-1208, chromium-1234, headless shell)",
-    "dependencies": ["runtime:node"], "cost": "free", "network": "none for local pages",
-    "io": { "input": "URL or file path", "output": "screenshots, console/network logs, DOM checks" },
-    "failureModes": ["a global install is not resolvable by plain import; scripts/visual-check.mjs resolves it via `npm root -g`", "font rendering differs across operating systems, so screenshot baselines are OS-specific"],
+    "id": "cli:playwright",
+    "name": "Playwright + Chromium",
+    "category": "cli",
+    "status": "unknown",
+    "provider": "Microsoft",
+    "auth": "none",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [
+      "runtime:node"
+    ],
+    "cost": "free",
+    "network": "none for local pages",
+    "io": {
+      "input": "URL or file path",
+      "output": "screenshots, console/network logs, DOM checks"
+    },
+    "failureModes": [
+      "a global install is not resolvable by plain import; scripts/visual-check.mjs resolves it via `npm root -g`",
+      "font rendering differs across operating systems, so screenshot baselines are OS-specific"
+    ],
     "fallback": "Browser MCP tools if verified in-session; otherwise visual gates are NOT TESTED.",
-    "evidence": "playwright --version -> Version 1.62.1; browsers directory listed", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "cli:lighthouse", "name": "Lighthouse CLI", "category": "cli", "status": "unavailable",
-    "provider": null, "auth": null, "environment": "local", "dependencies": [], "cost": "free", "network": "none",
-    "io": { "input": "URL", "output": "audit report" }, "failureModes": ["no CLI performance score"],
+    "id": "cli:lighthouse",
+    "name": "Lighthouse CLI",
+    "category": "cli",
+    "status": "unknown",
+    "provider": null,
+    "auth": null,
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "free",
+    "network": "none",
+    "io": {
+      "input": "URL",
+      "output": "audit report"
+    },
+    "failureModes": [
+      "no CLI performance score"
+    ],
     "fallback": "Chrome DevTools MCP lighthouse_audit (accessibility/SEO/best practices) plus performance_start_trace for LCP/CLS/INP-related insights; label all as lab data.",
-    "evidence": "command -v lighthouse -> not found", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "cli:vercel", "name": "Vercel CLI", "category": "cli", "status": "unavailable",
-    "provider": null, "auth": null, "environment": "local", "dependencies": [], "cost": "account-dependent", "network": "external",
-    "io": { "input": null, "output": null }, "failureModes": ["no CLI deploys"],
+    "id": "cli:vercel",
+    "name": "Vercel CLI",
+    "category": "cli",
+    "status": "unknown",
+    "provider": null,
+    "auth": null,
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "account-dependent",
+    "network": "external",
+    "io": {
+      "input": null,
+      "output": null
+    },
+    "failureModes": [
+      "no CLI deploys"
+    ],
     "fallback": "Deploys are publishing: ask the user; the Vercel MCP may be used only after approval.",
-    "evidence": "command -v vercel -> not found", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "library:sharp", "name": "sharp (image processing)", "category": "library", "status": "available-with-prerequisites",
-    "provider": "npm", "auth": "none", "environment": "project dependency (not installed globally)", "dependencies": ["cli:npm"],
-    "cost": "free", "network": "external during install",
-    "io": { "input": "JPEG/PNG/WebP/AVIF/TIFF/SVG", "output": "resized/encoded images" },
-    "failureModes": ["native binary download blocked offline"],
+    "id": "library:sharp",
+    "name": "sharp (image processing)",
+    "category": "library",
+    "status": "unknown",
+    "provider": "npm",
+    "auth": "none",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [
+      "cli:npm"
+    ],
+    "cost": "free",
+    "network": "external during install",
+    "io": {
+      "input": "JPEG/PNG/WebP/AVIF/TIFF/SVG",
+      "output": "resized/encoded images"
+    },
+    "failureModes": [
+      "native binary download blocked offline"
+    ],
     "fallback": "Ship source images at correct sizes; rely on framework image optimisation (for example next/image).",
-    "evidence": "not present in `npm ls -g`; installable as an ordinary project dependency", "verifiedOn": null
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "library:axe-core", "name": "axe-core / @axe-core/playwright", "category": "library", "status": "available-with-prerequisites",
-    "provider": "Deque (MPL-2.0)", "auth": "none", "environment": "project dev dependency (not installed)", "dependencies": ["cli:npm"],
-    "cost": "free", "network": "external during install",
-    "io": { "input": "rendered page", "output": "WCAG rule violations" },
-    "failureModes": ["automated rules catch only a subset of WCAG issues"],
+    "id": "library:axe-core",
+    "name": "axe-core / @axe-core/playwright",
+    "category": "library",
+    "status": "unknown",
+    "provider": "Deque (MPL-2.0)",
+    "auth": "none",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [
+      "cli:npm"
+    ],
+    "cost": "free",
+    "network": "external during install",
+    "io": {
+      "input": "rendered page",
+      "output": "WCAG rule violations"
+    },
+    "failureModes": [
+      "automated rules catch only a subset of WCAG issues"
+    ],
     "fallback": "Chrome DevTools MCP lighthouse_audit accessibility category plus manual keyboard/focus checks.",
-    "evidence": "not installed globally; scripts/visual-check.mjs reports axe NOT_TESTED when absent", "verifiedOn": null
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "browser:chrome", "name": "Google Chrome", "category": "browser", "status": "available-verified",
-    "provider": "Google", "auth": "none", "environment": "C:/Program Files/Google/Chrome/Application/chrome.exe",
-    "dependencies": [], "cost": "free", "network": "local pages: none",
-    "io": { "input": "URL", "output": "rendered page" }, "failureModes": ["profile or policy restrictions"],
+    "id": "browser:chrome",
+    "name": "Google Chrome",
+    "category": "browser",
+    "status": "unknown",
+    "provider": "Google",
+    "auth": "none",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "free",
+    "network": "local pages: none",
+    "io": {
+      "input": "URL",
+      "output": "rendered page"
+    },
+    "failureModes": [
+      "profile or policy restrictions"
+    ],
     "fallback": "Playwright Chromium or Edge.",
-    "evidence": "binary present; Chrome DevTools MCP opened a page (about:blank)", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "browser:edge", "name": "Microsoft Edge", "category": "browser", "status": "available-untested",
-    "provider": "Microsoft", "auth": "none", "environment": "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
-    "dependencies": [], "cost": "free", "network": "local pages: none",
-    "io": { "input": "URL", "output": "rendered page" }, "failureModes": ["not launched by any test yet"],
+    "id": "browser:edge",
+    "name": "Microsoft Edge",
+    "category": "browser",
+    "status": "unknown",
+    "provider": "Microsoft",
+    "auth": "none",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "free",
+    "network": "local pages: none",
+    "io": {
+      "input": "URL",
+      "output": "rendered page"
+    },
+    "failureModes": [
+      "not launched by any test yet"
+    ],
     "fallback": "Chrome or Playwright Chromium.",
-    "evidence": "binary present at the path above (not launched)", "verifiedOn": null
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "mcp:chrome-devtools", "name": "Chrome DevTools MCP (ECC plugin)", "category": "mcp", "status": "available-verified",
-    "provider": "ECC plugin / chrome-devtools-mcp", "auth": "none", "environment": "main Claude Code session (subagent access untested)",
-    "dependencies": ["browser:chrome"], "cost": "free", "network": "local",
-    "io": { "input": "URL, element uids, scripts", "output": "screenshots, a11y snapshot, Lighthouse (a11y/SEO/best practices), performance traces, console and network logs" },
-    "failureModes": ["MCP server not connected in a new session", "lighthouse_audit excludes performance; use performance_start_trace"],
+    "id": "mcp:chrome-devtools",
+    "name": "Chrome DevTools MCP (ECC plugin)",
+    "category": "mcp",
+    "status": "unknown",
+    "provider": "ECC plugin / chrome-devtools-mcp",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [
+      "browser:chrome"
+    ],
+    "cost": "Account-dependent; check before use.",
+    "network": "local",
+    "io": {
+      "input": "URL, element uids, scripts",
+      "output": "screenshots, a11y snapshot, Lighthouse (a11y/SEO/best practices), performance traces, console and network logs"
+    },
+    "failureModes": [
+      "Tool unavailable or disconnected in the current session",
+      "Authentication or host-specific permissions may be required"
+    ],
     "fallback": "scripts/visual-check.mjs (Playwright) or the built-in browser pane.",
-    "evidence": "new_page(about:blank, background) succeeded; tool schemas loaded via ToolSearch", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "mcp:claude-browser", "name": "Built-in browser pane (Claude_Browser)", "category": "mcp", "status": "available-untested",
-    "provider": "Claude desktop app", "auth": "none", "environment": "main session in the desktop app only",
-    "dependencies": [], "cost": "free", "network": "local or user-approved sites",
-    "io": { "input": "URL or dev server", "output": "screenshots, page text, console, network, viewport presets" },
-    "failureModes": ["not available in the terminal CLI or in subagents", "site approval prompts"],
-    "fallback": "Chrome DevTools MCP or scripts/visual-check.mjs.",
-    "evidence": "tools listed in the session tool list; not invoked during the audit", "verifiedOn": null
+    "id": "mcp:browser",
+    "name": "Browser tools exposed by the agent platform",
+    "category": "mcp",
+    "status": "unknown",
+    "provider": "Agent platform",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "Account-dependent; check before use.",
+    "network": "local or user-approved sites",
+    "io": {
+      "input": "URL or dev server",
+      "output": "screenshots, page text, console, network, viewport presets"
+    },
+    "failureModes": [
+      "Tool unavailable or disconnected in the current session",
+      "Authentication or host-specific permissions may be required"
+    ],
+    "fallback": "Use another verified browser tool or scripts/visual-check.mjs.",
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "mcp:threejs-view", "name": "Three.js view MCP", "category": "mcp", "status": "available-verified",
-    "provider": "connector 1a16eacb", "auth": "none", "environment": "main session",
-    "dependencies": [], "cost": "free", "network": "none",
-    "io": { "input": "Three.js scene code", "output": "inline scene preview in chat (three r181)" },
-    "failureModes": ["preview only: not a project build or deployment tool"],
+    "id": "mcp:threejs-view",
+    "name": "Three.js view MCP",
+    "category": "mcp",
+    "status": "unknown",
+    "provider": "Optional local or agent-host integration",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "Account-dependent; check before use.",
+    "network": "none",
+    "io": {
+      "input": "Three.js scene code",
+      "output": "inline scene preview in chat"
+    },
+    "failureModes": [
+      "Tool unavailable or disconnected in the current session",
+      "Authentication or host-specific permissions may be required"
+    ],
     "fallback": "Run scenes in the project and verify with visual-check.mjs.",
-    "evidence": "learn_threejs returned documentation (three r181 globals, templates)", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "mcp:higgsfield", "name": "Higgsfield MCP (image, video, 3D, audio generation and editing)", "category": "mcp", "status": "requires-approval",
-    "provider": "Higgsfield", "auth": "signed in (OAuth via connector)", "environment": "main session",
-    "dependencies": [], "cost": "paid credits; account balance 0 credits on the free plan (some models flag free-trial 'unlim' allowances)", "network": "external (prompts and media are sent to Higgsfield)",
-    "io": { "input": "text prompts, reference media", "output": "image/video/3D/audio URLs" },
-    "failureModes": ["0 credits blocks generation", "generated URLs expire; download and validate before use", "uploading private references sends data to a third party"],
+    "id": "mcp:higgsfield",
+    "name": "Higgsfield MCP (image, video, 3D, audio generation and editing)",
+    "category": "mcp",
+    "status": "unknown",
+    "provider": "Higgsfield",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "Account-dependent; check before use.",
+    "network": "external (prompts and media are sent to Higgsfield)",
+    "io": {
+      "input": "text prompts, reference media",
+      "output": "image/video/3D/audio URLs"
+    },
+    "failureModes": [
+      "Tool unavailable or disconnected in the current session",
+      "Authentication or host-specific permissions may be required"
+    ],
     "fallback": "Procedural SVG/Canvas/CSS assets, licensed stock, or user-supplied media; explicit placeholders until approved.",
-    "evidence": "balance -> {credits: 0, plan: free}; models_explore list returned image, video and 3D model families", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "generator:higgsfield-image", "name": "Higgsfield image models (nano_banana*, gpt_image_2*, flux_2*, seedream_v4_5, soul_* and others)", "category": "generator", "status": "requires-approval",
-    "provider": "Higgsfield (various model vendors)", "auth": "connector OAuth", "environment": "main session", "dependencies": ["mcp:higgsfield"],
-    "cost": "credits per generation", "network": "external",
-    "io": { "input": "prompt, optional reference image", "output": "image (aspect ratios such as 1:1, 16:9, 9:16, 4:3, 3:4, 3:2, 2:3, 21:9 depending on model)" },
-    "failureModes": ["insufficient credits", "style drift across a series", "model terms may restrict commercial use"],
-    "fallback": "See mcp:higgsfield.", "evidence": "models_explore list (page 1) on 2026-10-23", "verifiedOn": "2026-10-23"
+    "id": "generator:higgsfield-image",
+    "name": "Higgsfield image models (nano_banana*, gpt_image_2*, flux_2*, seedream_v4_5, soul_* and others)",
+    "category": "generator",
+    "status": "unknown",
+    "provider": "Higgsfield (various model vendors)",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [
+      "mcp:higgsfield"
+    ],
+    "cost": "Treat as paid or credit-based until a read-only check confirms otherwise.",
+    "network": "external",
+    "io": {
+      "input": "prompt, optional reference image",
+      "output": "image (aspect ratios such as 1:1, 16:9, 9:16, 4:3, 3:4, 3:2, 2:3, 21:9 depending on model)"
+    },
+    "failureModes": [
+      "Insufficient credits or account restrictions",
+      "Provider terms may restrict commercial use",
+      "Uploading private references sends data to a third party"
+    ],
+    "fallback": "See mcp:higgsfield.",
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "generator:higgsfield-video", "name": "Higgsfield video models (cinematic_studio_*, flux_3_video and others)", "category": "generator", "status": "requires-approval",
-    "provider": "Higgsfield", "auth": "connector OAuth", "environment": "main session", "dependencies": ["mcp:higgsfield"],
-    "cost": "credits per generation", "network": "external",
-    "io": { "input": "prompt, optional start image", "output": "video URL" },
-    "failureModes": ["insufficient credits", "loop seams", "duration/aspect limits per model"],
+    "id": "generator:higgsfield-video",
+    "name": "Higgsfield video models (cinematic_studio_*, flux_3_video and others)",
+    "category": "generator",
+    "status": "unknown",
+    "provider": "Higgsfield",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [
+      "mcp:higgsfield"
+    ],
+    "cost": "Treat as paid or credit-based until a read-only check confirms otherwise.",
+    "network": "external",
+    "io": {
+      "input": "prompt, optional start image",
+      "output": "video URL"
+    },
+    "failureModes": [
+      "Insufficient credits or account restrictions",
+      "Provider terms may restrict commercial use",
+      "Uploading private references sends data to a third party"
+    ],
     "fallback": "Static poster image, CSS/Canvas procedural motion, or user-supplied footage.",
-    "evidence": "models_explore list (page 1) on 2026-10-23", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "generator:higgsfield-3d", "name": "Higgsfield 3D models (meshy_image_to_3d, image_to_3d, rigging and others)", "category": "generator", "status": "requires-approval",
-    "provider": "Higgsfield / Meshy", "auth": "connector OAuth", "environment": "main session", "dependencies": ["mcp:higgsfield"],
-    "cost": "credits per generation", "network": "external",
-    "io": { "input": "reference image(s)", "output": "3D model" },
-    "failureModes": ["insufficient credits", "heavy meshes need optimisation", "scale/orientation issues"],
+    "id": "generator:higgsfield-3d",
+    "name": "Higgsfield 3D models (meshy_image_to_3d, image_to_3d, rigging and others)",
+    "category": "generator",
+    "status": "unknown",
+    "provider": "Higgsfield / Meshy",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [
+      "mcp:higgsfield"
+    ],
+    "cost": "Treat as paid or credit-based until a read-only check confirms otherwise.",
+    "network": "external",
+    "io": {
+      "input": "reference image(s)",
+      "output": "3D model"
+    },
+    "failureModes": [
+      "Insufficient credits or account restrictions",
+      "Provider terms may restrict commercial use",
+      "Uploading private references sends data to a third party"
+    ],
     "fallback": "Procedural Three.js geometry or user-supplied GLB.",
-    "evidence": "models_explore list (page 1) on 2026-10-23", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "generator:higgsfield-audio", "name": "Higgsfield audio models", "category": "generator", "status": "unknown",
-    "provider": "Higgsfield", "auth": "connector OAuth", "environment": "main session", "dependencies": ["mcp:higgsfield"],
-    "cost": "credits (assumed)", "network": "external",
-    "io": { "input": "prompt", "output": "audio" }, "failureModes": ["not listed on the first model page"],
+    "id": "generator:higgsfield-audio",
+    "name": "Higgsfield audio models",
+    "category": "generator",
+    "status": "unknown",
+    "provider": "Higgsfield",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [
+      "mcp:higgsfield"
+    ],
+    "cost": "Treat as paid or credit-based until a read-only check confirms otherwise.",
+    "network": "external",
+    "io": {
+      "input": "prompt",
+      "output": "audio"
+    },
+    "failureModes": [
+      "Insufficient credits or account restrictions",
+      "Provider terms may restrict commercial use",
+      "Uploading private references sends data to a third party"
+    ],
     "fallback": "Web Audio procedural sound, licensed libraries, or omit non-essential audio.",
-    "evidence": "first page of models_explore showed no audio models; query models_explore with type=audio to confirm", "verifiedOn": null
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "mcp:figma", "name": "Figma MCP (official connector)", "category": "mcp", "status": "available-untested",
-    "provider": "Figma", "auth": "connector (state not checked); the plugin:design:figma variant requires OAuth", "environment": "main session",
-    "dependencies": [], "cost": "unknown for generate_image / create_shader: treat any generation as requiring approval", "network": "external",
-    "io": { "input": "Figma URLs, prompts, code", "output": "design context, screenshots, generated images/shaders, Figma files" },
-    "failureModes": ["auth missing", "rate limits", "unknown generation cost"],
+    "id": "mcp:figma",
+    "name": "Figma MCP (official connector)",
+    "category": "mcp",
+    "status": "unknown",
+    "provider": "Figma",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "Account-dependent; check before use.",
+    "network": "external",
+    "io": {
+      "input": "Figma URLs, prompts, code",
+      "output": "design context, screenshots, generated images/shaders, Figma files"
+    },
+    "failureModes": [
+      "Tool unavailable or disconnected in the current session",
+      "Authentication or host-specific permissions may be required"
+    ],
     "fallback": "Work from code and screenshots; ask the user to export assets.",
-    "evidence": "tool names present in the session (generate_image, create_shader, get_design_context, use_figma); not invoked", "verifiedOn": null
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "mcp:heygen-hyperframes", "name": "HeyGen HyperFrames MCP (HTML video)", "category": "mcp", "status": "unavailable",
-    "provider": "HeyGen", "auth": "connector", "environment": "main session",
-    "dependencies": [], "cost": "account-dependent", "network": "external",
-    "io": { "input": "HTML composition", "output": "rendered video" },
-    "failureModes": ["compose and render_video are disabled for CLI/IDE clients (server instructions)"],
+    "id": "mcp:heygen-hyperframes",
+    "name": "HeyGen HyperFrames MCP (HTML video)",
+    "category": "mcp",
+    "status": "unknown",
+    "provider": "HeyGen",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "Account-dependent; check before use.",
+    "network": "external",
+    "io": {
+      "input": "HTML composition",
+      "output": "rendered video"
+    },
+    "failureModes": [
+      "Tool unavailable or disconnected in the current session",
+      "Authentication or host-specific permissions may be required"
+    ],
     "fallback": "Local HyperFrames skills (npx skills add heygen-com/hyperframes; ask before installing), Remotion, or CSS/Canvas animation captured locally.",
-    "evidence": "server instructions state compose/render_video are rejected from CLI clients", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "mcp:vercel", "name": "Vercel MCP", "category": "mcp", "status": "requires-approval",
-    "provider": "Vercel", "auth": "connector", "environment": "main session", "dependencies": [], "cost": "account-dependent", "network": "external",
-    "io": { "input": "project, deployment requests", "output": "deployments, logs" },
-    "failureModes": ["deploying publishes the site"],
+    "id": "mcp:vercel",
+    "name": "Vercel MCP",
+    "category": "mcp",
+    "status": "unknown",
+    "provider": "Vercel",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "Account-dependent; check before use.",
+    "network": "external",
+    "io": {
+      "input": "project, deployment requests",
+      "output": "deployments, logs"
+    },
+    "failureModes": [
+      "Tool unavailable or disconnected in the current session",
+      "Authentication or host-specific permissions may be required"
+    ],
     "fallback": "Local production build (`npm run build && npm start`) for verification; deploy only after approval.",
-    "evidence": "connected per session instructions; deployment is publishing, so approval is required", "verifiedOn": null
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "mcp:supabase", "name": "Supabase MCP", "category": "mcp", "status": "unavailable",
-    "provider": "Supabase", "auth": "connector", "environment": "main session", "dependencies": [], "cost": "account-dependent", "network": "external",
-    "io": { "input": null, "output": null }, "failureModes": ["disconnected in the audited session"],
+    "id": "mcp:supabase",
+    "name": "Supabase MCP",
+    "category": "mcp",
+    "status": "unknown",
+    "provider": "Supabase",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "Account-dependent; check before use.",
+    "network": "external",
+    "io": {
+      "input": null,
+      "output": null
+    },
+    "failureModes": [
+      "Tool unavailable or disconnected in the current session",
+      "Authentication or host-specific permissions may be required"
+    ],
     "fallback": "Use fixture data clearly marked as demo; never fabricate production metrics.",
-    "evidence": "session notice: server disconnected", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "mcp:desktop-commander", "name": "Desktop Commander MCP", "category": "mcp", "status": "unavailable",
-    "provider": "plugin", "auth": null, "environment": "main session", "dependencies": [], "cost": "free", "network": "local",
-    "io": { "input": null, "output": null }, "failureModes": ["failed to connect (CONNECTION_CLOSED)"],
-    "fallback": "Built-in Bash/PowerShell tools.", "evidence": "session notice: connection closed", "verifiedOn": "2026-10-23"
+    "id": "mcp:desktop-commander",
+    "name": "Desktop Commander MCP",
+    "category": "mcp",
+    "status": "unknown",
+    "provider": "plugin",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "Account-dependent; check before use.",
+    "network": "local",
+    "io": {
+      "input": null,
+      "output": null
+    },
+    "failureModes": [
+      "Tool unavailable or disconnected in the current session",
+      "Authentication or host-specific permissions may be required"
+    ],
+    "fallback": "Built-in Bash/PowerShell tools.",
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "mcp:context7", "name": "Context7 documentation MCP", "category": "mcp", "status": "unavailable",
-    "provider": null, "auth": null, "environment": "not configured", "dependencies": [], "cost": "free", "network": "external",
-    "io": { "input": null, "output": null }, "failureModes": ["ECC docs-lookup agent expects it"],
-    "fallback": "WebSearch/WebFetch against official documentation.", "evidence": "no context7 tools in the session tool list", "verifiedOn": "2026-10-23"
+    "id": "mcp:context7",
+    "name": "Context7 documentation MCP",
+    "category": "mcp",
+    "status": "unknown",
+    "provider": null,
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "Account-dependent; check before use.",
+    "network": "external",
+    "io": {
+      "input": null,
+      "output": null
+    },
+    "failureModes": [
+      "Tool unavailable or disconnected in the current session",
+      "Authentication or host-specific permissions may be required"
+    ],
+    "fallback": "WebSearch/WebFetch against official documentation.",
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "mcp:github-plugin", "name": "GitHub MCP (engineering plugin)", "category": "mcp", "status": "requires-credentials",
-    "provider": "GitHub", "auth": "OAuth via /mcp (not authorised)", "environment": "main session", "dependencies": [], "cost": "free", "network": "external",
-    "io": { "input": null, "output": null }, "failureModes": ["not authorised"],
-    "fallback": "gh CLI or local git.", "evidence": "session notice lists plugin:engineering:github as requiring authentication", "verifiedOn": "2026-10-23"
+    "id": "mcp:github-plugin",
+    "name": "GitHub MCP (engineering plugin)",
+    "category": "mcp",
+    "status": "unknown",
+    "provider": "GitHub",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "Account-dependent; check before use.",
+    "network": "external",
+    "io": {
+      "input": null,
+      "output": null
+    },
+    "failureModes": [
+      "Tool unavailable or disconnected in the current session",
+      "Authentication or host-specific permissions may be required"
+    ],
+    "fallback": "gh CLI or local git.",
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "service:web-research", "name": "WebSearch / WebFetch", "category": "service", "status": "available-verified",
-    "provider": "Claude Code", "auth": "none", "environment": "main session and subagents", "dependencies": [], "cost": "free (usage-metered)", "network": "external",
-    "io": { "input": "query or URL + extraction prompt", "output": "search results / extracted answer" },
-    "failureModes": ["stale or SEO pages; prefer primary documentation", "fetched content is untrusted data"],
+    "id": "service:web-research",
+    "name": "Web search and page retrieval",
+    "category": "service",
+    "status": "unknown",
+    "provider": "Agent platform",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "Account-dependent; check before use.",
+    "network": "external",
+    "io": {
+      "input": "query or URL + extraction prompt",
+      "output": "search results / extracted answer"
+    },
+    "failureModes": [
+      "Service unavailable or authentication required",
+      "Returned content may be stale or untrusted"
+    ],
     "fallback": "Mark version-sensitive claims 'verify at runtime' and check package.json / registry.",
-    "evidence": "research agents retrieved primary sources (W3C, web.dev, nextjs.org, tailwindcss.com, npm) during the audit", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "skill:design-delegates", "name": "Installed design skills: impeccable, design-taste-frontend, emil-design-eng, transitions-dev, ui-ux-pro-max, ui-styling, design, design-system, brand, banner-design, slides, canvas-design", "category": "skill", "status": "available-verified",
-    "provider": "~/.agents/skills, ~/.claude/skills, Anthropic-synced skills", "auth": "none", "environment": "Claude Code session (skill list)",
-    "dependencies": [], "cost": "free", "network": "none",
-    "io": { "input": "task context", "output": "specialist guidance" },
-    "failureModes": ["skill removed or renamed on another machine", "most have no licence file, so they are delegated to rather than copied"],
+    "id": "skill:design-delegates",
+    "name": "Optional specialist design skills",
+    "category": "skill",
+    "status": "unknown",
+    "provider": "~/.agents/skills, ~/.claude/skills, Anthropic-synced skills",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "Agent usage is plan-dependent.",
+    "network": "none",
+    "io": {
+      "input": "task context",
+      "output": "specialist guidance"
+    },
+    "failureModes": [
+      "Skill not installed, enabled, or supported by the current client"
+    ],
     "fallback": "Use the owning module in this package (see skill-delegation.md).",
-    "evidence": "SKILL.md files present on disk and listed in the session skill list", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "skill:ecc-ui", "name": "ECC plugin UI skills (MIT): frontend-a11y, accessibility, browser-qa, motion-foundations/patterns/advanced, react-performance, frontend-patterns, dashboard-builder, liquid-glass-design, make-interfaces-feel-better, e2e-testing and others", "category": "skill", "status": "available-verified",
-    "provider": "ECC plugin 2.2.3 (user scope)", "auth": "none", "environment": "Claude Code session (skill list, ecc: prefix)",
-    "dependencies": [], "cost": "free", "network": "none",
-    "io": { "input": "task context", "output": "specialist guidance" }, "failureModes": ["plugin disabled or updated"],
-    "fallback": "Use the owning module in this package.", "evidence": "plugin cache on disk; ecc:* skills listed in the session", "verifiedOn": "2026-10-23"
+    "id": "skill:ecc-ui",
+    "name": "ECC plugin UI skills (MIT): frontend-a11y, accessibility, browser-qa, motion-foundations/patterns/advanced, react-performance, frontend-patterns, dashboard-builder, liquid-glass-design, make-interfaces-feel-better, e2e-testing and others",
+    "category": "skill",
+    "status": "unknown",
+    "provider": "ECC plugin 2.2.3 (user scope)",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "Agent usage is plan-dependent.",
+    "network": "none",
+    "io": {
+      "input": "task context",
+      "output": "specialist guidance"
+    },
+    "failureModes": [
+      "Skill not installed, enabled, or supported by the current client"
+    ],
+    "fallback": "Use the owning module in this package.",
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "skill:design-plugin", "name": "Design plugin skills: design:design-critique, design:accessibility-review, design:design-system, design:ux-copy, design:design-handoff, design:user-research, design:research-synthesis", "category": "skill", "status": "available-verified",
-    "provider": "Anthropic design plugin (synced)", "auth": "none", "environment": "Claude Code session",
-    "dependencies": [], "cost": "free", "network": "none",
-    "io": { "input": "task context", "output": "specialist guidance" }, "failureModes": ["plugin unsynced"],
-    "fallback": "Use visual-critique, accessibility and interaction-design modules.", "evidence": "SKILL.md files present under the synced plugin directory and listed in the session", "verifiedOn": "2026-10-23"
+    "id": "skill:design-plugin",
+    "name": "Design plugin skills: design:design-critique, design:accessibility-review, design:design-system, design:ux-copy, design:design-handoff, design:user-research, design:research-synthesis",
+    "category": "skill",
+    "status": "unknown",
+    "provider": "Anthropic design plugin (synced)",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "Agent usage is plan-dependent.",
+    "network": "none",
+    "io": {
+      "input": "task context",
+      "output": "specialist guidance"
+    },
+    "failureModes": [
+      "Skill not installed, enabled, or supported by the current client"
+    ],
+    "fallback": "Use visual-critique, accessibility and interaction-design modules.",
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "skill:frontend-design", "name": "frontend-design (Anthropic official plugin)", "category": "skill", "status": "available-with-prerequisites",
-    "provider": "claude-plugins-official", "auth": "none", "environment": "installed with project scope for c:\\Dev\\Insta only",
-    "dependencies": [], "cost": "free", "network": "none",
-    "io": { "input": "task context", "output": "aesthetic direction guidance" }, "failureModes": ["not enabled for other projects"],
+    "id": "skill:frontend-design",
+    "name": "frontend-design (Anthropic official plugin)",
+    "category": "skill",
+    "status": "unknown",
+    "provider": "claude-plugins-official",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "Agent usage is plan-dependent.",
+    "network": "none",
+    "io": {
+      "input": "task context",
+      "output": "aesthetic direction guidance"
+    },
+    "failureModes": [
+      "Skill not installed, enabled, or supported by the current client"
+    ],
     "fallback": "design-intelligence module; enable the plugin for the project if the user wants it.",
-    "evidence": "installed_plugins.json lists project scope c:\\Dev\\Insta", "verifiedOn": "2026-10-23"
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "skill:dataviz", "name": "dataviz (built-in skill)", "category": "skill", "status": "available-verified",
-    "provider": "Claude app built-in", "auth": "none", "environment": "Skill tool only (not on disk)",
-    "dependencies": [], "cost": "free", "network": "none",
-    "io": { "input": "chart task", "output": "chart method, palette, mark specs" }, "failureModes": ["absent outside the Claude app"],
-    "fallback": "dashboard-engineering module chart rules.", "evidence": "loaded via the Skill tool by the dashboards research agent", "verifiedOn": "2026-10-23"
+    "id": "skill:dataviz",
+    "name": "dataviz (built-in skill)",
+    "category": "skill",
+    "status": "unknown",
+    "provider": "Claude app built-in",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "Agent usage is plan-dependent.",
+    "network": "none",
+    "io": {
+      "input": "chart task",
+      "output": "chart method, palette, mark specs"
+    },
+    "failureModes": [
+      "Skill not installed, enabled, or supported by the current client"
+    ],
+    "fallback": "dashboard-engineering module chart rules.",
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   },
   {
-    "id": "skill:echo-styles", "name": "cinematic-noir-studio and monochrome-editorial-portfolio style skills", "category": "skill", "status": "available-verified",
-    "provider": "C:/Dev/Portfolio/design-skills (junctions in ~/.claude/skills)", "auth": "none", "environment": "Claude Code session",
-    "dependencies": [], "cost": "free", "network": "none",
-    "io": { "input": "brand brief", "output": "complete style language + recipes" }, "failureModes": ["junction broken if the Portfolio folder moves"],
-    "fallback": "presets/cinematic-noir.json and presets/monochrome-editorial.json.", "evidence": "listed in the session skill list; files present", "verifiedOn": "2026-10-23"
+    "id": "skill:echo-styles",
+    "name": "cinematic-noir-studio and monochrome-editorial-portfolio style skills",
+    "category": "skill",
+    "status": "unknown",
+    "provider": "Optional local or agent-host integration",
+    "auth": "Check authorization with the current agent host or service.",
+    "environment": "Verify availability on the current machine or in the current agent session.",
+    "dependencies": [],
+    "cost": "Agent usage is plan-dependent.",
+    "network": "none",
+    "io": {
+      "input": "brand brief",
+      "output": "complete style language + recipes"
+    },
+    "failureModes": [
+      "Skill not installed, enabled, or supported by the current client"
+    ],
+    "fallback": "presets/cinematic-noir.json and presets/monochrome-editorial.json.",
+    "evidence": "Not verified in this distribution. Run scripts/environment-audit.mjs or probe the current agent session.",
+    "verifiedOn": null
   }
 ]

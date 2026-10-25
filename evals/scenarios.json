@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "description": "Evaluation scenarios for the ultimate-uiux skill. Routing fields (expectedPrimary, acceptableSecondary, mustIncludeModules, expectedApprovals, expectedWarnings) are checked deterministically by tests/routing.test.mjs against scripts/route.mjs. behaviorExpectations are graded by the LLM behaviour eval described in evals/README.md. Route, approval and warning ids are the ones defined in routing/routes.json.",
+  "description": "Evaluation scenarios for the arkononion-ui-ui skill. Routing fields (expectedPrimary, acceptableSecondary, mustIncludeModules, expectedApprovals, expectedWarnings) are checked deterministically by tests/routing.test.mjs against scripts/route.mjs. behaviorExpectations are graded by the LLM behaviour eval described in evals/README.md. Route, approval and warning ids are the ones defined in routing/routes.json.",
   "scenarios": [
     {
       "id": "static-marketing-page",

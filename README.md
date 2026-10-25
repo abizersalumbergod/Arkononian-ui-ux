@@ -1,19 +1,19 @@
-# ultimate-uiux
+# arkononion-ui-ui
 
-A Claude Code skill for UI/UX engineering. It turns a product brief, or an existing frontend, into a design direction, a design system, a working implementation, an asset pipeline and a verified interface, and it reports honestly what was and was not verified.
+An Agent Skills-compatible UI/UX engineering skill for Claude Code, Codex, and other clients that load a complete skill folder. It turns a product brief, or an existing frontend, into a design direction, a design system, a working implementation, an asset pipeline and a verified interface, and it reports honestly what was and was not verified.
 
 It covers landing pages, SaaS dashboards and admin panels, e-commerce, portfolios and editorial sites, mobile-first responsive UIs, cinematic/3D/WebGL experiences, design systems, redesigns of existing projects, UI asset production (image, video, audio, 3D) and UI audits.
 
 ## How it works
 
-`SKILL.md` is a lightweight orchestrator. For each request Claude:
+`SKILL.md` is a lightweight orchestrator. For each request, the agent:
 
 1. **Routes the request** with `scripts/route.mjs`: task type(s), the workflow, the modules to read, installed skills worth delegating to, actions that need your approval, and warnings about suspicious instructions.
 2. **Checks the environment** with `scripts/environment-audit.mjs` (runtimes, CLIs, browsers, installed skills, the project's stack). MCP tools are probed in-session.
 3. **Reads only the selected modules** from `references/` and follows the matching `workflows/` file through 11 stages: discover, understand, plan, design, build, assets, motion and 3D, run, inspect visually, validate and repair, deliver.
 4. **Verifies the result** against quality gates A–H (functional, visual, WCAG 2.2 AA, Core Web Vitals, responsive, assets, reliability and security). It writes a quality report in which `PASS` requires evidence and anything not run is `NOT_TESTED` or `BLOCKED`.
 
-Modules are never loaded automatically. The router and the tables in `SKILL.md` tell Claude which files to read, so a dashboard task never loads the 3D rules.
+Modules are loaded on demand. The router and tables in `SKILL.md` tell the agent which files to read, so a dashboard task does not need the 3D rules.
 
 ### Example: "Build a cinematic 3D landing page for our wireless headphones with a scroll-driven product reveal, then deploy it to Vercel"
 
@@ -23,9 +23,9 @@ The router (real output, abridged) returns:
 - workflows `cinematic-3d.md` and `landing-page.md`
 - 18 modules, including three-dimensional-web, shader-and-creative-coding, motion-engineering, asset-generation, landing-page-engineering, performance, accessibility and responsive-design
 - delegate skills (if installed) cinematic-noir-studio, frontend-design, emil-design-eng, design-taste-frontend, impeccable, ui-ux-pro-max, transitions-dev
-- approvals `publish-deploy`, so Claude must ask before deploying
+- approvals `publish-deploy`, so the agent must ask before deploying
 
-Claude then writes a motion and interaction plan before any code. It picks the cheapest 3D technology that achieves the effect, from a ladder that runs CSS 3D → model-viewer → OGL → Spline → three.js/R3F, and sets device budgets. Content and calls to action are built first, and the 3D scene is added after with disposal, visibility pausing and a non-3D fallback. It then runs `scripts/visual-check.mjs` across the viewport matrix with and without reduced motion, takes a performance trace if a browser tool is verified, records the gates, and asks before deploying.
+The agent then writes a motion and interaction plan before any code. It picks the cheapest 3D technology that achieves the effect, from a ladder that runs CSS 3D → model-viewer → OGL → Spline → three.js/R3F, and sets device budgets. Content and calls to action are built first, and the 3D scene is added after with disposal, visibility pausing and a non-3D fallback. It then runs `scripts/visual-check.mjs` across the viewport matrix with and without reduced motion, takes a performance trace if a browser tool is verified, records the gates, and asks before deploying.
 
 ## Package layout
 
@@ -46,32 +46,65 @@ Claude then writes a motion and interaction plan before any code. It picks the c
 
 ## Supported environments
 
-- **Claude Code** (CLI, desktop app, IDE extensions): full support. Skills are read from `~/.claude/skills/<name>/` (user) or `<project>/.claude/skills/<name>/` (project).
-- **Scripts:** Node.js 18 or newer on Windows, macOS or Linux, with no npm installs. Browser checks need Playwright with Chromium, resolved from the project or the global npm root.
-- **Other agents** (Cursor, Codex, Gemini and so on): there is no automatic loading. Attach `SKILL.md`, then the modules the router names. The scripts work anywhere Node runs.
-- **Claude.ai chat without a filesystem:** the instructions apply, but the scripts cannot run, so routing is manual and checks are reported as NOT TESTED.
+- **Claude Code:** install as a personal skill under `~/.claude/skills/arkononion-ui-ui/` or commit it to a project under `.claude/skills/arkononion-ui-ui/`.
+- **Codex:** install as a personal skill under `~/.agents/skills/arkononion-ui-ui/` or commit it to a project under `.agents/skills/arkononion-ui-ui/`.
+- **Other Agent Skills-compatible clients:** use the skill folder location documented by that client. Copy the complete folder so `SKILL.md`, references, workflows, schemas, templates and scripts stay together. Clients vary in which tools they expose and how they invoke skills.
+- **Scripts:** Node.js 18 or newer on Windows, macOS or Linux; no npm install is required for the bundled scripts. Browser checks also need Playwright with Chromium, resolved from the project or global npm root.
+- **Clients without filesystem or script access:** provide the complete skill folder when supported. If only Markdown can be attached, include `SKILL.md` and the routed modules; run no scripts and report unavailable checks as `NOT_TESTED`.
 
 ## Installation
 
-The skill lives in `C:/Dev/Portfolio/design-skills/ultimate-uiux`. To make Claude Code load it for every project, link it into the user skills folder.
+The skill folder name must be `arkononion-ui-ui` to match the `name` in `SKILL.md`. Clone the repository directly into the target folder, or rename the downloaded folder before installing it. Replace `<repository-url>` with the URL for your copy of this repository.
 
-Windows (PowerShell, no admin rights needed):
+### Claude Code, personal install
+
+PowerShell:
 
 ```powershell
-New-Item -ItemType Junction -Path "$env:USERPROFILE\.claude\skills\ultimate-uiux" -Target "C:\Dev\Portfolio\design-skills\ultimate-uiux"
+$repositoryUrl = "https://github.com/OWNER/REPOSITORY.git" # Replace OWNER/REPOSITORY
+New-Item -ItemType Directory -Force "$HOME\.claude\skills" | Out-Null
+git clone $repositoryUrl "$HOME\.claude\skills\arkononion-ui-ui"
 ```
 
 macOS or Linux:
 
 ```bash
-ln -s /path/to/design-skills/ultimate-uiux ~/.claude/skills/ultimate-uiux
+repository_url="https://github.com/OWNER/REPOSITORY.git" # Replace OWNER/REPOSITORY
+mkdir -p "$HOME/.claude/skills"
+git clone "$repository_url" "$HOME/.claude/skills/arkononion-ui-ui"
 ```
 
-Then start a new Claude Code session. The skill appears in the skill list and triggers on UI/UX requests (see the description in `SKILL.md`). Invoke it explicitly by name ("use the ultimate-uiux skill …") if needed.
+### Codex, personal install
+
+PowerShell:
+
+```powershell
+$repositoryUrl = "https://github.com/OWNER/REPOSITORY.git" # Replace OWNER/REPOSITORY
+New-Item -ItemType Directory -Force "$HOME\.agents\skills" | Out-Null
+git clone $repositoryUrl "$HOME\.agents\skills\arkononion-ui-ui"
+```
+
+macOS or Linux:
+
+```bash
+repository_url="https://github.com/OWNER/REPOSITORY.git" # Replace OWNER/REPOSITORY
+mkdir -p "$HOME/.agents/skills"
+git clone "$repository_url" "$HOME/.agents/skills/arkononion-ui-ui"
+```
+
+Replace `OWNER/REPOSITORY` with the published repository path.
+
+For a project-scoped install, copy this skill folder to `.claude/skills/arkononion-ui-ui/` for Claude Code or `.agents/skills/arkononion-ui-ui/` for Codex, then commit that folder with the project. For another client, follow its documented skill location.
+
+Start a new agent session if the skill does not appear. Invoke it as `/arkononion-ui-ui` in Claude Code or `$arkononion-ui-ui` in Codex; other clients use their own invocation syntax.
+
+This repository follows the [Agent Skills format](https://agentskills.io/specification). Claude Code and Codex document their skill locations in their [Claude Code skills guide](https://code.claude.com/docs/en/skills) and [Codex skills guide](https://learn.chatgpt.com/docs/build-skills). For broader public distribution through the OpenAI ecosystem, package it as a plugin or hosted skill according to that platform's current requirements.
+
+**License status:** no redistribution license has been selected. Review [LICENSES_AND_PROVENANCE.md](LICENSES_AND_PROVENANCE.md) and choose license terms before publishing or sharing the files. The documented third-party adaptations also need to be cleared for distribution.
 
 ## Capability detection and prerequisites
 
-Nothing is assumed to exist. `references/capability-registry.json` is a dated snapshot with an evidence string for every status. Re-verify on each machine:
+Nothing is assumed to exist. `references/capability-registry.json` is a catalog of possible capabilities and fallback guidance; it is not evidence that a tool is installed or available. Verify on each machine and in each agent session:
 
 ```bash
 node scripts/environment-audit.mjs --project <your-project> --out env-audit.json
@@ -99,7 +132,7 @@ Credentials are named in reports (environment variable names only) and never wri
 
 ## Framework support
 
-The preferred stack is Next.js (App Router) + React 19 + TypeScript + Tailwind CSS v4 + motion/GSAP + three.js/React Three Fiber. Claude detects the project's stack first and follows its conventions (Vite, Astro, Vue/Nuxt, SvelteKit, plain HTML and others) instead of migrating it. New dependencies need a reason, a compatibility check and a recorded decision. Version-sensitive facts in the modules are dated (October 2026) and marked "verify at runtime".
+The preferred stack is Next.js (App Router) + React 19 + TypeScript + Tailwind CSS v4 + motion/GSAP + three.js/React Three Fiber. The agent detects the project's stack first and follows its conventions (Vite, Astro, Vue/Nuxt, SvelteKit, plain HTML and others) instead of migrating it. New dependencies need a reason, a compatibility check and a recorded decision. Version-sensitive facts in the modules are dated (October 2026) and marked "verify at runtime".
 
 ## Testing
 
@@ -118,7 +151,7 @@ node scripts/build-docs.mjs --check    # generated docs are up to date
 - When adding a module, add it to the file list in `scripts/validate-skill.mjs` and to routes, SKILL.md and `MODULE_ORDER` in `scripts/build-docs.mjs`, then run the validator.
 - When a library releases a major version, update the affected module, re-check versions with `npm view <pkg> version`, and note it in `CHANGELOG.md`.
 - When new design skills are installed, audit them, decide incorporate, adapt, reference or reject, and update `references/skill-audit.md`, `references/skill-delegation.md` and `LICENSES_AND_PROVENANCE.md`.
-- Re-verify the capability registry on each machine. It is environment-specific.
+- Run the environment audit on each machine. The bundled capability registry does not claim that any optional tool or service is available.
 
 ## Troubleshooting
 
@@ -126,13 +159,13 @@ See `references/troubleshooting.md`. Common cases:
 
 - `visual-check.mjs` exits 4: Playwright cannot be resolved. Install it globally or in the project.
 - Node 24 says `Cannot find module 'tests'`: use `node --test "tests/*.test.mjs"`.
-- The skill does not trigger: invoke it by name, or check the junction or symlink exists in `~/.claude/skills`.
+- The skill does not trigger: use the host's explicit skill invocation or check that the complete skill folder is in the host's documented discovery location.
 
 ## Known limitations
 
-- Modules are guidance read by the model, not enforced code. Behaviour depends on Claude following SKILL.md. The evals measure that, but cannot guarantee it.
+- Modules are guidance read by the model, not enforced code. Behavior depends on the agent following `SKILL.md`. The evals measure that, but cannot guarantee it.
 - MCP tools cannot be detected from a script. They are probed in-session, and availability differs between sessions and machines.
 - Automated accessibility checks catch only part of WCAG. Manual keyboard and screen-reader checks are still required for a full pass.
 - Performance numbers from local runs are lab data. Core Web Vitals targets apply to field data at the 75th percentile.
 - No media generation was exercised while building this skill (no approved credits), so generator routes are documented and capability-gated but untested end to end.
-- The audit is a snapshot of the skills installed in October 2026. Re-audit when they change.
+- `references/skill-audit.md` records source research from October 2026. Re-check version-sensitive and installed-skill information when using a newer environment.
