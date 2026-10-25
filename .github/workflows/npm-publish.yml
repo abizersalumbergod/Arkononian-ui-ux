@@ -1,0 +1,78 @@
+name: Publish arkononion-ui-ux to npm
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+env:
+  SKILL_NAME: arkononion-ui-ux
+
+jobs:
+  validate-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Verify SKILL.md frontmatter name is arkononion-ui-ux
+        run: |
+          node -e '
+            const fs = require("node:fs");
+            const skill = fs.readFileSync("SKILL.md", "utf8");
+            if (!/^---\r?\n[\s\S]*?^name:\s*arkononion-ui-ux\s*$/m.test(skill)) {
+              console.error("ERROR: SKILL.md frontmatter name must be set to arkononion-ui-ux");
+              process.exit(1);
+            }
+          '
+
+      - name: Gate A - Validate skill structure, links, schemas and secrets
+        run: node scripts/validate-skill.mjs
+
+      - name: Check generated docs for drift
+        run: node scripts/build-docs.mjs --check
+
+      - name: Run unit and integration test suites
+        run: node --test "tests/*.test.mjs"
+
+  publish-npm:
+    needs: validate-and-test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js for npmjs.org
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org/
+
+      - name: Ensure package.json name and repository metadata match
+        env:
+          REPO: ${{ github.repository }}
+        run: |
+          node -e '
+            const fs = require("node:fs");
+            const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+            pkg.name = process.env.SKILL_NAME;
+            pkg.repository = {
+              type: "git",
+              url: `git+https://github.com/${process.env.REPO}.git`
+            };
+            delete pkg.publishConfig;
+            fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2) + "\n");
+          '
+
+      - name: Publish to npm with provenance
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN:
