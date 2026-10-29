@@ -54,6 +54,25 @@ The agent then writes a motion and interaction plan before any code. It picks th
 
 ## Installation
 
+### One command
+
+Install the skill into the AI tools on your machine with the [`skills` CLI](https://github.com/vercel-labs/skills):
+
+```bash
+npx skills add abizersalumbergod/Arkononian-ui-ux
+```
+
+It detects the agents you have installed (Claude Code, Codex, Cursor and others) and asks where to put the skill. By default it installs into the current project; add `-g` to install for your whole user account, or `-a` to pick specific agents:
+
+```bash
+npx skills add abizersalumbergod/Arkononian-ui-ux -g                # available in every project
+npx skills add abizersalumbergod/Arkononian-ui-ux -a claude-code    # Claude Code only
+```
+
+The repository is spelled `Arkononian-ui-ux`; the skill itself is named `arkononion-ui-ux`. Nothing needs to be uploaded or registered: the command installs straight from this public repository.
+
+### Manual install
+
 The skill folder name must be `arkononion-ui-ux` to match the `name` in `SKILL.md`. Clone the repository directly into the target folder, or rename the downloaded folder before installing it. Replace `<repository-url>` with the URL for your copy of this repository.
 
 ### Claude Code, personal install
