@@ -3,8 +3,8 @@
 //
 // Scores every route in routing/routes.json by the summed weights of its matched trigger
 // patterns (each trigger counts once), picks the primary route (highest score >= 1, ties go
-// to the earlier route) and the secondary routes (score >= max(1, 0.5 x primary)), then adds
-// the always-on modules, keyword modifiers, approval checkpoints and warnings. Falls back to
+// to the earlier route) and the secondary routes (score >= min(2, max(1, 0.5 x primary))), then
+// adds the always-on modules, keyword modifiers, approval checkpoints and warnings. Falls back to
 // the table's fallback route (new-product) when nothing matches. Offline, zero dependencies.
 
 import { readFileSync } from 'node:fs';
@@ -219,7 +219,8 @@ export function route(text, routesJson) {
   }
   let secondary = [];
   if (primary) {
-    const threshold = Math.max(1, 0.5 * scores[primary.id]);
+    // Half the primary's score, capped at 2 so a strong primary does not hide a real second concern.
+    const threshold = Math.min(2, Math.max(1, 0.5 * scores[primary.id]));
     secondary = table.routes
       .filter((r) => r !== primary && scores[r.id] >= threshold)
       .sort((a, b) => scores[b.id] - scores[a.id] || a.index - b.index);
@@ -237,6 +238,7 @@ export function route(text, routesJson) {
   const notes = [
     ...approvals.map((a) => `approval ${a.id}: ${a.note}`.trim()),
     ...warnings.map((w) => `warning ${w.id}: ${w.note}`.trim()),
+    ...modifiers.filter((m) => m.note).map((m) => `modifier ${m.id}: ${m.note}`),
   ];
   if (rawLength > MAX_INPUT_CHARS) notes.push(`input longer than ${MAX_INPUT_CHARS} characters: only the beginning was analysed`);
 

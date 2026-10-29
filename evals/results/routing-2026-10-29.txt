@@ -1,0 +1,33 @@
+✔ scenarios file is well-formed and uses ids defined in routes.json (2.8265ms)
+✔ scenario static-marketing-page routes as expected (33.5345ms)
+✔ scenario conversion-landing-page routes as expected (15.0732ms)
+✔ scenario multi-page-saas-dashboard routes as expected (0.8384ms)
+✔ scenario complex-analytics-dashboard routes as expected (0.8657ms)
+✔ scenario cinematic-3d-homepage routes as expected (0.8845ms)
+✔ scenario ecommerce-product-page routes as expected (0.4102ms)
+✔ scenario mobile-first-interface routes as expected (0.3478ms)
+✔ scenario improve-existing-no-rewrite routes as expected (0.4071ms)
+✔ scenario image-generation-no-generator routes as expected (0.6849ms)
+✔ scenario video-generation-external-api routes as expected (0.5527ms)
+✔ scenario unavailable-package routes as expected (0.4558ms)
+✔ scenario failing-tests routes as expected (0.3565ms)
+✔ scenario reduced-motion-site routes as expected (0.4095ms)
+✔ scenario untrusted-reference-readme routes as expected (0.3806ms)
+✔ scenario dashboard-unreliable-data routes as expected (0.3056ms)
+✔ scenario expensive-external-operation routes as expected (0.2644ms)
+✔ empty input routes to the new-product fallback (1.533ms)
+✔ "3D landing page" picks landing-page and immersive-3d as primary and secondary (0.615ms)
+✔ a route scoring 2 or more joins secondary even under a strong primary (0.3416ms)
+✔ adding a feature to "our site" pulls in the existing-project route (0.3206ms)
+✔ forms, waitlists and bookings carry the third-party data note (0.5503ms)
+✔ canvas-design is suggested for posters, not for product photography (0.3666ms)
+✔ routes.json validates against schemas/routes.schema.json and compiles (5.547ms)
+✔ every module and workflow path in routes.json is in the spec file list (0.4756ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 248.9844

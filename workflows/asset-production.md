@@ -70,7 +70,7 @@ Produce UI media (images, illustrations, icons, video, audio, textures, 3D model
 - Always: [quality-gates](../references/quality-gates.md), [capability-registry](../references/capability-registry.md).
 - Route: [asset-generation](../references/asset-generation.md), [image-pipelines](../references/image-pipelines.md), [video-pipelines](../references/video-pipelines.md), [audio-pipelines](../references/audio-pipelines.md), [security-and-privacy](../references/security-and-privacy.md). Load only the pipeline modules for media types actually in the list.
 - As needed: [shader-and-creative-coding](../references/shader-and-creative-coding.md) (procedural), [three-dimensional-web](../references/three-dimensional-web.md) (GLB), [performance](../references/performance.md), [troubleshooting](../references/troubleshooting.md).
-- Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `canvas-design`.
+- Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `canvas-design` for posters, illustrations and static art (the router suggests it through the `illustration-art` modifier), never for photography or product shots.
 
 ## Approvals needed
 

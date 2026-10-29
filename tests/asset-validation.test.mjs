@@ -201,6 +201,14 @@ test('a missing or placeholder licence fails', async () => {
   assert.equal(report.overall, 'FAIL');
 });
 
+test('a placeholder asset with a real licence statement warns instead of passing', async () => {
+  const report = await run(manifest(asset({ id: 'slot', source: 'placeholder', license: 'placeholder; project-owned SVG' })));
+  assert.equal(report.manifestChecks.find((c) => c.id === 'schema').status, 'pass');
+  assert.equal(check(report, 'slot', 'license').status, 'pass');
+  assert.equal(check(report, 'slot', 'placeholder').status, 'warn');
+  assert.equal(report.assets[0].status, 'warn');
+});
+
 test('a critical asset without a fallback fails; with one it passes', async () => {
   const report = await run(manifest(
     asset({ id: 'hero', role: 'hero', critical: true, loading: 'eager' }),

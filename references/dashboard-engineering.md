@@ -15,7 +15,7 @@ Rules for building dashboards, admin panels and SaaS apps whose job is to help p
 6. Every filter, date range, sort and search must change the query that produces the data. A control that only changes styling or is not wired is a Gate B failure.
 7. Keep filters, sort, page, date range, selected tab and open record in the URL. Typing updates use `replace`; deliberate view changes (saved view, drill-down) use `push` so Back undoes them.
 8. Choose the chart by the analytical question (table in Specifications), never by novelty. Ban radial gauges, 3D charts and pies with more than 5 slices or near-equal shares.
-9. Never encode a value with colour alone (WCAG 1.4.1). Bars start at zero; never animate or truncate an axis in a way that misrepresents magnitude.
+9. Never encode a value with colour alone (WCAG 1.4.1). Bars and areas start at zero. A line chart may use a non-zero baseline (sensor readings, prices) only when the axis is labelled with its range. Never animate or truncate an axis in a way that misrepresents magnitude.
 10. Give every chart a title with unit and period, a text summary of the key finding, and a reachable data-table alternative.
 11. Format every number and date with `Intl.NumberFormat` / `Intl.DateTimeFormat`, cached per option set, in the viewer's locale and an explicit, displayed time zone. Use `tabular-nums` and right alignment for numeric columns.
 12. Implement sortable columns as a `<button>` inside `<th scope="col">`, with `aria-sort` only on the currently sorted header, and announce the new sort order.

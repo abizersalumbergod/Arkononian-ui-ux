@@ -48,7 +48,7 @@
         "role": { "type": "string", "minLength": 1, "description": "hero, background, poster, product, avatar, ambient-loop, ui-sound, ..." },
         "path": { "type": "string", "minLength": 1, "description": "File path relative to the project root (validated with --root)." },
         "uri": { "type": "string", "minLength": 1, "description": "Remote or runtime URI when there is no local file (not fetched by the validator)." },
-        "source": { "type": "string", "enum": ["generated", "procedural", "retrieved", "original"] },
+        "source": { "type": "string", "enum": ["generated", "procedural", "retrieved", "original", "placeholder"] },
         "generator": {
           "description": "Tool/model that produced the asset. Never put credentials here.",
           "anyOf": [
