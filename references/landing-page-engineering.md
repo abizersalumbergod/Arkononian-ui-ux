@@ -96,7 +96,7 @@ Variety and density (source: design-taste-frontend): an 8-section page uses at l
 | Area | Requirements |
 |---|---|
 | Gallery | First image is the LCP candidate: preloaded, explicit dimensions, no lazy load; others lazy. Thumbnails are buttons with accessible names; zoom/lightbox is keyboard-operable and closable with Esc; swipe on touch plus arrow buttons. Formats and `srcset` per [image-pipelines](image-pipelines.md). |
-| Variants | Size/colour as radio groups (`fieldset` + `legend`), colour swatches with a text label; selection updates price, image, stock and URL (`?variant=` so the page is shareable). Unavailable options stay visible, marked unavailable, with "Notify me" if supported. |
+| Variants | Size/colour as radio groups (`fieldset` + `legend`), colour swatches with a text label; the selected option shows a non-colour indicator (ring, check or heavier border at 3:1 against its surroundings) and its name in text; selection updates price, image, stock and URL (`?variant=` so the page is shareable). Unavailable options stay visible, marked unavailable, with "Notify me" if supported. |
 | Price and stock | Current price, compare-at price only if the item was genuinely sold at it, currency, unit price where legally required (EU), stock state from inventory data, delivery estimate when computable. |
 | Add to cart | Pending state on click, success feedback announced via `aria-live="polite"` (cart count + mini-cart or toast with "View bag" / "Checkout"), error state with retry on failure. Never navigate away silently. |
 | Reviews | Average rating with count and distribution, sort/filter, verified-buyer marker if real; never seed fake reviews. Load the review list below the fold or on interaction. |

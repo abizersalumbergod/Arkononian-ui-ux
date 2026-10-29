@@ -81,6 +81,31 @@ test('"3D landing page" picks landing-page and immersive-3d as primary and secon
   assert.ok(r.modules.includes('references/landing-page-engineering.md'));
 });
 
+test('a route scoring 2 or more joins secondary even under a strong primary', () => {
+  const r = route("Generate a set of hero images for our bakery's landing page.");
+  assert.equal(r.primary, 'asset-production');
+  assert.ok(r.secondary.includes('landing-page'), `secondary ${r.secondary.join(', ')} scores=${JSON.stringify(r.scores)}`);
+});
+
+test('adding a feature to "our site" pulls in the existing-project route', () => {
+  const r = route('Add scroll-triggered reveal animations to our portfolio site.');
+  assert.equal(r.primary, 'portfolio-editorial');
+  assert.ok(r.secondary.includes('existing-project'), `secondary ${r.secondary.join(', ')} scores=${JSON.stringify(r.scores)}`);
+});
+
+test('forms, waitlists and bookings carry the third-party data note', () => {
+  for (const prompt of ['Landing page with a waitlist', 'Booking flow for yoga classes', 'One page with a contact section']) {
+    const r = route(prompt);
+    assert.ok(r.modifiers.includes('forms-auth-payments'), `${prompt}: ${r.modifiers.join(', ')}`);
+    assert.ok(r.notes.some((n) => n.startsWith('modifier forms-auth-payments:')), `${prompt}: ${r.notes.join(' | ')}`);
+  }
+});
+
+test('canvas-design is suggested for posters, not for product photography', () => {
+  assert.ok(route('Design a poster for our gig').delegateSkills.includes('canvas-design'));
+  assert.ok(!route('Generate 40 product photos for the catalog').delegateSkills.includes('canvas-design'));
+});
+
 test('routes.json validates against schemas/routes.schema.json and compiles', () => {
   const result = validate(readJson('schemas', 'routes.schema.json'), routes);
   assert.ok(result.valid, formatErrors(result.errors).join('\n'));

@@ -137,7 +137,9 @@ test('project profile detects framework, router, styling, kits, libraries and pa
   assert.ok(names(p.testTools).includes('@playwright/test'));
   assert.equal(p.packageManager.name, 'pnpm');
   assert.equal(p.typescript, true);
-  assert.ok(result.skills.roots.some((r) => r.root.endsWith('fixture-app/.claude/skills')));
+  // Roots are reported as labels (no absolute paths); a --project run adds both project roots.
+  assert.ok(result.skills.roots.some((r) => r.root === '<project>/.claude/skills'));
+  assert.ok(result.skills.roots.some((r) => r.root === '<project>/.agents/skills'));
 });
 
 test('profileProject handles a directory without package.json', () => {

@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/routes.schema.json",
-  "$comment": "Read by scripts/route.mjs. Patterns are JavaScript regular-expression sources compiled with the case-insensitive flag and matched against whitespace-normalised request text; every pattern is word-boundary anchored. A route's score is the sum of the weights of its matched triggers (each trigger counts once). Extension fields beyond the schema minimum: modifiers[].delegateSkills, approvalTriggers[].modules and warningPatterns[].modules are merged into the result like modifier modules. delegateSkills are 'use if installed' (see references/skill-delegation.md); presets are suggestions, never forced.",
+  "$comment": "Read by scripts/route.mjs. Patterns are JavaScript regular-expression sources compiled with the case-insensitive flag and matched against whitespace-normalised request text; every pattern is word-boundary anchored. A route's score is the sum of the weights of its matched triggers (each trigger counts once). Extension fields beyond the schema minimum: modifiers[].delegateSkills, approvalTriggers[].modules and warningPatterns[].modules are merged into the result like modifier modules; modifiers[].note is added to the result's notes. delegateSkills are 'use if installed' (see references/skill-delegation.md); presets are suggestions, never forced.",
   "version": "1.0.0",
   "description": "Routing table for the arkononion-ui-ux skill: weighted trigger patterns per route, always-loaded modules, keyword modifiers, approval checkpoints, warning patterns and the fallback route.",
   "always": [
@@ -226,7 +226,9 @@
         { "pattern": "\\b(moderni[sz](e|es|ed|ing|ation)|revamp\\w*|restyl(e|es|ed|ing)|refresh(ing)? (the )?(look|design|ui|brand)|face[\\s-]?lift|overhaul\\w*|declutter\\w*)\\b", "weight": 2 },
         { "pattern": "\\b(failing|broken|flaky) (tests?|builds?|ci|pipelines?|e2e|suites?)\\b", "weight": 2 },
         { "pattern": "\\bexisting\\b", "weight": 1 },
-        { "pattern": "\\b(in|to|on|for|of) (my|our) ([\\w.+'-]+ ){0,3}(app|site|website|codebase|repo|project)\\b", "weight": 1 }
+        { "pattern": "\\b(in|to|on|into) (my|our) ([\\w.+'-]+ ){0,3}(app|site|website|codebase|repo|project|portfolio|blog|store|storefront|shop|dashboard|homepage|landing page)s?\\b", "weight": 2 },
+        { "pattern": "\\b(style|update|tweak|adjust|change) (my|our) ([\\w.+'-]+ ){0,3}(app|site|website|pages?|homepage|store|storefront|shop|dashboard|portfolio|blog|ui|frontend|front-end)\\b", "weight": 2 },
+        { "pattern": "\\b(for|of) (my|our) ([\\w.+'-]+ ){0,3}(app|site|website|codebase|repo|project)\\b", "weight": 1 }
       ],
       "modules": [
         "references/frontend-architecture.md",
@@ -270,7 +272,7 @@
         "references/audio-pipelines.md",
         "references/security-and-privacy.md"
       ],
-      "delegateSkills": ["canvas-design"],
+      "delegateSkills": [],
       "presets": [],
       "note": "Generated or sourced media: check capability status and cost first; paid generation needs approval."
     },
@@ -397,15 +399,23 @@
       "delegateSkills": ["dataviz"]
     },
     {
+      "id": "illustration-art",
+      "patterns": ["\\b(posters?|illustrations?|art ?work|art pieces?|generative art|social (cards?|images?|graphics?)|og images?|open[\\s-]?graph images?)\\b"],
+      "modules": ["references/asset-generation.md"],
+      "delegateSkills": ["canvas-design"]
+    },
+    {
       "id": "forms-auth-payments",
       "patterns": [
         "\\bforms?\\b",
+        "\\b(contact (forms?|sections?|pages?)|wait[\\s-]?lists?|newsletters?|bookings?|reservations?|add[\\s-]to[\\s-]cart|carts?)\\b",
         "\\b(log[\\s-]?in|sign[\\s-]?in|sign[\\s-]?ups?|authenticat\\w*|auth|sso|passwords?|2fa|mfa|magic links?)\\b",
         "\\b(payments?|checkouts?|stripe|paypal|billing|subscriptions?|invoices?)\\b",
         "\\b(user data|personal data|pii|gdpr|ccpa|consent|cookie banners?)\\b",
         "\\bapi[\\s-]?keys?\\b"
       ],
-      "modules": ["references/security-and-privacy.md", "references/interaction-design.md"]
+      "modules": ["references/security-and-privacy.md", "references/interaction-design.md"],
+      "note": "Connecting a form, sign-in, booking, payment or API key to a provider sends user data or secrets to a third party: ask first (SKILL.md section 1) and keep keys server-side. Until approved, post to a local stub and report it as not connected."
     },
     {
       "id": "seo",
@@ -482,7 +492,7 @@
         "\\b(dependency (conflicts?|errors?|issues?|hell)|peer dep\\w*)\\b"
       ],
       "modules": ["references/troubleshooting.md"],
-      "note": "Failures, broken installs, missing packages and regressions."
+      "note": "Reproduce the failure and record the exact error before changing code; fix the cause, and never skip, delete or weaken a test to go green."
     },
     {
       "id": "stack-and-dependencies",
@@ -495,7 +505,7 @@
         "\\ball sharing (one|a|the same) [\\w-]+ (layout|shell|navigation)\\b"
       ],
       "modules": ["references/frontend-architecture.md"],
-      "note": "A named stack, a dependency question or a multi-page app structure (routing, shared layouts) loads framework detection, app architecture and dependency policy."
+      "note": "Detect the framework, package manager and lockfile before choosing libraries; verify a package name exists in the registry before installing it."
     }
   ],
   "approvalTriggers": [
