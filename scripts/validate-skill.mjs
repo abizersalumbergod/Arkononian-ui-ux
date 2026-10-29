@@ -35,7 +35,7 @@ export const EXIT = Object.freeze({ PASS: 0, FAIL: 1, USAGE: 64 });
 
 /** Package file list from the build spec section 3 (also the only allowed link targets). */
 export const PACKAGE_FILES = Object.freeze({
-  '': ['SKILL.md', 'README.md', 'MASTER_INSTRUCTIONS.md', 'CHANGELOG.md', 'LICENSES_AND_PROVENANCE.md'],
+  '': ['SKILL.md', 'README.md', 'MASTER_INSTRUCTIONS.md', 'CHANGELOG.md', 'LICENSE', 'LICENSES_AND_PROVENANCE.md'],
   references: [
     'capability-registry.md', 'capability-registry.json', 'skill-audit.md', 'skill-delegation.md',
     'design-intelligence.md', 'product-discovery.md', 'visual-systems.md', 'typography-and-layout.md',

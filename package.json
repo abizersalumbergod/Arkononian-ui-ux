@@ -1,0 +1,61 @@
+{
+  "name": "arkononion-ui-ux",
+  "version": "0.2.0",
+  "description": "Agent skill to plan, build, redesign or audit web interfaces: routing, design tokens, asset pipelines and honest quality gates (WCAG 2.2 AA, Core Web Vitals, responsive, assets).",
+  "keywords": [
+    "agent-skill",
+    "claude-code",
+    "codex",
+    "ui",
+    "ux",
+    "design-system",
+    "accessibility",
+    "design-tokens",
+    "landing-page",
+    "dashboard"
+  ],
+  "license": "MIT",
+  "author": "abizersalumbergod",
+  "homepage": "https://github.com/abizersalumbergod/Arkononian-ui-ux#readme",
+  "bugs": {
+    "url": "https://github.com/abizersalumbergod/Arkononian-ui-ux/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abizersalumbergod/Arkononian-ui-ux.git"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "SKILL.md",
+    "MASTER_INSTRUCTIONS.md",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "LICENSES_AND_PROVENANCE.md",
+    "references/",
+    "workflows/",
+    "templates/",
+    "presets/",
+    "routing/",
+    "schemas/",
+    "scripts/"
+  ],
+  "bin": {
+    "arkononion-route": "scripts/route.mjs",
+    "arkononion-environment-audit": "scripts/environment-audit.mjs",
+    "arkononion-build-tokens": "scripts/build-tokens.mjs",
+    "arkononion-visual-check": "scripts/visual-check.mjs",
+    "arkononion-asset-validation": "scripts/asset-validation.mjs",
+    "arkononion-quality-report": "scripts/quality-report.mjs"
+  },
+  "scripts": {
+    "test": "node --test \"tests/*.test.mjs\"",
+    "validate": "node scripts/validate-skill.mjs",
+    "docs": "node scripts/build-docs.mjs",
+    "docs:check": "node scripts/build-docs.mjs --check",
+    "prepublishOnly": "node scripts/validate-skill.mjs && node scripts/build-docs.mjs --check"
+  }
+}

@@ -94,13 +94,25 @@ git clone "$repository_url" "$HOME/.agents/skills/arkononion-ui-ux"
 
 Replace `OWNER/REPOSITORY` with the published repository path.
 
+### From npm
+
+The package `arkononion-ui-ux` contains the skill files only (no tests or eval results). Unpack it straight into the skill folder; this example is for Claude Code, so use `.agents/skills` for Codex.
+
+```bash
+npm pack arkononion-ui-ux
+mkdir -p "$HOME/.claude/skills/arkononion-ui-ux"
+tar -xzf arkononion-ui-ux-*.tgz -C "$HOME/.claude/skills/arkononion-ui-ux" --strip-components=1
+```
+
+Installing it globally (`npm install --global arkononion-ui-ux`) also puts the scripts on your PATH as `arkononion-route`, `arkononion-environment-audit`, `arkononion-build-tokens`, `arkononion-visual-check`, `arkononion-asset-validation` and `arkononion-quality-report`.
+
 For a project-scoped install, copy this skill folder to `.claude/skills/arkononion-ui-ux/` for Claude Code or `.agents/skills/arkononion-ui-ux/` for Codex, then commit that folder with the project. For another client, follow its documented skill location.
 
 Start a new agent session if the skill does not appear. Invoke it as `/arkononion-ui-ux` in Claude Code or `$arkononion-ui-ux` in Codex; other clients use their own invocation syntax.
 
 This repository follows the [Agent Skills format](https://agentskills.io/specification). Claude Code and Codex document their skill locations in their [Claude Code skills guide](https://code.claude.com/docs/en/skills) and [Codex skills guide](https://learn.chatgpt.com/docs/build-skills). For broader public distribution through the OpenAI ecosystem, package it as a plugin or hosted skill according to that platform's current requirements.
 
-**License status:** no redistribution license has been selected. Review [LICENSES_AND_PROVENANCE.md](LICENSES_AND_PROVENANCE.md) and choose license terms before publishing or sharing the files. The documented third-party adaptations also need to be cleared for distribution.
+**License:** MIT ([LICENSE](LICENSE)). Third-party techniques adapted into the modules, and their attribution, are listed in [LICENSES_AND_PROVENANCE.md](LICENSES_AND_PROVENANCE.md).
 
 ## Capability detection and prerequisites
 
