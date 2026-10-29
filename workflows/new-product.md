@@ -44,7 +44,7 @@ Build a new product, site or app from a brief when no more specific route matche
    - **Exit check:** tokens exist in code; one representative screen or journey renders with them.
 5. **Build (stage 5).**
    - Read [interaction-design](../references/interaction-design.md). Implement remaining screens with semantic HTML, reusable components and explicit default, hover, focus, active, disabled, loading, empty and error states.
-   - Apply [responsive-design](../references/responsive-design.md) from the smallest viewport up (mandatory for `mobile-responsive`).
+   - Apply [responsive-design](../references/responsive-design.md) from the smallest viewport up (mandatory for `mobile-responsive`): fluid type and space with `clamp()` and a `rem` term (its rule 8), content-driven breakpoints, and no horizontal scroll at any width in the matrix.
    - Every CTA must do something real or be visibly disabled with a reason.
    - **Exit check:** all critical journeys work locally; no inert primary CTAs.
 6. **Assets (stage 6).**

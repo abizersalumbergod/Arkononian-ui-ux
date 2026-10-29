@@ -650,6 +650,7 @@ async function checkAsset(asset, ctx) {
   if (a.optimization === 'pending') add('optimization', 'warn', 'optimization is still pending');
   if (a.loading === 'lazy' && /hero/i.test(String(a.role ?? ''))) add('loading', 'warn', 'hero assets are usually the LCP element; do not lazy-load them');
   if (a.validation?.status === 'failed') add('recorded-validation', 'warn', 'the manifest records a failed validation for this asset');
+  if (a.source === 'placeholder') add('placeholder', 'warn', 'placeholder asset: replace it before launch and list it in the final report');
 
   const status = checks.some((c) => c.status === 'fail') ? 'fail'
     : checks.some((c) => c.status === 'not-tested') ? 'not-tested'
@@ -796,6 +797,7 @@ schemas/asset-manifest.schema.json, then checks every asset:
   license   required; "unknown" and similar placeholders fail
   fallback  required for critical assets; assetId/path references must resolve
   secrets   prompts, generator params and promptRef files must hold no credentials
+  placeholder  source "placeholder" warns until the asset is replaced
 Statuses: fail = critical failure, warn = advisory, not-tested = not verified here.
 
 Options:

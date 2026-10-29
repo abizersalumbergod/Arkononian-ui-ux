@@ -11,7 +11,7 @@ Defines gates A-H, what each one accepts, how to run it with the tools that real
 2. Give every FAIL, BLOCKED, NOT_TESTED and NOT_APPLICABLE status a specific `reason` naming what is missing and what would unblock it (tool, credential, approval, fix).
 3. Never lower a threshold, shrink the viewport matrix, drop a critical journey or disable an axe rule to turn a gate green. Fix the root cause and re-run.
 4. If a gate has an open `critical` finding, its status is FAIL, whatever the other evidence says.
-5. Use BLOCKED when the check cannot run (tool `unavailable`, `requires-credentials`, `requires-approval`, build broken upstream). Use NOT_TESTED when it could run but was not run. Use NOT_APPLICABLE only when the gate's subject does not exist (no assets, not a skill package) and say why.
+5. Use BLOCKED when the check cannot run (tool `unavailable`, `requires-credentials`, `requires-approval`, build broken upstream). Use NOT_TESTED when it could run but was not run; field Core Web Vitals for a page that is not live yet are NOT_TESTED, with the lab results as evidence. Use NOT_APPLICABLE only when the gate's subject does not exist (no assets, not a skill package) and say why.
 6. Keep build, render, interaction, accessibility, performance and responsive evidence in separate evidence items. A green build never implies a rendered, accessible or responsive UI.
 7. Record the evaluation mode that actually ran for C, D, F and H: `live-browser`, `screenshots-only` or `code-only`. Never present a code-only review as a browser evaluation.
 8. Never report a UI as "accessible" from automated scans alone. Gate D needs an automated scan plus a manual keyboard and focus pass; mark the screen-reader spot check NOT_TESTED if it was not done.
