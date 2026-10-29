@@ -1,0 +1,9 @@
+# Secret-bearing environment files must never be committed; the placeholder example stays.
+.env
+.env.*
+!.env.example
+
+# Local tooling
+.venv*/
+__pycache__/
+*.pyc

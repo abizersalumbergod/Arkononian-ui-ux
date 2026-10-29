@@ -1,0 +1,51 @@
+{
+  "_comment": "Recorded 2026-10-29 from https://trellis-community-trellis.hf.space/gradio_api/info (Space trellis-community/TRELLIS), trimmed to parameter names/defaults and return components. Used only by tests/image-to-3d/test_pipeline.py.",
+  "named_endpoints": {
+    "/start_session": { "parameters": [], "returns": [] },
+    "/preprocess_image": {
+      "parameters": [
+        { "parameter_name": "image", "parameter_has_default": false, "parameter_default": null, "component": "Image" }
+      ],
+      "returns": [ { "label": "Image Prompt", "component": "Image" } ]
+    },
+    "/preprocess_images": {
+      "parameters": [
+        { "parameter_name": "images", "parameter_has_default": true, "parameter_default": null, "component": "Gallery" }
+      ],
+      "returns": [ { "label": "Image Prompt", "component": "Gallery" } ]
+    },
+    "/get_seed": {
+      "parameters": [
+        { "parameter_name": "randomize_seed", "parameter_has_default": true, "parameter_default": true, "component": "Checkbox" },
+        { "parameter_name": "seed", "parameter_has_default": true, "parameter_default": 0, "component": "Slider" }
+      ],
+      "returns": [ { "label": "Seed", "component": "Slider" } ]
+    },
+    "/generate_and_extract_glb": {
+      "parameters": [
+        { "parameter_name": "image", "parameter_has_default": false, "parameter_default": null, "component": "Image" },
+        { "parameter_name": "multiimages", "parameter_has_default": true, "parameter_default": null, "component": "Gallery" },
+        { "parameter_name": "seed", "parameter_has_default": true, "parameter_default": 0, "component": "Slider" },
+        { "parameter_name": "ss_guidance_strength", "parameter_has_default": true, "parameter_default": 7.5, "component": "Slider" },
+        { "parameter_name": "ss_sampling_steps", "parameter_has_default": true, "parameter_default": 12, "component": "Slider" },
+        { "parameter_name": "slat_guidance_strength", "parameter_has_default": true, "parameter_default": 3.0, "component": "Slider" },
+        { "parameter_name": "slat_sampling_steps", "parameter_has_default": true, "parameter_default": 12, "component": "Slider" },
+        { "parameter_name": "multiimage_algo", "parameter_has_default": true, "parameter_default": "stochastic", "component": "Radio" },
+        { "parameter_name": "mesh_simplify", "parameter_has_default": true, "parameter_default": 0.95, "component": "Slider" },
+        { "parameter_name": "texture_size", "parameter_has_default": true, "parameter_default": 1024, "component": "Slider" }
+      ],
+      "returns": [
+        { "label": "Generated 3D Asset", "component": "Video" },
+        { "label": "Extracted GLB/Gaussian", "component": "Litmodel3d" },
+        { "label": "Download GLB", "component": "Downloadbutton" }
+      ]
+    },
+    "/extract_gaussian": {
+      "parameters": [],
+      "returns": [
+        { "label": "Extracted GLB/Gaussian", "component": "Litmodel3d" },
+        { "label": "Download Gaussian", "component": "Downloadbutton" }
+      ]
+    }
+  }
+}

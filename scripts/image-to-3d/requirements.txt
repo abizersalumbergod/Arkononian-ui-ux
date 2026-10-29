@@ -1,0 +1,4 @@
+# Optional image-to-3D pipeline (references/image-to-3d-pipeline.md). Install into an isolated venv:
+#   python scripts/image-to-3d/image_to_glb.py setup
+# Only generate_3d.py needs a package; process_mesh.py runs inside Blender's own Python.
+gradio_client>=1.0.0

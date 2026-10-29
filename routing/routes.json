@@ -475,6 +475,39 @@
       "modules": ["references/three-dimensional-web.md"]
     },
     {
+      "id": "image-to-3d",
+      "patterns": [
+        "\\b(image|photo|picture|sketch|drawing|render|screenshot)s?[\\s-]to[\\s-](3d|glb|gltf)\\b",
+        "\\b(3d|glb|gltf)( models?| assets?| meshes| objects?)? (from|out of|based on) (this|that|these|my|our|the|an?)( [\\w-]+){0,2} (images?|photos?|pictures?|sketch(es)?|drawings?|renders?|screenshots?)\\b",
+        "\\b(turn|convert|make|generate)\\b.{0,40}?\\b(images?|photos?|pictures?|sketch(es)?|renders?)\\b.{0,25}?\\b(into|to|as) (an? )?(3d|glb|gltf)\\b",
+        "\\b(trellis|hunyuan ?3d|hunyuan3d)\\b",
+        "\\bgradio[\\s-]?client\\b"
+      ],
+      "modules": [
+        "references/image-to-3d-pipeline.md",
+        "references/asset-generation.md",
+        "references/three-dimensional-web.md",
+        "references/security-and-privacy.md"
+      ],
+      "note": "Optional image-to-3D route: the image is uploaded to a public Hugging Face Space and generation runs on remote free-tier GPUs, so name the file and the Space and get an explicit yes first (third-party-upload). It needs Python and Blender; if either is missing, report it and offer the procedural or supplied-GLB fallback."
+    },
+    {
+      "id": "gemini-media",
+      "patterns": [
+        "\\b(nano[\\s-]?banana|gemini omni|omni flash|veo [\\d.]+)\\b",
+        "\\bgemini\\b.{0,40}?\\b(images?|videos?|pictures?|photos?|art ?work|generat\\w*|illustrations?|renders?|api|key|textures?|mockups?|assets?)\\b",
+        "\\b(images?|videos?|pictures?|generat\\w*|illustrations?|textures?|mockups?|assets?)\\b.{0,30}?\\b(with|using|via|through|from) gemini\\b"
+      ],
+      "modules": [
+        "references/image-to-3d-pipeline.md",
+        "references/asset-generation.md",
+        "references/image-pipelines.md",
+        "references/video-pipelines.md",
+        "references/security-and-privacy.md"
+      ],
+      "note": "Optional Gemini stage: it works only with a billing-enabled Gemini key (Google lists its image and video models as paid-only), so run `gemini_media.py doctor` first and use the normal procedure when there is no access. Every call is paid and sends the prompt to Google: get the user's approval naming the provider and the job count, plus the exact names of any local image sent. Never ask the user to enable billing."
+    },
+    {
       "id": "shader",
       "patterns": ["\\b(shaders?|glsl|tsl|wgsl|creative coding|generative art|procedural|noise fields?|film[\\s-]grain|canvas (animations?|art))\\b"],
       "modules": ["references/shader-and-creative-coding.md"]
@@ -528,7 +561,9 @@
       "patterns": [
         "\\bgenerat(e|es|ed|ing|ion|ions)\\b.{0,40}?\\b(images?|photos?|pictures?|illustrations?|videos?|clips?|audio|sound effects?|music|soundtracks?|voice[\\s-]?overs?|speech|3d( models?| assets?)?|textures?|icons?|renders?|artwork|imagery)\\b",
         "\\b(creat(e|es|ing)|mak(e|es|ing)|produc(e|es|ing)|render(s|ing)?)( me| us)? (an?|some|\\d+|several|a few|a set of|new|custom|original)( [\\w-]+){0,2} (images?|photos?|pictures?|illustrations?|videos?|clips?|soundtracks?|music|voice[\\s-]?overs?|sound effects?|3d models?|textures?|artwork)\\b",
-        "\\b(higgsfield|midjourney|elevenlabs|stable[\\s-]diffusion|dall[\\s-]?e|suno|meshy|fal\\.ai|fal|runway|sora|veo|kling|ideogram|recraft|replicate)\\b",
+        "\\bgemini\\b.{0,40}?\\b(images?|videos?|pictures?|photos?|generat\\w*|illustrations?|renders?|textures?|mockups?)\\b",
+        "\\b(images?|videos?|pictures?|photos?|illustrations?|renders?|textures?|mockups?)\\b.{0,30}?\\b(with|using|via|through|from) gemini\\b",
+        "\\b(higgsfield|midjourney|elevenlabs|stable[\\s-]diffusion|dall[\\s-]?e|suno|meshy|fal\\.ai|fal|runway|sora|veo|kling|ideogram|recraft|replicate|nano[\\s-]?banana|gemini omni)\\b",
         "\\b(image|video|audio|music|voice|speech|3d)[\\s-](generation|generators?)\\b",
         "\\b(upscal(e|es|ed|ing)|text[\\s-]to[\\s-](image|video|speech|3d)|image[\\s-]to[\\s-](video|3d))\\b"
       ],
@@ -563,6 +598,10 @@
     {
       "id": "third-party-upload",
       "patterns": [
+        "\\b(image|photo|picture|sketch|drawing|render|screenshot)s?[\\s-]to[\\s-](3d|glb|gltf)\\b",
+        "\\b(trellis|hunyuan ?3d|hunyuan3d|hugging ?face spaces?)\\b",
+        "\\b(3d|glb|gltf)( models?| assets?| meshes| objects?)? (from|out of|based on) (this|that|these|my|our|the|an?)( [\\w-]+){0,2} (images?|photos?|pictures?|sketch(es)?|drawings?|renders?|screenshots?)\\b",
+        "\\b(turn|convert|make|generate)\\b.{0,40}?\\b(images?|photos?|pictures?|sketch(es)?|renders?)\\b.{0,25}?\\b(into|to|as) (an? )?(3d|glb|gltf)\\b",
         "\\bupload(s|ed|ing)? (it|them|this|these|those|the|our|my|all|every|[\\w-]+ (files?|assets?|images?|photos?|videos?|data))\\b.{0,40}?\\b(to|onto|into)\\b",
         "\\b(send|share|transfer|sync)(s|ed|ing)? ([\\w-]+ ){0,3}(files?|assets?|data|datasets?|database|codebase|source code|repo|repository|screenshots?|recordings?)\\b.{0,30}?\\b(to|with)\\b"
       ],

@@ -3,7 +3,7 @@
 How to plan, encode, embed, caption, generate and validate video for interfaces: hero and background loops, product demos and explainers. Encoding and embedding choices here decide LCP, data cost and whether autoplay works at all.
 
 **Load when:** a page uses `<video>`, a background or hero loop, a product demo or screen recording, an explainer, social cut-downs, or a request to generate or edit video. **Owns:** codec and container choice, the encoding ladder, faststart, poster frames, video size budgets, background/hero/loop/demo patterns, WebVTT tracks for video, video generation prompt specs, ffmpeg-less fallbacks.
-**Related:** [asset-generation](asset-generation.md), [image-pipelines](image-pipelines.md), [audio-pipelines](audio-pipelines.md), [motion-engineering](motion-engineering.md), [accessibility](accessibility.md), [performance](performance.md), [capability-registry](capability-registry.md), [skill-delegation](skill-delegation.md), [security-and-privacy](security-and-privacy.md), [asset-production workflow](../workflows/asset-production.md)
+**Related:** [image-to-3d-pipeline](image-to-3d-pipeline.md) (optional Gemini video generation from a still), [asset-generation](asset-generation.md), [image-pipelines](image-pipelines.md), [audio-pipelines](audio-pipelines.md), [motion-engineering](motion-engineering.md), [accessibility](accessibility.md), [performance](performance.md), [capability-registry](capability-registry.md), [skill-delegation](skill-delegation.md), [security-and-privacy](security-and-privacy.md), [asset-production workflow](../workflows/asset-production.md)
 
 ## Decision rules
 

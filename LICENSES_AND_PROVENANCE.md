@@ -148,9 +148,17 @@ The original text, scripts, schemas and data in `arkononion-ui-ux` were written 
 
 - Fonts in `presets/` are Google Fonts (SIL Open Font License or Apache 2.0) or system fonts.
 - Libraries recommended by modules keep their own licences. Most are MIT (React, Next.js, Tailwind CSS, motion, Lenis, three.js, React Three Fiber, drei, TanStack). axe-core is MPL-2.0. GSAP 3.13+ is free for commercial use under its own no-charge licence (read its terms before use). Verify each licence at install time.
+- Optional image-to-3D toolkit (nothing is bundled; each item is installed or called only at the user's request): `gradio_client` from PyPI (check its licence at install time); the TRELLIS model weights (MIT per the model card, read 2026-10-29); the Hunyuan3D-2 model (Tencent Hunyuan 3D 2.0 Community License, which excludes the European Union, the United Kingdom and South Korea and requires a separate licence above 1 million monthly active users); Blender (GPL, run as an external program and never bundled). The public Hugging Face Spaces that host the models have their own terms; the site owner must review them before commercial use. Gemini output (optional stage, standard library client, nothing bundled) is governed by Google's Gemini API terms and carries a SynthID watermark; the site owner must review those terms before commercial use.
 
 ## External documentation consulted
 
+- <https://ai.google.dev/api/interactions-api>
+- <https://ai.google.dev/gemini-api/docs/api-errors>
+- <https://ai.google.dev/gemini-api/docs/image-generation>
+- <https://ai.google.dev/gemini-api/docs/interactions-overview>
+- <https://ai.google.dev/gemini-api/docs/omni>
+- <https://ai.google.dev/gemini-api/docs/pricing>
+- <https://ai.google.dev/gemini-api/docs/video>
 - <https://api.webstatus.dev/v1/features?q=id%3Aview-transitions%20OR%20id%3Across-document-view-transitions%20OR%20id%3Ascroll-driven-animations%20OR%20id%3Astarting-style%20OR%20id%3Aanchor-positioning%20OR%20id%3Acontainer-queries%20OR%20id%3Apopover>
 - <https://bugs.webkit.org/show_bug.cgi?id=216887>
 - <https://c2pa.org/the-c2pa-launches-content-credentials-2-3-and-celebrates-5-years-of-impact-across-the-digital-ecosystem/>
@@ -192,6 +200,12 @@ The original text, scripts, schemas and data in `arkononion-ui-ux` were written 
 - <https://github.com/recharts/recharts/wiki/3.0-migration-guide>
 - <https://gltf-transform.dev/cli>
 - <https://gsap.com/standard-license>
+- <https://huggingface.co/JeffreyXiang/TRELLIS-image-large>
+- <https://huggingface.co/api/spaces/trellis-community/TRELLIS>
+- <https://huggingface.co/spaces/tencent/Hunyuan3D-2>
+- <https://huggingface.co/spaces/trellis-community/TRELLIS>
+- <https://huggingface.co/tencent/Hunyuan3D-2/blob/main/LICENSE>
+- <https://trellis-community-trellis.hf.space/gradio_api/info>
 - <https://nextjs.org/blog>
 - <https://nextjs.org/blog/next-16>
 - <https://nextjs.org/blog/next-16-4>

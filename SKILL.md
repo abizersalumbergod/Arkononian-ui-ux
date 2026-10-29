@@ -8,7 +8,7 @@ compatibility: Node.js 18 or newer is required for bundled scripts; the document
 
 This file is the orchestrator. It decides what kind of task this is, which specialist modules to read, which tools exist, what needs the user's approval, and how the result is verified.
 
-**How modules load.** Nothing loads automatically. Read the files that the router (or the routing table below) selects, read each one fully before applying it, and do not read modules the task does not need. `<skill-dir>` means the folder containing this file. The scripts need Node 18+ and no npm installs.
+**How modules load.** Nothing loads automatically. Read the files that the router (or the routing table below) selects, read each one fully before applying it, and do not read modules the task does not need. `<skill-dir>` means the folder containing this file. The scripts need Node 18+ and no npm installs; only the optional image-to-3D toolkit needs Python (and Blender), see [image-to-3d-pipeline](references/image-to-3d-pipeline.md).
 
 | Folder | Contains |
 |---|---|
@@ -191,6 +191,7 @@ Never inflate this report.
 | [three-dimensional-web](references/three-dimensional-web.md) | 3D technology choice, Three.js/R3F, scene performance, disposal, fallbacks. |
 | [shader-and-creative-coding](references/shader-and-creative-coding.md) | Shaders, procedural graphics, Canvas/SVG generative art. |
 | [asset-generation](references/asset-generation.md) | Asset routes, manifest, acceptance. |
+| [image-to-3d-pipeline](references/image-to-3d-pipeline.md) | Optional media stages: Gemini images and video (only with Gemini access), then image-to-GLB through a free remote TRELLIS Space and Blender cleanup; approvals, manifest, failure modes. |
 | [image-pipelines](references/image-pipelines.md) | Formats, responsive images, image generation prompts. |
 | [video-pipelines](references/video-pipelines.md) | Encoding, hero/background video, video generation prompts. |
 | [audio-pipelines](references/audio-pipelines.md) | Formats, autoplay policy, loudness, sound generation. |
@@ -221,5 +222,6 @@ Never inflate this report.
 | `visual-check.mjs` | Playwright screenshots, overflow, console, broken images, optional axe (Gates C, D, F, H). |
 | `quality-report.mjs` | Validate a quality report and enforce evidence rules. |
 | `validate-skill.mjs` | Validate this skill package (Gate A). |
+| `image-to-3d/` | Optional Python toolkit (not Node): Gemini images and video for people with Gemini access, then reference image to GLB through a Hugging Face Space and headless Blender cleanup. Opt-in; see [image-to-3d-pipeline](references/image-to-3d-pipeline.md). |
 
 The complete instruction set in one document is [MASTER_INSTRUCTIONS.md](MASTER_INSTRUCTIONS.md). Installation, maintenance and limitations are in [README.md](README.md).

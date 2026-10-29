@@ -18,7 +18,7 @@ const SPEC_REFERENCES = [
   'capability-registry.md', 'capability-registry.json', 'skill-audit.md', 'skill-delegation.md', 'design-intelligence.md',
   'product-discovery.md', 'visual-systems.md', 'typography-and-layout.md', 'design-tokens.md', 'dashboard-engineering.md',
   'landing-page-engineering.md', 'interaction-design.md', 'motion-engineering.md', 'three-dimensional-web.md',
-  'shader-and-creative-coding.md', 'asset-generation.md', 'image-pipelines.md', 'video-pipelines.md', 'audio-pipelines.md',
+  'shader-and-creative-coding.md', 'asset-generation.md', 'image-to-3d-pipeline.md', 'image-pipelines.md', 'video-pipelines.md', 'audio-pipelines.md',
   'responsive-design.md', 'accessibility.md', 'performance.md', 'visual-testing.md', 'visual-critique.md',
   'frontend-architecture.md', 'security-and-privacy.md', 'troubleshooting.md', 'quality-gates.md',
 ].map((f) => `references/${f}`);

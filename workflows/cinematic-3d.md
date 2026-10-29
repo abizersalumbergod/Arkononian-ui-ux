@@ -49,7 +49,7 @@ Build immersive experiences: Three.js/R3F scenes, shaders, scroll-driven cinemat
    - Keyboard and touch parity for every interactive control; nothing hover-only.
    - **Exit check:** scene runs at the top tier locally; unmounting the component leaves no running loops or listeners (check renderer info or heap if DevTools MCP is verified).
 6. **Assets (stage 6).**
-   - Produce or optimise models, textures and footage through [asset-production](asset-production.md); see [asset-generation](../references/asset-generation.md) for route choice. Paid generation needs approval.
+   - Produce or optimise models, textures and footage through [asset-production](asset-production.md); see [asset-generation](../references/asset-generation.md) for route choice. Paid generation needs approval. A model made from a reference image can use the optional [image-to-3d-pipeline](../references/image-to-3d-pipeline.md): the generation is remote on a public Space, so it needs the user's upload approval first.
    - Run `node <skill-dir>/scripts/asset-validation.mjs --manifest <file>` ([asset-validation.mjs](../scripts/asset-validation.mjs)); every critical asset needs a fallback entry.
    - **Exit check:** asset validation passes for critical assets, or failures recorded.
 7. **Motion, fallbacks and reduced motion (stage 7).**
@@ -75,7 +75,7 @@ Build immersive experiences: Three.js/R3F scenes, shaders, scroll-driven cinemat
 
 - Always: [quality-gates](../references/quality-gates.md), [capability-registry](../references/capability-registry.md).
 - Route: [design-intelligence](../references/design-intelligence.md), [three-dimensional-web](../references/three-dimensional-web.md), [shader-and-creative-coding](../references/shader-and-creative-coding.md), [motion-engineering](../references/motion-engineering.md), [asset-generation](../references/asset-generation.md), [performance](../references/performance.md), [accessibility](../references/accessibility.md), [responsive-design](../references/responsive-design.md), [visual-testing](../references/visual-testing.md).
-- As needed: [video-pipelines](../references/video-pipelines.md) for pre-rendered fallbacks, [audio-pipelines](../references/audio-pipelines.md) for sound, [troubleshooting](../references/troubleshooting.md).
+- As needed: [image-to-3d-pipeline](../references/image-to-3d-pipeline.md) for a GLB made from a reference image, [video-pipelines](../references/video-pipelines.md) for pre-rendered fallbacks, [audio-pipelines](../references/audio-pipelines.md) for sound, [troubleshooting](../references/troubleshooting.md).
 - Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `cinematic-noir-studio`, `frontend-design`, `emil-design-eng`, `design-taste-frontend`.
 
 ## Approvals needed

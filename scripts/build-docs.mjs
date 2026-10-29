@@ -23,7 +23,7 @@ const MODULE_ORDER = [
   'capability-registry', 'skill-delegation', 'product-discovery', 'design-intelligence', 'visual-systems',
   'typography-and-layout', 'design-tokens', 'interaction-design', 'motion-engineering', 'responsive-design',
   'landing-page-engineering', 'dashboard-engineering', 'three-dimensional-web', 'shader-and-creative-coding',
-  'asset-generation', 'image-pipelines', 'video-pipelines', 'audio-pipelines', 'accessibility', 'performance',
+  'asset-generation', 'image-to-3d-pipeline', 'image-pipelines', 'video-pipelines', 'audio-pipelines', 'accessibility', 'performance',
   'visual-testing', 'visual-critique', 'frontend-architecture', 'security-and-privacy', 'troubleshooting',
   'quality-gates', 'skill-audit',
 ];

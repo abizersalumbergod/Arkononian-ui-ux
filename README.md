@@ -33,13 +33,13 @@ The agent then writes a motion and interaction plan before any code. It picks th
 |---|---|
 | `SKILL.md` | Orchestrator: rules, approval boundaries, precedence, the 11 stages, routing table, gate summary, report format, indexes |
 | `MASTER_INSTRUCTIONS.md` | Every rule in one document. **Generated** from SKILL.md, each module's "Decision rules" and each workflow's "Steps" |
-| `references/` | 27 specialist modules. Each topic has exactly one owner (see the index in SKILL.md) |
+| `references/` | 28 specialist modules, one of them optional (image-to-3d-pipeline). Each topic has exactly one owner (see the index in SKILL.md) |
 | `workflows/` | 9 procedures: new-product, existing-project, landing-page, dashboard, ecommerce, cinematic-3d, design-system, asset-production, visual-regression |
 | `routing/routes.json` | Task types, triggers, modifiers, approval triggers, warning patterns |
 | `presets/` | Starting token sets: cinematic-noir, monochrome-editorial, precision-saas, warm-commerce |
 | `schemas/` | JSON Schemas: capability registry, asset manifest, quality report, routes, presets |
 | `templates/` | Design brief, design decision record, asset manifest, quality report, acceptance checklist |
-| `scripts/` | Zero-dependency Node tools (documented in `scripts/README.md`) |
+| `scripts/` | Zero-dependency Node tools (documented in `scripts/README.md`), plus the optional Python image-to-3D toolkit in `scripts/image-to-3d/` |
 | `tests/` | `node:test` suites and fixtures |
 | `evals/` | 16 behaviour scenarios and how to run them |
 | `LICENSES_AND_PROVENANCE.md` | Licence policy, audited sources, attribution |
@@ -157,7 +157,8 @@ Image, video, audio and 3D generators (for example the Higgsfield or Figma MCP c
 - probes them read-only (auth state, credits, model list) and never generates anything as a test;
 - asks for approval before any generation that costs money or credits, and before sending private files to a third party;
 - records each asset's route, generator, prompt reference and licence in an asset manifest, validated with `scripts/asset-validation.mjs`;
-- falls back to procedural SVG, Canvas or CSS assets, licensed retrieval or clearly labelled placeholders when a generator is unavailable or not approved.
+- falls back to procedural SVG, Canvas or CSS assets, licensed retrieval or clearly labelled placeholders when a generator is unavailable or not approved;
+- offers an optional, opt-in media route (`references/image-to-3d-pipeline.md`). If you have Gemini API access (a billing-enabled key), Gemini generates reference stills, site images and video first, for static sites too; then a free public Hugging Face Space (TRELLIS) turns a chosen still into a 3D model and headless Blender cleans the GLB up. Every Gemini call is paid and sends your prompt to Google, and the Space upload sends your image to a third party, so each needs your approval. Without Gemini access the normal procedure supplies the image. It needs Python (and Blender for 3D); nothing else in the skill does, and nothing runs unless you ask.
 
 Credentials are named in reports (environment variable names only) and never written into code, bundles, manifests or logs. Deploying, publishing, sending messages and destructive operations always require explicit approval.
 
@@ -171,6 +172,7 @@ The preferred stack is Next.js (App Router) + React 19 + TypeScript + Tailwind C
 node --test "tests/*.test.mjs"        # unit and integration tests (Node 24 needs the glob form)
 node scripts/validate-skill.mjs        # Gate A: structure, links, schemas, reachability, secrets, placeholders
 node scripts/build-docs.mjs --check    # generated docs are up to date
+npm run test:py                        # optional image-to-3D toolkit (Python 3.9+; also run by tests/image-to-3d.test.mjs when Python is found)
 ```
 
 - **Unit and integration tests** cover the schema validator, quality-report honesty rules, asset validation (including path-traversal rejection), skill-structure checks, routing (all 16 eval scenarios), capability detection, token building with contrast checks, a live Playwright visual check on fixture pages, and the docs generator.

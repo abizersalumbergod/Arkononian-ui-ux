@@ -1,6 +1,6 @@
 # scripts/
 
-Tooling for the `arkononion-ui-ux` skill. Every script is plain Node.js ESM with **zero npm dependencies**.
+Tooling for the `arkononion-ui-ux` skill. Every script is plain Node.js ESM with **zero npm dependencies**. The one exception is the optional Python toolkit in [image-to-3d/](image-to-3d/README.md), which is never needed unless a 3D model is made from an image.
 
 **Supported environments (all scripts):** Node.js 18 or newer on Windows (PowerShell, cmd, Git Bash), macOS and Linux. Verified on Node 24.13 / Windows 11. Run them from any directory. Paths are resolved relative to the current directory unless stated otherwise.
 
@@ -29,6 +29,7 @@ node --test "tests/*.test.mjs"
 | [build-tokens.mjs](build-tokens.mjs) | Turn a preset into CSS tokens and a Tailwind v4 theme, with a contrast check | C, D |
 | [visual-check.mjs](visual-check.mjs) | Headless screenshots and layout/console checks per viewport | B, C, D, F |
 | [quality-report.mjs](quality-report.mjs) | Validate a gate A-H quality report, or create a blank one | All (A-H) |
+| [image-to-3d/](image-to-3d/README.md) | Optional Python toolkit: Gemini images and video (only with Gemini access), then image to GLB through a Hugging Face Space, Blender cleanup, manifest entries | G (feeds asset-validation) |
 | [lib/schema.mjs](lib/schema.mjs) | JSON Schema subset validator | Library |
 | [lib/fsutil.mjs](lib/fsutil.mjs) | File system, front matter, link and secret-scan helpers | Library |
 

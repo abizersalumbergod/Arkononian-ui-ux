@@ -229,6 +229,114 @@
     "verifiedOn": null
   },
   {
+    "id": "generator:gemini-interactions",
+    "name": "Gemini image and video generation (Interactions API, via scripts/image-to-3d/gemini_media.py)",
+    "category": "generator",
+    "status": "requires-credentials",
+    "provider": "Google (Gemini API)",
+    "auth": "GEMINI_API_KEY from a billing-enabled Google project (name only; never the value)",
+    "environment": "Local Python script calling https://generativelanguage.googleapis.com/v1beta/interactions",
+    "dependencies": [
+      "runtime:python"
+    ],
+    "cost": "Paid: Google lists the image and video models with no free tier and bills per token; this package does not quote prices. Treat every call as paid and ask first.",
+    "network": "external (prompts and any reference images are sent to Google)",
+    "io": {
+      "input": "text prompt, optional reference images or an earlier video interaction",
+      "output": "PNG, JPEG or WebP images and MP4 video (SynthID-watermarked)"
+    },
+    "failureModes": [
+      "no key, a free-tier project or billing off: exit code 77, use the normal procedure",
+      "model ids are retired or renamed (the Veo 3.1 previews were shut down on 2026-10-22); ids come from configuration",
+      "rate limit, overload, quota or timeout (exit code 75); a create request is never resent unless Google rejected it before doing work",
+      "a video job can outlive the local timeout and keep billing until it is resumed or cancelled",
+      "the prompt or the output can be blocked by safety checks",
+      "response shapes were read from Google's documentation and API reference and have not been seen from a live call"
+    ],
+    "fallback": "A user-supplied image or video, licensed retrieval, procedural SVG, CSS or Canvas assets, or another approved generator.",
+    "evidence": "Documentation read on 2026-10-29 (image-generation, video, Omni, Interactions, errors and pricing pages); unit tests against a fake network layer. No live request was made, so access, billing behaviour and response parsing are untested.",
+    "verifiedOn": "2026-10-29"
+  },
+  {
+    "id": "library:gradio_client",
+    "name": "gradio_client (Python)",
+    "category": "library",
+    "status": "available-with-prerequisites",
+    "provider": "Hugging Face / Gradio",
+    "auth": "none (an optional HF_TOKEN raises the ZeroGPU quota)",
+    "environment": "Python venv created by scripts/image-to-3d/image_to_glb.py setup",
+    "dependencies": [
+      "runtime:python"
+    ],
+    "cost": "free",
+    "network": "external",
+    "io": {
+      "input": "Gradio Space API calls",
+      "output": "downloaded files"
+    },
+    "failureModes": [
+      "not importable until setup has run",
+      "current releases need Python 3.10 or newer"
+    ],
+    "fallback": "Procedural Three.js geometry or a user-supplied GLB.",
+    "evidence": "pip install into a throwaway venv succeeded on 2026-10-29 (gradio_client 2.7.2, Python 3.10.10, Windows 11); the signatures used by scripts/image-to-3d/generate_3d.py were inspected and a live read-only schema discovery worked. This says nothing about the current machine: run scripts/image-to-3d/image_to_glb.py doctor.",
+    "verifiedOn": "2026-10-29"
+  },
+  {
+    "id": "service:trellis-hf-space",
+    "name": "TRELLIS image-to-3D on a public Hugging Face Space (trellis-community/TRELLIS)",
+    "category": "service",
+    "status": "requires-approval",
+    "provider": "Hugging Face Spaces (ZeroGPU)",
+    "auth": "none required (an optional HF_TOKEN raises the quota)",
+    "environment": "Remote Space called with gradio_client from the local machine",
+    "dependencies": [
+      "library:gradio_client"
+    ],
+    "cost": "free tier; ZeroGPU quota and queue limited; the provider quotes no price",
+    "network": "external (the image is uploaded to a third party)",
+    "io": {
+      "input": "one PNG, JPEG or WebP image",
+      "output": "GLB"
+    },
+    "failureModes": [
+      "GPU quota exhausted, queue full, rate limit or timeout (exit code 75)",
+      "Space sleeping, renamed or broken (the original JeffreyXiang/TRELLIS Space was in a config error on 2026-10-29)",
+      "endpoint layout can change (the current Space has no /image_to_3d)",
+      "hidden sides of the object are invented by the model; quality varies",
+      "Space operator terms and output rights are not reviewed by this package"
+    ],
+    "fallback": "A user-supplied or licensed GLB, or procedural Three.js geometry.",
+    "evidence": "Read-only on 2026-10-29: the Hugging Face API reported stage RUNNING on zero-a10g; /gradio_api/info listed /preprocess_image and /generate_and_extract_glb; a real gradio_client opened the Space and mapped the parameters. No job was submitted, so generation itself is untested.",
+    "verifiedOn": "2026-10-29"
+  },
+  {
+    "id": "service:hunyuan3d-hf-space",
+    "name": "Hunyuan3D-2 image-to-3D on a public Hugging Face Space (tencent/Hunyuan3D-2)",
+    "category": "service",
+    "status": "requires-approval",
+    "provider": "Hugging Face Spaces (ZeroGPU)",
+    "auth": "none required (an optional HF_TOKEN raises the quota)",
+    "environment": "Remote Space called with gradio_client from the local machine",
+    "dependencies": [
+      "library:gradio_client"
+    ],
+    "cost": "free tier; ZeroGPU quota and queue limited; the provider quotes no price",
+    "network": "external (the image is uploaded to a third party)",
+    "io": {
+      "input": "one PNG, JPEG or WebP image",
+      "output": "GLB (textured or shape only)"
+    },
+    "failureModes": [
+      "Tencent Hunyuan 3D 2.0 Community License excludes the European Union, the United Kingdom and South Korea and needs a separate licence above 1 million monthly active users",
+      "experimental backend: parameters are mapped by name and the flow was not exercised live",
+      "quota, queue, sleeping Space and layout-change failures as for TRELLIS"
+    ],
+    "fallback": "TRELLIS with a fresh approval, a user-supplied GLB, or procedural Three.js geometry.",
+    "evidence": "2026-10-29: the Hugging Face API reported stage RUNNING on zero-a10g; the live /gradio_api/info request timed out, so endpoint names come from the Space's gradio_app.py; the licence text was read from the model repository. Nothing was submitted.",
+    "verifiedOn": "2026-10-29"
+  },
+  {
     "id": "cli:imagemagick",
     "name": "ImageMagick (magick)",
     "category": "cli",

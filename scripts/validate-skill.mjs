@@ -43,7 +43,7 @@ export const PACKAGE_FILES = Object.freeze({
     'motion-engineering.md', 'three-dimensional-web.md', 'shader-and-creative-coding.md', 'asset-generation.md',
     'image-pipelines.md', 'video-pipelines.md', 'audio-pipelines.md', 'responsive-design.md', 'accessibility.md',
     'performance.md', 'visual-testing.md', 'visual-critique.md', 'frontend-architecture.md',
-    'security-and-privacy.md', 'troubleshooting.md', 'quality-gates.md',
+    'security-and-privacy.md', 'troubleshooting.md', 'quality-gates.md', 'image-to-3d-pipeline.md',
   ],
   workflows: [
     'new-product.md', 'existing-project.md', 'landing-page.md', 'dashboard.md', 'ecommerce.md',
@@ -58,6 +58,8 @@ export const PACKAGE_FILES = Object.freeze({
   scripts: [
     'README.md', 'lib/schema.mjs', 'lib/fsutil.mjs', 'environment-audit.mjs', 'route.mjs', 'validate-skill.mjs',
     'asset-validation.mjs', 'quality-report.mjs', 'build-tokens.mjs', 'visual-check.mjs',
+    'image-to-3d/README.md', 'image-to-3d/image_to_glb.py', 'image-to-3d/generate_3d.py', 'image-to-3d/process_mesh.py',
+    'image-to-3d/requirements.txt', 'image-to-3d/gemini_media.py', 'image-to-3d/.env.example',
   ],
   templates: ['design-brief.md', 'design-decision-record.md', 'asset-manifest.json', 'quality-report.json', 'acceptance-checklist.md'],
   evals: ['scenarios.json', 'README.md'],
@@ -96,7 +98,7 @@ export const SCHEMA_TARGETS = Object.freeze([
 export const SCAN_EXCLUDES = Object.freeze(['node_modules', '.git', 'tests/fixtures']);
 
 const PACKAGE_DIRS = new Set([
-  'references', 'workflows', 'presets', 'routing', 'schemas', 'scripts', 'scripts/lib', 'templates',
+  'references', 'workflows', 'presets', 'routing', 'schemas', 'scripts', 'scripts/lib', 'scripts/image-to-3d', 'templates',
   'tests', 'tests/fixtures', 'evals', 'evals/results',
 ]);
 const EMPTY_OK = new Set(['.gitkeep', '.keep']);

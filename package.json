@@ -54,6 +54,7 @@
   "scripts": {
     "test": "node --test \"tests/*.test.mjs\"",
     "validate": "node scripts/validate-skill.mjs",
+    "test:py": "python -B -I -m unittest discover -s tests/image-to-3d -p \"test_*.py\"",
     "docs": "node scripts/build-docs.mjs",
     "docs:check": "node scripts/build-docs.mjs --check",
     "prepublishOnly": "node scripts/validate-skill.mjs && node scripts/build-docs.mjs --check"
