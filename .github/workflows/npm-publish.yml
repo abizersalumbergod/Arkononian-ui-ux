@@ -58,6 +58,7 @@ jobs:
         run: npm pack --dry-run
 
   publish-npm:
+    if: ${{ github.event.repository.private == false }}
     needs: validate-and-test
     runs-on: ubuntu-latest
     permissions:
@@ -89,8 +90,8 @@ jobs:
             fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2) + "\n");
           '
 
-      # npm provenance only works for public repositories, so it is skipped while the repo is private.
+      # npm provenance only works for public repositories, so we skip publishing when the repo is private.
       - name: Publish to npm
-        run: npm publish --access public ${{ github.event.repository.private && ' ' || '--provenance' }}
+        run: npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
