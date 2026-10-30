@@ -43,25 +43,26 @@ export const PACKAGE_FILES = Object.freeze({
     'motion-engineering.md', 'three-dimensional-web.md', 'shader-and-creative-coding.md', 'asset-generation.md',
     'image-pipelines.md', 'video-pipelines.md', 'audio-pipelines.md', 'responsive-design.md', 'accessibility.md',
     'performance.md', 'visual-testing.md', 'visual-critique.md', 'frontend-architecture.md',
-    'security-and-privacy.md', 'troubleshooting.md', 'quality-gates.md', 'image-to-3d-pipeline.md',
+    'security-and-privacy.md', 'troubleshooting.md', 'quality-gates.md', 'image-to-3d-pipeline.md', 'hyperframes-video.md',
+    'companion-skills.md',
   ],
   workflows: [
     'new-product.md', 'existing-project.md', 'landing-page.md', 'dashboard.md', 'ecommerce.md',
-    'cinematic-3d.md', 'design-system.md', 'asset-production.md', 'visual-regression.md',
+    'cinematic-3d.md', 'design-system.md', 'asset-production.md', 'demo-video.md', 'visual-regression.md',
   ],
   presets: ['README.md', 'cinematic-noir.json', 'monochrome-editorial.json', 'precision-saas.json', 'warm-commerce.json'],
   routing: ['routes.json'],
   schemas: [
     'capability-registry.schema.json', 'asset-manifest.schema.json', 'quality-report.schema.json',
-    'routes.schema.json', 'preset.schema.json',
+    'routes.schema.json', 'preset.schema.json', 'video-spec.schema.json',
   ],
   scripts: [
     'README.md', 'lib/schema.mjs', 'lib/fsutil.mjs', 'environment-audit.mjs', 'route.mjs', 'validate-skill.mjs',
-    'asset-validation.mjs', 'quality-report.mjs', 'build-tokens.mjs', 'visual-check.mjs',
+    'asset-validation.mjs', 'quality-report.mjs', 'build-tokens.mjs', 'visual-check.mjs', 'video-check.mjs',
     'image-to-3d/README.md', 'image-to-3d/image_to_glb.py', 'image-to-3d/generate_3d.py', 'image-to-3d/process_mesh.py',
     'image-to-3d/requirements.txt', 'image-to-3d/gemini_media.py', 'image-to-3d/.env.example',
   ],
-  templates: ['design-brief.md', 'design-decision-record.md', 'asset-manifest.json', 'quality-report.json', 'acceptance-checklist.md'],
+  templates: ['design-brief.md', 'design-decision-record.md', 'asset-manifest.json', 'quality-report.json', 'acceptance-checklist.md', 'video-spec.json'],
   evals: ['scenarios.json', 'README.md'],
 });
 
@@ -92,6 +93,7 @@ export const SCHEMA_TARGETS = Object.freeze([
   { pattern: 'references/capability-registry.json', schema: 'capability-registry.schema.json' },
   { pattern: 'presets/*.json', schema: 'preset.schema.json' },
   { pattern: 'routing/routes.json', schema: 'routes.schema.json' },
+  { pattern: 'templates/video-spec.json', schema: 'video-spec.schema.json' },
 ]);
 
 /** Paths skipped by every scan. Test fixtures are intentionally broken, so they are excluded. */

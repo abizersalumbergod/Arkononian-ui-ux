@@ -18,13 +18,13 @@ const SPEC_REFERENCES = [
   'capability-registry.md', 'capability-registry.json', 'skill-audit.md', 'skill-delegation.md', 'design-intelligence.md',
   'product-discovery.md', 'visual-systems.md', 'typography-and-layout.md', 'design-tokens.md', 'dashboard-engineering.md',
   'landing-page-engineering.md', 'interaction-design.md', 'motion-engineering.md', 'three-dimensional-web.md',
-  'shader-and-creative-coding.md', 'asset-generation.md', 'image-to-3d-pipeline.md', 'image-pipelines.md', 'video-pipelines.md', 'audio-pipelines.md',
+  'shader-and-creative-coding.md', 'asset-generation.md', 'image-to-3d-pipeline.md', 'image-pipelines.md', 'video-pipelines.md', 'hyperframes-video.md', 'companion-skills.md', 'audio-pipelines.md',
   'responsive-design.md', 'accessibility.md', 'performance.md', 'visual-testing.md', 'visual-critique.md',
   'frontend-architecture.md', 'security-and-privacy.md', 'troubleshooting.md', 'quality-gates.md',
 ].map((f) => `references/${f}`);
 const SPEC_WORKFLOWS = [
   'new-product.md', 'existing-project.md', 'landing-page.md', 'dashboard.md', 'ecommerce.md', 'cinematic-3d.md',
-  'design-system.md', 'asset-production.md', 'visual-regression.md',
+  'design-system.md', 'asset-production.md', 'demo-video.md', 'visual-regression.md',
 ].map((f) => `workflows/${f}`);
 
 const routeIds = new Set(routes.routes.map((r) => r.id));
@@ -32,7 +32,7 @@ const approvalIds = new Set(routes.approvalTriggers.map((a) => a.id));
 const warningIds = new Set(routes.warningPatterns.map((w) => w.id));
 
 test('scenarios file is well-formed and uses ids defined in routes.json', () => {
-  assert.equal(scenarios.length, 16);
+  assert.equal(scenarios.length, 17);
   const ids = scenarios.map((s) => s.id);
   assert.equal(new Set(ids).size, ids.length, 'scenario ids must be unique');
   for (const s of scenarios) {
@@ -104,6 +104,24 @@ test('forms, waitlists and bookings carry the third-party data note', () => {
 test('canvas-design is suggested for posters, not for product photography', () => {
   assert.ok(route('Design a poster for our gig').delegateSkills.includes('canvas-design'));
   assert.ok(!route('Generate 40 product photos for the catalog').delegateSkills.includes('canvas-design'));
+});
+
+test('companion skills reach site builds, copy, code quality, media and session tools', () => {
+  const site = route('Build a landing page for our bakery with homepage copy and SEO');
+  for (const s of ['copywriting', 'humanizer', 'seo-audit', 'schema']) assert.ok(site.delegateSkills.includes(s), `${s}: ${site.delegateSkills.join(', ')}`);
+  assert.ok(site.modules.includes('references/companion-skills.md'));
+  const copy = route('Make the about page copy sound human, it reads like AI slop');
+  assert.ok(copy.modifiers.includes('copy-and-voice') && copy.delegateSkills.includes('humanizer'), copy.modifiers.join(', '));
+  const arch = route('Improve the architecture of my site and cut the tech debt');
+  assert.ok(arch.modifiers.includes('code-quality') && arch.delegateSkills.includes('improve-codebase-architecture'), arch.modifiers.join(', '));
+  assert.ok(route('Create background music for the site').delegateSkills.includes('media-use'));
+  const session = route('Use caveman mode and remember this across sessions');
+  assert.ok(session.modifiers.includes('session-tools') && session.delegateSkills.includes('caveman'), session.modifiers.join(', '));
+});
+
+test('installing skills and publishing specs or tickets need approval', () => {
+  assert.ok(route('Install skills with npx skills add mattpocock/skills').approvals.includes('system-install'));
+  assert.ok(route('Turn this plan into tickets and create issues on GitHub').approvals.includes('tracker-or-pr'));
 });
 
 test('routes.json validates against schemas/routes.schema.json and compiles', () => {

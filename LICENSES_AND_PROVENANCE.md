@@ -142,12 +142,15 @@ The original text, scripts, schemas and data in `arkononion-ui-ux` were written 
 - **ECC plugin skills** © 2026 Affaan Mustafa, MIT License: motion, accessibility, browser QA, frontend patterns, performance, taste and dashboard techniques were adapted and paraphrased.
 - **skill-creator** (Anthropic), Apache License 2.0: skill format and evaluation methodology informed the package structure and evals.
 - **ui-styling, design, design-system, banner-design** (MIT per frontmatter): token and styling techniques were paraphrased.
+- **HyperFrames** (HeyGen, github.com/heygen-com/hyperframes), Apache License 2.0: its skills `hyperframes`, `hyperframes-cli`, `hyperframes-registry` and `media-use` were read on 2026-10-30. The composition contract, the work loop and the CLI job summaries in `references/hyperframes-video.md` are paraphrased with credit. Nothing is copied or bundled, and the delegate stays the authority on flag-level detail.
+- **Companion skills** (installed 2026-10-30; nothing copied or bundled, and `references/companion-skills.md` only names them and maps them to stages): mattpocock/skills (MIT), DietrichGebert/ponytail (MIT), blader/humanizer (MIT; its patterns come from Wikipedia's guide to signs of AI writing), coreyhaines31/marketingskills (MIT), JuliusBrussee/caveman (Apache-2.0), thedotmack/claude-mem 15.6.0 (Apache-2.0). Each skill's own `SKILL.md` stays the authority.
 - **ECHO Design Studio / ECHO Website** reference projects and the derived `cinematic-noir-studio` and `monochrome-editorial-portfolio` skills: techniques learned and rewritten. No brand assets, copy or images are included.
 
 ## Libraries and assets referenced (not bundled)
 
 - Fonts in `presets/` are Google Fonts (SIL Open Font License or Apache 2.0) or system fonts.
 - Libraries recommended by modules keep their own licences. Most are MIT (React, Next.js, Tailwind CSS, motion, Lenis, three.js, React Three Fiber, drei, TanStack). axe-core is MPL-2.0. GSAP 3.13+ is free for commercial use under its own no-charge licence (read its terms before use). Verify each licence at install time.
+- Optional video route (nothing is bundled; each item is run or installed only at the user's request): the HyperFrames CLI from npm (Apache-2.0, run through `npx` at a pinned version); FFmpeg and FFprobe (LGPL or GPL depending on the build, external programs); the headless Chrome the CLI downloads for itself (Google's terms); GSAP, which compositions load (its own no-charge licence); music, sound effects and fonts, each under its own licence, recorded per asset in the manifest. HeyGen services (hosted render, avatar, voice, catalogue media) have their own terms and billing; the site owner must review them before commercial use.
 - Optional image-to-3D toolkit (nothing is bundled; each item is installed or called only at the user's request): `gradio_client` from PyPI (check its licence at install time); the TRELLIS model weights (MIT per the model card, read 2026-10-29); the Hunyuan3D-2 model (Tencent Hunyuan 3D 2.0 Community License, which excludes the European Union, the United Kingdom and South Korea and requires a separate licence above 1 million monthly active users); Blender (GPL, run as an external program and never bundled). The public Hugging Face Spaces that host the models have their own terms; the site owner must review them before commercial use. Gemini output (optional stage, standard library client, nothing bundled) is governed by Google's Gemini API terms and carries a SynthID watermark; the site owner must review those terms before commercial use.
 
 ## External documentation consulted
@@ -194,6 +197,7 @@ The original text, scripts, schemas and data in `arkononion-ui-ux` were written 
 - <https://github.com/dequelabs/axe-core>
 - <https://github.com/dequelabs/axe-core/blob/develop/doc/API.md>
 - <https://github.com/gpuweb/gpuweb/wiki/Implementation-Status>
+- <https://github.com/heygen-com/hyperframes>
 - <https://github.com/motiondivision/motion/blob/main/CHANGELOG.md>
 - <https://github.com/mrdoob/three.js/releases>
 - <https://github.com/recharts/recharts/discussions/4484>
@@ -293,6 +297,7 @@ The original text, scripts, schemas and data in `arkononion-ui-ux` were written 
 - <https://www.npmjs.com/package/cn>
 - <https://www.npmjs.com/package/framer-motion>
 - <https://www.npmjs.com/package/gsap>
+- <https://www.npmjs.com/package/hyperframes>
 - <https://www.npmjs.com/package/lenis>
 - <https://www.npmjs.com/package/motion>
 - <https://www.npmjs.com/package/next>

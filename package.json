@@ -12,7 +12,9 @@
     "accessibility",
     "design-tokens",
     "landing-page",
-    "dashboard"
+    "dashboard",
+    "video",
+    "hyperframes"
   ],
   "license": "MIT",
   "author": "abizersalumbergod",
@@ -49,7 +51,8 @@
     "arkononion-build-tokens": "scripts/build-tokens.mjs",
     "arkononion-visual-check": "scripts/visual-check.mjs",
     "arkononion-asset-validation": "scripts/asset-validation.mjs",
-    "arkononion-quality-report": "scripts/quality-report.mjs"
+    "arkononion-quality-report": "scripts/quality-report.mjs",
+    "arkononion-video-check": "scripts/video-check.mjs"
   },
   "scripts": {
     "test": "node --test \"tests/*.test.mjs\"",

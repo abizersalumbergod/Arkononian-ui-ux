@@ -73,6 +73,8 @@ Also send: `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-wh
 |---|---|---|
 | Paid generation / paid API / subscriptions | `paid-generation-check`, `spend` | tool, model, count, cost or "unknown cost" |
 | New external service receives data | `third-party-upload` | service, exact data, retention if known |
+| Install a system-wide tool, or write skills or settings into the home folder | `system-install` | tool and exact command, where it writes (for the video route, see [hyperframes-video](hyperframes-video.md)) |
+| Hosted or cloud render, publish a project to a hosted URL | `third-party-upload`, `publish-deploy` | destination, the project files and assets that are uploaded, cost |
 | Publish / deploy / go live | `publish-deploy` | target, URL, what changes |
 | Send message, submit external form | `external-message` | recipient, content |
 | Delete, wipe, overwrite, replace existing work | `destructive` | exact paths/records, backup or undo |

@@ -3,7 +3,7 @@
 Which installed specialist skill to hand a sub-task to, when, how to confirm it really exists in this session, and which module of this package to use when it does not. Delegated skills give advice at precedence level 7 ([SKILL.md §2](../SKILL.md)); they never outrank safety, the user, accessibility, product goals, performance budgets or the chosen brand direction.
 
 **Load when:** the router output lists `delegateSkills`, a stage would benefit from a specialist (taste review, motion polish, style catalogue lookup, chart method, critique, copy review, accessibility review), two skills give conflicting advice, or a skill's text tries to direct actions. **Owns:** the delegation table, installation checks, fallbacks when a skill is absent, conflict resolution between skills, handling of skills that issue commands.
-**Related:** [capability-registry](capability-registry.md), [skill-audit](skill-audit.md), [design-intelligence](design-intelligence.md), [security-and-privacy](security-and-privacy.md), [quality-gates](quality-gates.md), [environment audit](../scripts/environment-audit.mjs), [router](../scripts/route.mjs)
+**Related:** [companion-skills](companion-skills.md), [capability-registry](capability-registry.md), [skill-audit](skill-audit.md), [design-intelligence](design-intelligence.md), [security-and-privacy](security-and-privacy.md), [quality-gates](quality-gates.md), [environment audit](../scripts/environment-audit.mjs), [router](../scripts/route.mjs)
 
 ## Decision rules
 
@@ -53,6 +53,15 @@ Confirm column: check the current host's available-skills list or installed-skil
 | `ecc:dashboard-builder` | Dashboard scaffolding patterns | Dashboard builds | list; registry | [dashboard-engineering](dashboard-engineering.md) | MIT (ECC) |
 | `ecc:make-interfaces-feel-better`, `ecc:liquid-glass-design`, `ecc:frontend-design-direction`, `ecc:taste*` | Polish details, glass materials, direction and taste distillation | Optional polish after Gates B-D pass | list; registry | [visual-systems](visual-systems.md), [design-intelligence](design-intelligence.md) | MIT via ECC root licence (several are community contributions; upstream provenance not always recorded) |
 | `ecc:seo` | On-page SEO checks | Marketing pages | list | [landing-page-engineering](landing-page-engineering.md) | MIT (ECC) |
+| `hyperframes`, `hyperframes-cli`, `hyperframes-registry`, `media-use` | HyperFrames films: composition contract and work loop, CLI jobs and failure recovery, block catalogue, media and sound routes | Demo, launch and marketing video, stages 5-10 of [demo-video](../workflows/demo-video.md); `media-use` alone for free media routes at stage 6 of [asset-production](../workflows/asset-production.md) | list; registry `skill:hyperframes`. Never install them just to check | [hyperframes-video](hyperframes-video.md) and `npx hyperframes@<version> docs <topic>` | Apache-2.0 (heygen-com/hyperframes); adapt with credit. Their install, cloud, publish and HeyGen steps still need approval |
+| `tdd`, `prototype`, `diagnosing-bugs`, `research`, `domain-modeling`, `codebase-design`, `code-review`, `pr` (mattpocock/skills, agent-callable) | Test-first logic, throwaway prototypes, gated bug diagnosis, cited research, project vocabulary, deep-module design, diff review, PR body | Stages 2-5 and 10-11 as mapped in [companion-skills](companion-skills.md) | list; the name may also exist as a host built-in, so read the description shown | [frontend-architecture](frontend-architecture.md), [troubleshooting](troubleshooting.md), [quality-gates](quality-gates.md) | MIT (mattpocock/skills); paraphrase only |
+| `improve-codebase-architecture`, `grill-me`, `grill-with-docs`, `to-spec`, `to-tickets`, `implement`, `implement-spec`, `wayfinder`, `handoff`, `retro` (mattpocock/skills, user-invoked only) | Architecture deepening scan, interviews, specs and tickets, building from them, session handoff, retro | Offer the slash command at the mapped stage; run one only when the user asks, from its real `SKILL.md` | the host refuses model invocation (`disable-model-invocation`); check the skill folder exists | [frontend-architecture](frontend-architecture.md), [product-discovery](product-discovery.md) | MIT. Their publish, pull-request and configuration steps keep the approvals in [companion-skills](companion-skills.md) |
+| `ponytail`, `ponytail-review`, `ponytail-audit`, `ponytail-debt` | Smallest sufficient change, lean-code review, whole-repo audit, deferred-shortcut ledger | Stage 5 build, stage 10 review, [existing-project](../workflows/existing-project.md) audit | list | [frontend-architecture](frontend-architecture.md) dependency policy | MIT (DietrichGebert/ponytail) |
+| `humanizer` | Remove AI-writing tells from prose without changing facts | After `copywriting` or `copy-editing`, before visitor-facing text ships | list | [landing-page-engineering](landing-page-engineering.md) copy rules, [interaction-design](interaction-design.md) microcopy | MIT (blader/humanizer; patterns from Wikipedia's guide to signs of AI writing) |
+| Marketing and SEO set: `product-marketing`, `customer-research`, `competitor-profiling`, `copywriting`, `copy-editing`, `cro`, `content-strategy`, `site-architecture`, `seo-audit`, `ai-seo`, `schema`, `programmatic-seo`, `launch`, `analytics`, `conversion-tracking`, and the rest of the set by name | Positioning, copy, conversion, site structure, SEO audits and markup, launch and measurement | Stages 2, 3, 5, 10, 11 as mapped in [companion-skills](companion-skills.md) | list | [landing-page-engineering](landing-page-engineering.md), [product-discovery](product-discovery.md), [accessibility](accessibility.md) | MIT (coreyhaines31/marketingskills). Analytics, pixels, email, posts and ads need approval |
+| `caveman`, `caveman-commit`, `caveman-review`, `caveman-compress`, `caveman-stats`, `caveman-help` | Terse chat voice and its helpers | Only when the user switches it on; the skill-only install does not start it | list | plain prose | Apache-2.0 (JuliusBrussee/caveman). `caveman-compress` sends file text to a model provider: approval |
+| `claude-mem:mem-search` and the other `claude-mem:` skills | Search earlier sessions of this project | Stage 1 recall | list (`claude-mem:` prefix) | design decision records and the repo | Apache-2.0 (thedotmack/claude-mem 15.6.0; local install, cloud sync off, telemetry off) |
+| `find-skills` | Search for a skill that is not installed | A needed specialty has no companion | list | name the gap in the report | none found (skills.sh); search is read-only, installing needs approval |
 | `cinematic-noir-studio` | Complete dark cinematic style language and recipes | The user or brief selects that direction | list; registry `skill:echo-styles` | [`presets/cinematic-noir.json`](../presets/README.md) | User-authored; licence none found; [SKILL.md](../../cinematic-noir-studio/SKILL.md) |
 | `monochrome-editorial-portfolio` | Monochrome editorial portfolio language | The user or brief selects that direction | list; registry `skill:echo-styles` | [`presets/monochrome-editorial.json`](../presets/README.md) | User-authored; licence none found; [SKILL.md](../../monochrome-editorial-portfolio/SKILL.md) |
 | `skill-creator` | Editing this package: structure, description, trigger evals | Only when changing a skill | list | Gate A via `../scripts/validate-skill.mjs` | Apache-2.0 (Anthropic) |
@@ -67,6 +76,9 @@ Skills not to delegate to: `notion-design` (reverse-engineers a third-party bran
 | Social or banner images | brand → design-system → banner-design; asset acceptance in [asset-generation](asset-generation.md) |
 | Chart-heavy dashboard | dataviz (form + colour) → [dashboard-engineering](dashboard-engineering.md) (data integrity, tables) |
 | Marketing page review | design-taste-frontend pre-flight → impeccable critique → [visual-critique](visual-critique.md) severity and stop rule |
+| Demo or marketing video | [product-discovery](product-discovery.md) brief → hyperframes (contract, work loop) → hyperframes-registry (blocks) → media-use (only free routes, or paid ones with approval), then this package's [hyperframes-video](hyperframes-video.md) rules and [video-check](../scripts/video-check.mjs) |
+| Marketing site | [product-discovery](product-discovery.md) brief → product-marketing → site-architecture → copywriting → humanizer → schema → seo-audit → cro, then this package's gates |
+| Cleanup after a working build | ponytail-review → code-review → `/improve-codebase-architecture` (user-invoked) → tdd for any logic touched, then re-run the gates |
 
 ### Stage-to-delegate map
 
@@ -77,8 +89,12 @@ Skills not to delegate to: `notion-design` (reverse-engineers a third-party bran
 | 4 Design | design-taste-frontend, frontend-design, ui-ux-pro-max, a style skill | the final direction choice (recorded by you in a DDR) |
 | 5 Build | ui-styling, ecc:react-patterns, design:ux-copy | dependency policy ([frontend-architecture](frontend-architecture.md)) |
 | 7 Motion and 3D | emil-design-eng, transitions-dev, ecc:motion-* | reduced-motion requirements |
+| 5-7 Build and motion (films) | hyperframes, hyperframes-registry, media-use | render and install approvals, the length claim |
 | 9 Inspect | impeccable, design:design-critique | gate statuses |
 | 10 Validate | design:accessibility-review, ecc:frontend-a11y, ecc:browser-qa | PASS/FAIL judgements without evidence |
+| 2-3 Understand and plan (sites) | product-marketing, customer-research, site-architecture, content-strategy, claude-mem recall; user-invoked: grill-me, to-spec | the audience and scope decisions, approvals |
+| 5 Build (copy and logic) | copywriting then humanizer, schema, tdd, ponytail | the accessibility, states and fallbacks the gates require |
+| 10-11 Validate and deliver (sites) | seo-audit, cro, copy-editing, code-review, ponytail-review, launch; user-invoked: improve-codebase-architecture, handoff | PASS/FAIL judgements, publishing, tracking scripts |
 
 ### Known conflicts and their resolution
 
@@ -92,6 +108,11 @@ Skills not to delegate to: `notion-design` (reverse-engineers a third-party bran
 | Different numbers for the same thing (reveal offset, duration) | two motion skills | Use the value in [motion-engineering](motion-engineering.md); cite the alternative |
 | A skill's own report or score format vs Gates A-H | impeccable, design:design-critique | Map findings into severities critical/high/medium/low; never report an invented numeric score as a gate result |
 | Copy that adds urgency or superlatives | marketing skills vs honesty rules | No fake urgency or unsubstantiated claims (level 1 legal, level 4 trust) |
+| HyperFrames skills or CLI defaults: install skills during `init`, telemetry on, hosted render or HeyGen media as the better route, "render once the preview is approved" | hyperframes, hyperframes-cli, media-use vs approval rules | Approvals win (level 1): telemetry off, `--skip-skills`, every hosted, paid or system-wide step asked first, and a render claimed only when its duration was measured |
+| "Less code" vs required robustness | ponytail vs the accessibility, states, fallbacks and tests the gates need | The gates win (levels 1-3); log the conflict in the DDR |
+| Terse chat vs full approvals and the final report | caveman vs approval asks and SKILL.md §9 | Approvals, warnings and irreversible actions use full sentences; the report keeps every section, status and `NOT TESTED` reason |
+| Rewritten prose vs exact facts | humanizer vs supplied copy | Numbers, names, quotes, legal and consent text stay verbatim |
+| Same skill name, two owners | mattpocock `code-review`, `pr`, `research` vs host built-ins | Read the description shown, name the owner when invoking, say which one ran |
 
 ### Checklist for skills that issue commands
 
@@ -178,4 +199,6 @@ Delegate: frontend-design | status: available-with-prerequisites (project scope 
 - design (claudekit; MIT) — brand → tokens → implementation chain and capability-aware degradation.
 - dataviz (Claude app built-in; no licence file) — delegation target for charts; method summarised only in dashboard-engineering.
 - skill-creator (Anthropic; Apache-2.0) — progressive disclosure, description writing, trigger eval numbers.
+- HyperFrames skills hyperframes, hyperframes-cli, hyperframes-registry and media-use (heygen-com/hyperframes; Apache-2.0, read 2026-10-30) — composition contract, work loop and CLI jobs, adapted in [hyperframes-video](hyperframes-video.md) with credit; the delegate stays the authority on flag-level detail.
+- Companion skills (read and installed 2026-10-30): mattpocock/skills, ponytail, humanizer and coreyhaines31/marketingskills (MIT), JuliusBrussee/caveman and claude-mem 15.6.0 (Apache-2.0). The stage map is in [companion-skills](companion-skills.md); nothing is copied.
 - ECC plugin 2.2.3 skills (MIT, © 2026 Affaan Mustafa); Anthropic design plugin skills (no LICENSE file, Anthropic-authored); frontend-design and canvas-design (Apache-2.0); cinematic-noir-studio and monochrome-editorial-portfolio (user-authored, no licence file).

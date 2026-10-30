@@ -1,0 +1,71 @@
+{
+  "$schema": "../schemas/video-spec.schema.json",
+  "title": "Example: a 75 s product film about planning demo videos",
+  "kind": "demo",
+  "goal": "The viewer asks for a planned demo video instead of a screen recording.",
+  "audience": "Founders and product teams who need a demo for a launch page",
+  "cta": "Ask for the plan first",
+  "direction": "Replace with the preset name or the project's token file",
+  "canvas": { "width": 1920, "height": 1080, "fps": 30 },
+  "minDurationSeconds": 60,
+  "targetDurationSeconds": 75,
+  "engine": { "name": "hyperframes", "version": "0.8.221" },
+  "audio": {
+    "silent": false,
+    "music": { "source": "Replace with a file path or library id", "licence": "Replace with the licence name and URL" },
+    "sfx": true,
+    "voiceover": false,
+    "captions": false
+  },
+  "approvals": { "install": "none", "paidMedia": "none", "cloudRender": "none", "publish": "none" },
+  "scenes": [
+    {
+      "id": "hook", "role": "hook", "start": 0, "duration": 7, "shots": 1,
+      "text": "Most product demos lose people in five seconds.",
+      "visual": "Large type on the brand ground; an accent bar draws in",
+      "source": "drawn"
+    },
+    {
+      "id": "problem", "role": "problem", "start": 7, "duration": 11, "shots": 2,
+      "text": "A screen recording shows clicks, not a reason to care.",
+      "visual": "A cropped real screen recording, then the same frame with nothing explained",
+      "source": "real", "sourceRef": "assets/recording-before.mp4"
+    },
+    {
+      "id": "solution", "role": "solution", "start": 18, "duration": 11, "shots": 2,
+      "text": "Write the film as source. Render it the same way every time.",
+      "visual": "The composition's HTML beside its first frame",
+      "source": "real", "sourceRef": "assets/composition-source.png"
+    },
+    {
+      "id": "demo-plan", "role": "demo", "start": 29, "duration": 11, "shots": 3,
+      "text": "Plan: scenes, seconds and words, checked first.",
+      "visual": "The spec file and the checker output with its errors fixed",
+      "source": "real", "sourceRef": "assets/spec-check.png"
+    },
+    {
+      "id": "demo-check", "role": "demo", "start": 40, "duration": 11, "shots": 3,
+      "text": "Check: every scene seen before a single render.",
+      "visual": "The snapshot contact sheet, zooming into one scene",
+      "source": "real", "sourceRef": "assets/contact-sheet.png"
+    },
+    {
+      "id": "demo-prove", "role": "demo", "start": 51, "duration": 11, "shots": 3,
+      "text": "Prove: the finished file is measured, not assumed.",
+      "visual": "The measured duration beside the planned one",
+      "source": "real", "sourceRef": "assets/render-duration.png"
+    },
+    {
+      "id": "proof", "role": "proof", "start": 62, "duration": 6, "shots": 1,
+      "text": "Real screens. Nothing invented.",
+      "visual": "The three real screens side by side",
+      "source": "real", "sourceRef": "assets/"
+    },
+    {
+      "id": "cta", "role": "cta", "start": 68, "duration": 7, "shots": 1,
+      "text": "Ask for the plan first.",
+      "visual": "End card with the one action, held for the last 3 s",
+      "source": "drawn"
+    }
+  ]
+}

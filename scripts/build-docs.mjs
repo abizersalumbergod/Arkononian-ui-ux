@@ -20,16 +20,16 @@ Usage: node scripts/build-docs.mjs [--root <skill-dir>] [--only registry|master]
 Exit codes: 0 ok, 1 stale/missing (with --check) or source error, 2 bad arguments.`;
 
 const MODULE_ORDER = [
-  'capability-registry', 'skill-delegation', 'product-discovery', 'design-intelligence', 'visual-systems',
+  'capability-registry', 'skill-delegation', 'companion-skills', 'product-discovery', 'design-intelligence', 'visual-systems',
   'typography-and-layout', 'design-tokens', 'interaction-design', 'motion-engineering', 'responsive-design',
   'landing-page-engineering', 'dashboard-engineering', 'three-dimensional-web', 'shader-and-creative-coding',
-  'asset-generation', 'image-to-3d-pipeline', 'image-pipelines', 'video-pipelines', 'audio-pipelines', 'accessibility', 'performance',
+  'asset-generation', 'image-to-3d-pipeline', 'image-pipelines', 'video-pipelines', 'hyperframes-video', 'audio-pipelines', 'accessibility', 'performance',
   'visual-testing', 'visual-critique', 'frontend-architecture', 'security-and-privacy', 'troubleshooting',
   'quality-gates', 'skill-audit',
 ];
 const WORKFLOW_ORDER = [
   'new-product', 'existing-project', 'landing-page', 'dashboard', 'ecommerce', 'cinematic-3d', 'design-system',
-  'asset-production', 'visual-regression',
+  'asset-production', 'demo-video', 'visual-regression',
 ];
 
 function parseArgs(argv) {

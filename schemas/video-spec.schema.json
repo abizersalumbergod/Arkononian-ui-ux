@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arkononion-ui-ux.local/schemas/video-spec.schema.json",
+  "title": "Video spec",
+  "description": "Plan for a demo, launch or marketing film made with HyperFrames: canvas, story beats with start and duration in seconds, on-screen words, the source of every visual, and the claims that need evidence. scripts/video-check.mjs --spec validates it against this schema and then enforces the numeric rules (contiguous scenes, minimum runtime, hook first, call to action, reading load).",
+  "type": "object",
+  "required": ["title", "kind", "goal", "audience", "canvas", "minDurationSeconds", "scenes"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "title": { "type": "string", "minLength": 1, "description": "Working title of the film." },
+    "kind": { "type": "string", "enum": ["demo", "launch", "promo", "teaser", "explainer", "tutorial", "testimonial"] },
+    "goal": { "type": "string", "minLength": 1, "description": "What the viewer should do or understand at the end." },
+    "audience": { "type": "string", "minLength": 1 },
+    "cta": { "type": "string", "description": "The one action the closing beat asks for. Required for demo, launch, promo and teaser films." },
+    "direction": { "type": "string", "description": "Design direction: preset name, token source or style skill. One style authority per film." },
+    "canvas": {
+      "type": "object",
+      "required": ["width", "height", "fps"],
+      "additionalProperties": false,
+      "properties": {
+        "width": { "type": "integer", "minimum": 320, "maximum": 7680 },
+        "height": { "type": "integer", "minimum": 320, "maximum": 7680 },
+        "fps": { "type": "number", "minimum": 1, "maximum": 240 }
+      }
+    },
+    "minDurationSeconds": { "type": "number", "minimum": 0, "description": "Floor for the finished file. 60 for a one-minute-or-more film." },
+    "targetDurationSeconds": { "type": "number", "exclusiveMinimum": 0 },
+    "engine": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "enum": ["hyperframes"] },
+        "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$", "description": "Pinned CLI version, for example the one written into the scaffold's package.json." }
+      }
+    },
+    "audio": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "silent": { "type": "boolean", "description": "True only when the user asked for no sound." },
+        "music": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "source": { "type": "string", "minLength": 1 },
+            "licence": { "type": "string", "minLength": 1 }
+          },
+          "required": ["source", "licence"]
+        },
+        "sfx": { "type": "boolean" },
+        "voiceover": { "type": "boolean" },
+        "captions": { "type": "boolean", "description": "Burned-in captions plus a sidecar file. Required when any scene has narration." }
+      }
+    },
+    "approvals": {
+      "type": "object",
+      "description": "What the user approved, in their words or 'none'. Recorded so the report can quote it.",
+      "additionalProperties": false,
+      "properties": {
+        "install": { "type": "string" },
+        "paidMedia": { "type": "string" },
+        "cloudRender": { "type": "string" },
+        "publish": { "type": "string" }
+      }
+    },
+    "scenes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/scene" }
+    }
+  },
+  "$defs": {
+    "scene": {
+      "type": "object",
+      "required": ["id", "role", "start", "duration", "visual", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$", "description": "Also the host id, scene root id and timeline key in the composition." },
+        "role": { "type": "string", "enum": ["hook", "problem", "solution", "demo", "feature", "proof", "recap", "cta", "outro"] },
+        "start": { "type": "number", "minimum": 0, "description": "Seconds from the start of the film." },
+        "duration": { "type": "number", "exclusiveMinimum": 0, "description": "Seconds the scene's slot lasts." },
+        "shots": { "type": "integer", "minimum": 1, "description": "Number of distinct shots inside the beat. Defaults to 1." },
+        "text": { "type": "string", "description": "Words shown on screen in this beat." },
+        "narration": { "type": "string", "description": "Spoken words, if any." },
+        "visual": { "type": "string", "minLength": 1, "description": "What the viewer sees." },
+        "source": { "type": "string", "enum": ["real", "drawn", "stock", "generated", "none"], "description": "real: captured from the product or brand. drawn: original type or illustration. stock: licensed media. generated: AI-made media. none: type only." },
+        "sourceRef": { "type": "string", "description": "File, URL or manifest id of the source." },
+        "claims": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["text", "evidence"],
+            "additionalProperties": false,
+            "properties": {
+              "text": { "type": "string", "minLength": 1 },
+              "evidence": { "type": "string", "minLength": 1, "description": "Where the number or statement comes from." }
+            }
+          }
+        }
+      }
+    }
+  }
+}

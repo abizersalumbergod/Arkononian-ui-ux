@@ -39,9 +39,10 @@
         "references/interaction-design.md",
         "references/responsive-design.md",
         "references/accessibility.md",
-        "references/performance.md"
+        "references/performance.md",
+        "references/companion-skills.md"
       ],
-      "delegateSkills": ["frontend-design", "design-taste-frontend", "impeccable", "ui-ux-pro-max", "emil-design-eng"],
+      "delegateSkills": ["frontend-design", "design-taste-frontend", "impeccable", "ui-ux-pro-max", "emil-design-eng", "copywriting", "humanizer", "cro", "seo-audit", "schema", "ponytail"],
       "presets": ["precision-saas", "monochrome-editorial", "warm-commerce"],
       "note": "Conversion-focused single pages and marketing sites."
     },
@@ -76,9 +77,10 @@
         "references/responsive-design.md",
         "references/accessibility.md",
         "references/performance.md",
-        "references/security-and-privacy.md"
+        "references/security-and-privacy.md",
+        "references/companion-skills.md"
       ],
-      "delegateSkills": ["dataviz", "ui-ux-pro-max", "impeccable", "transitions-dev", "ecc:frontend-a11y"],
+      "delegateSkills": ["dataviz", "ui-ux-pro-max", "impeccable", "transitions-dev", "ecc:frontend-a11y", "tdd", "ponytail", "improve-codebase-architecture"],
       "presets": ["precision-saas"],
       "note": "Data-dense product UI: IA, tables, charts, CRUD and data integrity."
     },
@@ -110,9 +112,10 @@
         "references/responsive-design.md",
         "references/accessibility.md",
         "references/performance.md",
-        "references/security-and-privacy.md"
+        "references/security-and-privacy.md",
+        "references/companion-skills.md"
       ],
-      "delegateSkills": ["frontend-design", "ui-ux-pro-max", "impeccable", "design-taste-frontend"],
+      "delegateSkills": ["frontend-design", "ui-ux-pro-max", "impeccable", "design-taste-frontend", "copywriting", "humanizer", "schema", "seo-audit", "cro", "tdd", "ponytail"],
       "presets": ["warm-commerce"],
       "note": "Product listing/detail pages, cart and checkout patterns."
     },
@@ -173,9 +176,10 @@
         "references/image-pipelines.md",
         "references/responsive-design.md",
         "references/accessibility.md",
-        "references/performance.md"
+        "references/performance.md",
+        "references/companion-skills.md"
       ],
-      "delegateSkills": ["monochrome-editorial-portfolio", "cinematic-noir-studio", "design-taste-frontend", "frontend-design"],
+      "delegateSkills": ["monochrome-editorial-portfolio", "cinematic-noir-studio", "design-taste-frontend", "frontend-design", "humanizer", "copywriting", "seo-audit", "schema", "ponytail"],
       "presets": ["monochrome-editorial", "cinematic-noir"],
       "note": "Type-led personal, portfolio and publishing sites."
     },
@@ -236,11 +240,44 @@
         "references/design-intelligence.md",
         "references/accessibility.md",
         "references/performance.md",
-        "references/visual-testing.md"
+        "references/visual-testing.md",
+        "references/companion-skills.md"
       ],
-      "delegateSkills": ["impeccable", "design:design-critique", "design-taste-frontend", "emil-design-eng"],
+      "delegateSkills": ["impeccable", "design:design-critique", "design-taste-frontend", "emil-design-eng", "improve-codebase-architecture", "ponytail-audit", "code-review", "seo-audit", "humanizer"],
       "presets": [],
       "note": "Audit first, keep what works, change incrementally; the project's conventions win over presets."
+    },
+    {
+      "id": "video-production",
+      "label": "Demo / marketing / launch video (HyperFrames)",
+      "workflow": "workflows/demo-video.md",
+      "triggers": [
+        { "pattern": "\\bhyper[\\s-]?frames?\\b", "weight": 3 },
+        { "pattern": "\\b(demo|marketing|product|promo|promotional|launch|explainer|brand|sales|tutorial|teaser|testimonial|onboarding|feature|announcement|showcase|trailer)[\\s-](videos?|films?|reels?|clips?)\\b", "weight": 3 },
+        { "pattern": "\\b(\\d{1,3}|one|two|three)[\\s-]?(second|sec|minute|min)s?[\\s-]+(long[\\s-]+)?(demo|marketing|product|promo|launch|explainer|brand|sales|video|film|trailer)\\b", "weight": 3 },
+        { "pattern": "\\b(videos?|films?)\\b.{0,40}?\\b(minutes?|mins?)\\b|\\b(minutes?|mins?)\\b.{0,25}?\\b(videos?|films?|demos?)\\b", "weight": 2 },
+        { "pattern": "\\b(storyboards?|shot[\\s-]?lists?|b[\\s-]?roll|voice[\\s-]?over script|scripted video)\\b", "weight": 2 },
+        { "pattern": "\\b(product tours?|screen[\\s-]?(recordings?|captures?)|walk[\\s-]?throughs?)\\b", "weight": 2 },
+        { "pattern": "\\b(title cards?|end cards?|lower[\\s-]thirds?|kinetic (type|typography)|motion graphics?|animated (explainer|intro|logo))\\b", "weight": 2 },
+        { "pattern": "\\b(video ads?|ad (videos?|spots?)|commercials?)\\b", "weight": 2 },
+        { "pattern": "\\b(videos?|films?|trailers?)\\b", "weight": 1 },
+        { "pattern": "\\b(youtube|vimeo|linkedin|tiktok|instagram|shorts)\\b.{0,30}?\\b(videos?|clips?|cut[\\s-]?downs?)\\b", "weight": 1 }
+      ],
+      "modules": [
+        "references/hyperframes-video.md",
+        "references/video-pipelines.md",
+        "references/audio-pipelines.md",
+        "references/asset-generation.md",
+        "references/product-discovery.md",
+        "references/design-intelligence.md",
+        "references/visual-systems.md",
+        "references/motion-engineering.md",
+        "references/accessibility.md",
+        "references/security-and-privacy.md"
+      ],
+      "delegateSkills": ["hyperframes", "hyperframes-cli", "hyperframes-registry", "media-use"],
+      "presets": ["precision-saas", "cinematic-noir", "monochrome-editorial"],
+      "note": "Films of 60 s or more are planned in numbers, built as HyperFrames source, checked, snapshotted and only then rendered; the length is proven on the rendered file."
     },
     {
       "id": "asset-production",
@@ -272,7 +309,7 @@
         "references/audio-pipelines.md",
         "references/security-and-privacy.md"
       ],
-      "delegateSkills": [],
+      "delegateSkills": ["media-use"],
       "presets": [],
       "note": "Generated or sourced media: check capability status and cost first; paid generation needs approval."
     },
@@ -351,9 +388,10 @@
         "references/interaction-design.md",
         "references/responsive-design.md",
         "references/accessibility.md",
-        "references/performance.md"
+        "references/performance.md",
+        "references/companion-skills.md"
       ],
-      "delegateSkills": ["frontend-design", "design-taste-frontend", "ui-ux-pro-max", "impeccable"],
+      "delegateSkills": ["frontend-design", "design-taste-frontend", "ui-ux-pro-max", "impeccable", "grill-me", "tdd", "ponytail", "copywriting", "humanizer"],
       "presets": ["precision-saas", "monochrome-editorial", "warm-commerce", "cinematic-noir"],
       "note": "Used when nothing more specific matches."
     }
@@ -378,6 +416,13 @@
       "id": "video",
       "patterns": ["\\bvideos?\\b", "\\b(clips?|footage|mp4|webm|hls|reels?|trailers?)\\b"],
       "modules": ["references/video-pipelines.md"]
+    },
+    {
+      "id": "hyperframes",
+      "patterns": ["\\bhyper[\\s-]?frames?\\b"],
+      "modules": ["references/hyperframes-video.md"],
+      "delegateSkills": ["hyperframes", "hyperframes-cli", "hyperframes-registry", "media-use"],
+      "note": "HyperFrames CLI: run it with HYPERFRAMES_NO_TELEMETRY=1 and pass --skip-skills to init, because by default it reports usage and writes its skills into the home folder of every agent tool it finds. Installing FFmpeg, installing those skills, cloud render, publish and HeyGen media each need the user's approval."
     },
     {
       "id": "image",
@@ -420,7 +465,55 @@
     {
       "id": "seo",
       "patterns": ["\\b(seo|search engines?|meta (tags?|descriptions?)|open[\\s-]?graph|structured data|schema\\.org|sitemaps?|canonical urls?)\\b"],
-      "modules": ["references/landing-page-engineering.md"]
+      "modules": ["references/landing-page-engineering.md", "references/companion-skills.md"],
+      "delegateSkills": ["seo-audit", "schema", "ai-seo", "site-architecture", "ecc:seo"]
+    },
+    {
+      "id": "copy-and-voice",
+      "patterns": [
+        "\\b(copywriting|copywriter|headlines?|taglines?|slogans?|microcopy|ux writing|tone of voice|brand voice)\\b",
+        "\\b(sounds? like (ai|a robot|chatgpt)|ai[\\s-]?(slop|tells?|sounding|written)|humani[sz]\\w*|make it sound (human|natural))\\b",
+        "\\b(website|site|home|homepage|page|landing|hero|about|product) copy\\b"
+      ],
+      "modules": ["references/companion-skills.md"],
+      "delegateSkills": ["copywriting", "copy-editing", "humanizer"],
+      "note": "Site copy: draft with copywriting, then run humanizer. Numbers, names, quotes and legal text stay exactly as supplied, and nothing invents proof, scarcity or urgency."
+    },
+    {
+      "id": "growth-and-conversion",
+      "patterns": [
+        "\\b(cro|conversion[\\s-]rate|a/b tests?|split tests?|lead magnets?|opt[\\s-]?ins?)\\b",
+        "\\b(product hunt|launch plan|go[\\s-]to[\\s-]market|content strategy|content calendar|backlinks?|link[\\s-]building|programmatic seo)\\b",
+        "\\b(ga4|google analytics|tag manager|gtm|utm|conversion tracking|tracking pixels?)\\b"
+      ],
+      "modules": ["references/companion-skills.md"],
+      "delegateSkills": ["cro", "ab-testing", "launch", "content-strategy", "analytics", "conversion-tracking"],
+      "note": "Analytics, pixels and tracking scripts send visitor data to a third party: ask first (SKILL.md section 1). Marketing advice never licenses invented proof or urgency."
+    },
+    {
+      "id": "code-quality",
+      "patterns": [
+        "\\b(architecture|architectural|deep modules?|tech(nical)? debt|testability|test[\\s-]driven|tdd|red[\\s-]green)\\b",
+        "\\b(over[\\s-]?engineer\\w*|bloat\\w*|too much code|yagni|lean code|dead code)\\b",
+        "\\b(code review|review (the |my |this )?(diff|pr|pull request|code))\\b"
+      ],
+      "modules": ["references/companion-skills.md"],
+      "delegateSkills": ["improve-codebase-architecture", "codebase-design", "tdd", "ponytail", "ponytail-review", "code-review"],
+      "note": "improve-codebase-architecture is user-invoked only: name the slash command, or read its SKILL.md and follow it when the user asks, and refactor only the candidate the user picks. Lean code never removes what the quality gates require."
+    },
+    {
+      "id": "session-tools",
+      "patterns": [
+        "\\bclaude[\\s-]?mem\\b",
+        "\\b(across|between) sessions\\b",
+        "\\b(persistent|long[\\s-]term) memory\\b",
+        "\\bwhere we left off\\b",
+        "\\bcaveman\\b",
+        "\\b(be brief|fewer tokens|less tokens|save tokens|token[\\s-]saving)\\b"
+      ],
+      "modules": ["references/companion-skills.md"],
+      "delegateSkills": ["claude-mem:mem-search", "caveman", "ponytail"],
+      "note": "Memory is advice and the repo wins on conflict. Caveman shapes chat replies only: approvals, warnings and anything saved to files stay in plain prose. Never type secrets into a session that a memory tool records."
     },
     {
       "id": "theming",
@@ -565,7 +658,8 @@
         "\\b(images?|videos?|pictures?|photos?|illustrations?|renders?|textures?|mockups?)\\b.{0,30}?\\b(with|using|via|through|from) gemini\\b",
         "\\b(higgsfield|midjourney|elevenlabs|stable[\\s-]diffusion|dall[\\s-]?e|suno|meshy|fal\\.ai|fal|runway|sora|veo|kling|ideogram|recraft|replicate|nano[\\s-]?banana|gemini omni)\\b",
         "\\b(image|video|audio|music|voice|speech|3d)[\\s-](generation|generators?)\\b",
-        "\\b(upscal(e|es|ed|ing)|text[\\s-]to[\\s-](image|video|speech|3d)|image[\\s-]to[\\s-](video|3d))\\b"
+        "\\b(upscal(e|es|ed|ing)|text[\\s-]to[\\s-](image|video|speech|3d)|image[\\s-]to[\\s-](video|3d))\\b",
+        "\\b(heygen|avatar videos?|ai (avatars?|presenters?|spokespersons?)|voice[\\s-]clon\\w*)\\b"
       ],
       "modules": ["references/asset-generation.md", "references/security-and-privacy.md"],
       "note": "Media generation may spend credits or send data to a third party: check the capability registry for status and cost; if it is paid or metered, get explicit approval with the expected cost first."
@@ -596,6 +690,16 @@
       "note": "Messages, posts and form submissions act on the user's behalf: show the exact content and recipient and get explicit approval."
     },
     {
+      "id": "tracker-or-pr",
+      "patterns": [
+        "\\b(to-spec|to-tickets)\\b",
+        "\\b(create|file|open|publish|post|raise|push)\\b.{0,30}?\\b(issues?|tickets?|pull requests?|prs?)\\b",
+        "\\b(github|gitlab|linear|jira) (issues?|tickets?|pull requests?)\\b"
+      ],
+      "modules": ["references/security-and-privacy.md"],
+      "note": "Publishing a spec, ticket, issue or pull request to a tracker or remote is outward-facing: show the exact content and the destination and get explicit approval. Without approval, write specs and tickets to files in the workspace."
+    },
+    {
       "id": "third-party-upload",
       "patterns": [
         "\\b(image|photo|picture|sketch|drawing|render|screenshot)s?[\\s-]to[\\s-](3d|glb|gltf)\\b",
@@ -603,10 +707,25 @@
         "\\b(3d|glb|gltf)( models?| assets?| meshes| objects?)? (from|out of|based on) (this|that|these|my|our|the|an?)( [\\w-]+){0,2} (images?|photos?|pictures?|sketch(es)?|drawings?|renders?|screenshots?)\\b",
         "\\b(turn|convert|make|generate)\\b.{0,40}?\\b(images?|photos?|pictures?|sketch(es)?|renders?)\\b.{0,25}?\\b(into|to|as) (an? )?(3d|glb|gltf)\\b",
         "\\bupload(s|ed|ing)? (it|them|this|these|those|the|our|my|all|every|[\\w-]+ (files?|assets?|images?|photos?|videos?|data))\\b.{0,40}?\\b(to|onto|into)\\b",
-        "\\b(send|share|transfer|sync)(s|ed|ing)? ([\\w-]+ ){0,3}(files?|assets?|data|datasets?|database|codebase|source code|repo|repository|screenshots?|recordings?)\\b.{0,30}?\\b(to|with)\\b"
+        "\\b(send|share|transfer|sync)(s|ed|ing)? ([\\w-]+ ){0,3}(files?|assets?|data|datasets?|database|codebase|source code|repo|repository|screenshots?|recordings?)\\b.{0,30}?\\b(to|with)\\b",
+        "\\b(cloud render(ing)?|render (it |this |the \\w+ )?(in|on|with) (the )?(cloud|lambda|cloud ?run)|hyperframes (publish|cloud)|publish (it |this )?(to )?hyperframes)\\b"
       ],
       "modules": ["references/security-and-privacy.md"],
       "note": "Uploading or sharing files sends data to a third party: name the destination and the files and get explicit approval."
+    },
+    {
+      "id": "system-install",
+      "patterns": [
+        "\\b(install(ing)?|set ?up|download(ing)?) (ffmpeg|ffprobe|docker|python|blender|imagemagick|whisper|chrome|chromium)\\b",
+        "\\b(winget|brew|apt(-get)?|choco|scoop|pip3?) install\\b",
+        "\\bsudo\\b",
+        "\\b(upgrade|update|install) (node(\\.?js)?|the node version)\\b",
+        "\\b(npx )?skills (add|install)\\b",
+        "\\bplugin (install|marketplace add)\\b",
+        "\\bclaude-mem (install|update|uninstall)\\b"
+      ],
+      "modules": ["references/security-and-privacy.md"],
+      "note": "System-wide installs and upgrades change the user's machine: name the tool, the exact command and where it writes, and get a clear yes. Installing skills, plugins or hooks changes agent configuration: name the source, the target agent and where it writes, and limit the target to one agent. Ordinary project dependencies do not need this."
     },
     {
       "id": "spend",

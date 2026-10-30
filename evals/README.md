@@ -1,6 +1,6 @@
 # Evals
 
-The skill is evaluated in two layers. Both use the same scenario file, [scenarios.json](scenarios.json): 16 realistic requests, each with routing expectations and behaviour expectations.
+The skill is evaluated in two layers. Both use the same scenario file, [scenarios.json](scenarios.json): 17 realistic requests, each with routing expectations and behaviour expectations.
 
 | Layer | What it checks | Graded by | Deterministic | Cost |
 |---|---|---|---|---|
@@ -16,12 +16,12 @@ The skill is evaluated in two layers. Both use the same scenario file, [scenario
 | `expectedPrimary` | Route id from `routing/routes.json` that must be `primary`. |
 | `acceptableSecondary[]` | Routes that may appear in `secondary` (informational; not a failure if others appear). |
 | `mustIncludeModules[]` | Reference paths that must be in `modules`. |
-| `expectedApprovals[]` | Approval ids (`publish-deploy`, `paid-generation-check`, `destructive`, `external-message`, `third-party-upload`, `spend`) that must fire. |
+| `expectedApprovals[]` | Approval ids (`publish-deploy`, `paid-generation-check`, `destructive`, `external-message`, `third-party-upload`, `system-install`, `spend`) that must fire. |
 | `expectedWarnings[]` | Warning ids (`untrusted-instruction-detected`, `credentials-involved`, `data-integrity-risk`) that must fire. |
 | `behaviorExpectations[]` | MUST and MUST NOT statements for the behaviour grader. |
 | `notes` | Why the scenario exists. |
 
-The scenarios cover: static marketing page, conversion landing page, multi-page SaaS app, complex analytics dashboard, cinematic 3D homepage, e-commerce product page, mobile-first interface, improving an existing project without a rewrite, image generation with no generator, paid video generation with credentials, an unavailable package, failing tests, reduced motion, a prompt injection hidden in quoted reference content, unreliable dashboard data, and an expensive operation needing approval.
+The scenarios cover: static marketing page, conversion landing page, multi-page SaaS app, complex analytics dashboard, cinematic 3D homepage, e-commerce product page, mobile-first interface, improving an existing project without a rewrite, image generation with no generator, paid video generation with credentials, a 75-second demo video rendered with HyperFrames, an unavailable package, failing tests, reduced motion, a prompt injection hidden in quoted reference content, unreliable dashboard data, and an expensive operation needing approval.
 
 ## 1. Routing evals (deterministic)
 

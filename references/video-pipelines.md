@@ -3,7 +3,7 @@
 How to plan, encode, embed, caption, generate and validate video for interfaces: hero and background loops, product demos and explainers. Encoding and embedding choices here decide LCP, data cost and whether autoplay works at all.
 
 **Load when:** a page uses `<video>`, a background or hero loop, a product demo or screen recording, an explainer, social cut-downs, or a request to generate or edit video. **Owns:** codec and container choice, the encoding ladder, faststart, poster frames, video size budgets, background/hero/loop/demo patterns, WebVTT tracks for video, video generation prompt specs, ffmpeg-less fallbacks.
-**Related:** [image-to-3d-pipeline](image-to-3d-pipeline.md) (optional Gemini video generation from a still), [asset-generation](asset-generation.md), [image-pipelines](image-pipelines.md), [audio-pipelines](audio-pipelines.md), [motion-engineering](motion-engineering.md), [accessibility](accessibility.md), [performance](performance.md), [capability-registry](capability-registry.md), [skill-delegation](skill-delegation.md), [security-and-privacy](security-and-privacy.md), [asset-production workflow](../workflows/asset-production.md)
+**Related:** [hyperframes-video](hyperframes-video.md) (planned demo and marketing films of 60 s or more, built as HyperFrames source), [image-to-3d-pipeline](image-to-3d-pipeline.md) (optional Gemini video generation from a still), [asset-generation](asset-generation.md), [image-pipelines](image-pipelines.md), [audio-pipelines](audio-pipelines.md), [motion-engineering](motion-engineering.md), [accessibility](accessibility.md), [performance](performance.md), [capability-registry](capability-registry.md), [skill-delegation](skill-delegation.md), [security-and-privacy](security-and-privacy.md), [asset-production workflow](../workflows/asset-production.md)
 
 ## Decision rules
 
@@ -70,7 +70,7 @@ Codec strings (defaults — adjust to the actual encode profile/level):
 | Background loop duration | 6-15 s | default — adjust per product |
 | Card/inline loop (GIF replacement) | ≤ 500 KB, 2-6 s | default — adjust per product |
 | Poster image | follows image budgets | [image-pipelines](image-pipelines.md) |
-| Product demo | split into ≤ 60 s chapters; `preload="none"` | default — adjust per product |
+| Product demo embedded in a page | split into ≤ 60 s chapters; `preload="none"`. A standalone film of 60 s or more is planned and rendered under [hyperframes-video](hyperframes-video.md) | default — adjust per product |
 
 ### Platform aspect ratios (video-editing, tasteforge-video)
 
@@ -265,7 +265,7 @@ finally { await context.close(); } // the WebM (VP8) is written on close
 const file = await page.video()?.path(); // copy to a stable name afterwards
 ```
 
-The output is VP8 WebM. Converting to MP4/H.264 needs a full ffmpeg or the in-browser route below. For rendered explainers, delegate to `remotion-video-creation` or `manim-video` if installed ([skill-delegation](skill-delegation.md)).
+The output is VP8 WebM. Converting to MP4/H.264 needs a full ffmpeg or the in-browser route below. For planned demo, launch and marketing films of a minute or more, use [hyperframes-video](hyperframes-video.md). For other rendered explainers, delegate to `remotion-video-creation` or `manim-video` if installed ([skill-delegation](skill-delegation.md)).
 
 ### Video generation prompt spec
 

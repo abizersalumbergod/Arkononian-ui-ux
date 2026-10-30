@@ -2,7 +2,7 @@
 
 An Agent Skills-compatible UI/UX engineering skill for Claude Code, Codex, and other clients that load a complete skill folder. It turns a product brief, or an existing frontend, into a design direction, a design system, a working implementation, an asset pipeline and a verified interface, and it reports honestly what was and was not verified.
 
-It covers landing pages, SaaS dashboards and admin panels, e-commerce, portfolios and editorial sites, mobile-first responsive UIs, cinematic/3D/WebGL experiences, design systems, redesigns of existing projects, UI asset production (image, video, audio, 3D) and UI audits.
+It covers landing pages, SaaS dashboards and admin panels, e-commerce, portfolios and editorial sites, mobile-first responsive UIs, cinematic/3D/WebGL experiences, design systems, redesigns of existing projects, UI asset production (image, video, audio, 3D), demo and marketing videos of a minute or more (planned in numbers and built as HyperFrames source) and UI audits.
 
 ## How it works
 
@@ -33,15 +33,15 @@ The agent then writes a motion and interaction plan before any code. It picks th
 |---|---|
 | `SKILL.md` | Orchestrator: rules, approval boundaries, precedence, the 11 stages, routing table, gate summary, report format, indexes |
 | `MASTER_INSTRUCTIONS.md` | Every rule in one document. **Generated** from SKILL.md, each module's "Decision rules" and each workflow's "Steps" |
-| `references/` | 28 specialist modules, one of them optional (image-to-3d-pipeline). Each topic has exactly one owner (see the index in SKILL.md) |
-| `workflows/` | 9 procedures: new-product, existing-project, landing-page, dashboard, ecommerce, cinematic-3d, design-system, asset-production, visual-regression |
+| `references/` | 30 specialist modules, two of them optional routes (image-to-3d-pipeline, hyperframes-video) and one map of companion skills (companion-skills). Each topic has exactly one owner (see the index in SKILL.md) |
+| `workflows/` | 10 procedures: new-product, existing-project, landing-page, dashboard, ecommerce, cinematic-3d, design-system, asset-production, demo-video, visual-regression |
 | `routing/routes.json` | Task types, triggers, modifiers, approval triggers, warning patterns |
 | `presets/` | Starting token sets: cinematic-noir, monochrome-editorial, precision-saas, warm-commerce |
-| `schemas/` | JSON Schemas: capability registry, asset manifest, quality report, routes, presets |
-| `templates/` | Design brief, design decision record, asset manifest, quality report, acceptance checklist |
+| `schemas/` | JSON Schemas: capability registry, asset manifest, quality report, routes, presets, video spec |
+| `templates/` | Design brief, design decision record, asset manifest, quality report, acceptance checklist, video spec |
 | `scripts/` | Zero-dependency Node tools (documented in `scripts/README.md`), plus the optional Python image-to-3D toolkit in `scripts/image-to-3d/` |
 | `tests/` | `node:test` suites and fixtures |
-| `evals/` | 16 behaviour scenarios and how to run them |
+| `evals/` | 17 behaviour scenarios and how to run them |
 | `LICENSES_AND_PROVENANCE.md` | Licence policy, audited sources, attribution |
 
 ## Supported environments
@@ -146,7 +146,8 @@ node scripts/environment-audit.mjs --project <your-project> --out env-audit.json
 | Node.js 18+ | All scripts | Route manually from the SKILL.md tables |
 | Playwright + Chromium (`npm i -g playwright && npx playwright install chromium`) | `visual-check.mjs` screenshots, overflow, console, reduced-motion runs | Use a verified browser MCP, or report visual gates NOT TESTED |
 | A browser MCP (Chrome DevTools or the built-in browser) | Lighthouse accessibility/SEO, performance traces, interactive checks | Playwright checks only; performance is lab-only or NOT TESTED |
-| ffmpeg | Video transcoding, posters, durations | Ship pre-encoded media; durations marked NOT TESTED |
+| ffmpeg | Video transcoding, posters, durations, and rendering HyperFrames films | Ship pre-encoded media; durations marked NOT TESTED; a film's render is BLOCKED until it is installed (ask first) |
+| Node.js 22+ (for `npx hyperframes`) | The optional video route: authoring checks (`lint`, `check`, `snapshot`, `preview`) run without FFmpeg | Plan the film and run `scripts/video-check.mjs` (Node 18+); the HyperFrames CLI is blocked |
 | sharp (project dependency) | Image resizing and encoding | Framework image optimisation, or correctly sized source images |
 | axe-core (project dev dependency) | Automated WCAG rules in `visual-check.mjs --axe` | Lighthouse accessibility plus manual checks |
 
@@ -159,6 +160,8 @@ Image, video, audio and 3D generators (for example the Higgsfield or Figma MCP c
 - records each asset's route, generator, prompt reference and licence in an asset manifest, validated with `scripts/asset-validation.mjs`;
 - falls back to procedural SVG, Canvas or CSS assets, licensed retrieval or clearly labelled placeholders when a generator is unavailable or not approved;
 - offers an optional, opt-in media route (`references/image-to-3d-pipeline.md`). If you have Gemini API access (a billing-enabled key), Gemini generates reference stills, site images and video first, for static sites too; then a free public Hugging Face Space (TRELLIS) turns a chosen still into a 3D model and headless Blender cleans the GLB up. Every Gemini call is paid and sends your prompt to Google, and the Space upload sends your image to a third party, so each needs your approval. Without Gemini access the normal procedure supplies the image. It needs Python (and Blender for 3D); nothing else in the skill does, and nothing runs unless you ask.
+
+- offers an optional video route (`references/hyperframes-video.md`, `workflows/demo-video.md`) for demo, launch and marketing films of a minute or more. The film is planned in numbers (`templates/video-spec.json`, checked by `scripts/video-check.mjs`), built as HyperFrames source, checked, snapshotted, rendered, and its length measured on the finished file. The HyperFrames CLI runs with telemetry off and `init --skip-skills`, because by default it reports usage and writes its skills into the home folder of every agent tool it finds. Installing FFmpeg or those skills, hosted render, publishing and HeyGen media (avatar, voice, catalogue music) each need your approval.
 
 Credentials are named in reports (environment variable names only) and never written into code, bundles, manifests or logs. Deploying, publishing, sending messages and destructive operations always require explicit approval.
 
@@ -175,7 +178,7 @@ node scripts/build-docs.mjs --check    # generated docs are up to date
 npm run test:py                        # optional image-to-3D toolkit (Python 3.9+; also run by tests/image-to-3d.test.mjs when Python is found)
 ```
 
-- **Unit and integration tests** cover the schema validator, quality-report honesty rules, asset validation (including path-traversal rejection), skill-structure checks, routing (all 16 eval scenarios), capability detection, token building with contrast checks, a live Playwright visual check on fixture pages, and the docs generator.
+- **Unit and integration tests** cover the schema validator, quality-report honesty rules, asset validation (including path-traversal rejection), skill-structure checks, routing (all 17 eval scenarios), video checks (film plan, HyperFrames project scan, MP4 duration from synthetic files), capability detection, token building with contrast checks, a live Playwright visual check on fixture pages, and the docs generator.
 - **Behaviour evals** (`evals/README.md`) check that an agent following the skill plans correctly, respects approvals, refuses injected instructions and reports honestly. They run through subagents and use model usage.
 
 ## Maintenance
@@ -200,5 +203,6 @@ See `references/troubleshooting.md`. Common cases:
 - MCP tools cannot be detected from a script. They are probed in-session, and availability differs between sessions and machines.
 - Automated accessibility checks catch only part of WCAG. Manual keyboard and screen-reader checks are still required for a full pass.
 - Performance numbers from local runs are lab data. Core Web Vitals targets apply to field data at the 75th percentile.
+- No film was rendered while building the video route: FFmpeg was absent on the author's machine. `init`, `lint`, `check` and `snapshot` ran on a 75 s, 7-scene HyperFrames composition (2026-10-30, hyperframes 0.8.221); the `render` command, `--skip-skills`, hosted render and HeyGen media are documented but untested.
 - No media generation was exercised while building this skill (no approved credits), so generator routes are documented and capability-gated but untested end to end.
 - `references/skill-audit.md` records source research from October 2026. Re-check version-sensitive and installed-skill information when using a newer environment.

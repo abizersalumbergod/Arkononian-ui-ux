@@ -29,6 +29,7 @@ node --test "tests/*.test.mjs"
 | [build-tokens.mjs](build-tokens.mjs) | Turn a preset into CSS tokens and a Tailwind v4 theme, with a contrast check | C, D |
 | [visual-check.mjs](visual-check.mjs) | Headless screenshots and layout/console checks per viewport | B, C, D, F |
 | [quality-report.mjs](quality-report.mjs) | Validate a gate A-H quality report, or create a blank one | All (A-H) |
+| [video-check.mjs](video-check.mjs) | Check a film plan, a HyperFrames project and a rendered file: runtime floor, scene mounts, forbidden patterns, duration read from the MP4 header | B, C, G (films) |
 | [image-to-3d/](image-to-3d/README.md) | Optional Python toolkit: Gemini images and video (only with Gemini access), then image to GLB through a Hugging Face Space, Blender cleanup, manifest entries | G (feeds asset-validation) |
 | [lib/schema.mjs](lib/schema.mjs) | JSON Schema subset validator | Library |
 | [lib/fsutil.mjs](lib/fsutil.mjs) | File system, front matter, link and secret-scan helpers | Library |
@@ -287,6 +288,41 @@ node scripts/quality-report.mjs --report quality-report.json
 ```
 
 Exports: `evaluateReport`, `createTemplate`, `GATES`, `STATUSES`. Tests: `tests/quality-gates.test.mjs`.
+
+## video-check.mjs
+
+**Purpose (feeds Gates B, C and G for films).** Read-only checks for a demo or marketing film of one minute or more, in three modes that can be combined. It never runs Chrome or the HyperFrames CLI (`npx hyperframes check` is the runtime gate), writes nothing and makes no network calls.
+
+| Mode | What is checked |
+|---|---|
+| `--spec <file>` | The plan against `schemas/video-spec.schema.json`, then: runtime at least the floor (default 60 s); scenes contiguous (a gap is an error, so is an overlap over 1 s); the first scene is a hook; demo, launch, promo and teaser films have a `cta` scene and text; narration needs captions; reading load (warning above 17 characters per second, error above 25); pacing (a beat over 8 s needs a visible change every 6 s); numbers and superlatives need `claims[]` with evidence; music for films over 15 s; odd canvas sides; generated media needs a recorded approval |
+| `--project <dir>` | A HyperFrames project, statically: root `data-duration` against the floor; every scene host mounted, inside the root, with host id = scene root id = `window.__timelines` key; scene files exist and use `<template>`; gaps and a blank tail; forbidden patterns with file and line (`Date.now`, `Math.random`, `repeat: -1`, timers, fetch, `play()` or `pause()`); leading-slash asset paths; `crossorigin` on media |
+| `--render <file>` | The finished file: non-empty and not truncated; duration read from the MP4 or MOV `mvhd` header (no ffprobe needed); at least the floor; within the tolerance of the planned length; `faststart` reported. Other formats need ffprobe, otherwise the length is NOT_TESTED (exit 2) |
+
+With more than one mode it also cross-checks plan, composition and render against each other.
+
+```text
+node scripts/video-check.mjs --spec <file> [--project <dir> [--entry <file>]] [--render <file>] [--expect-seconds <n>] [--tolerance <s>] [--min-seconds <n>] [--ffprobe] [--json]
+```
+
+| Flag | Meaning |
+|---|---|
+| `--spec <file>` | Film plan (`templates/video-spec.json` shape). |
+| `--project <dir>` / `--entry <file>` | HyperFrames project folder and its root composition (default `index.html`). |
+| `--render <file>` | Rendered file to measure. |
+| `--expect-seconds <n>` | Planned length for `--render` (default: the project's root duration, else the plan's total). |
+| `--tolerance <s>` | Allowed difference between planned and measured length (default 0.5). |
+| `--min-seconds <n>` | Floor for every duration found (default: the plan's `minDurationSeconds`, else 60). |
+| `--ffprobe` | Also ask ffprobe for the duration, as a cross-check. |
+| `--json` | Print the full result as JSON. |
+
+Exit codes: `0` pass (warnings allowed) · `1` fail · `2` incomplete (a length could not be measured) · `3` unreadable or invalid input · `64` usage error.
+
+```sh
+node scripts/video-check.mjs --spec video-spec.json --project video --render video/renders/final.mp4
+```
+
+Optional external tool: `ffprobe` (only for non-MP4 files or `--ffprobe`). Exports: `checkSpec`, `scanProject`, `probeRender`, `mp4Info`, `runChecks`, `formatReport`, `DEFAULTS`, `EXIT`. Tests: `tests/video-check.test.mjs`.
 
 ## lib/schema.mjs (library)
 

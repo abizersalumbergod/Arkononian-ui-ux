@@ -64,6 +64,7 @@ Improve, polish or redesign an interface that already works, without breaking it
    - Re-run the step 3 audits and compare counts and severities.
    - **Exit check:** a before/after table per page: findings fixed, findings remaining, new findings.
 10. **Validate and repair (stage 10).**
+    - Companion skills, if installed: `ponytail-audit` for a whole-repo quality report that changes nothing, `code-review` on the diff, `seo-audit` when the site is public; when the user wants structure improved, offer `/improve-codebase-architecture` (user-invoked), refactor only the candidate they pick, and keep the preserved-journey tests green.
     - Run gates B-H per [quality-gates](../references/quality-gates.md). A regression in a preserved journey is critical. Fix and re-run; never lower a threshold or delete a failing test to pass.
     - **Exit check:** no unresolved critical findings and no regression against the baseline.
 11. **Deliver (stage 11).**
@@ -75,7 +76,7 @@ Improve, polish or redesign an interface that already works, without breaking it
 - Always: [quality-gates](../references/quality-gates.md), [capability-registry](../references/capability-registry.md).
 - Route: [frontend-architecture](../references/frontend-architecture.md), [visual-critique](../references/visual-critique.md), [design-intelligence](../references/design-intelligence.md), [accessibility](../references/accessibility.md), [performance](../references/performance.md), [visual-testing](../references/visual-testing.md).
 - Plus the secondary route's modules and any modifiers the router returns (for example [design-tokens](../references/design-tokens.md) for theming, [motion-engineering](../references/motion-engineering.md) for animation, [troubleshooting](../references/troubleshooting.md) for failing builds).
-- Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `impeccable`, `design:design-critique`, `design-taste-frontend`, `emil-design-eng`.
+- Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `impeccable`, `design:design-critique`, `design-taste-frontend`, `emil-design-eng`. Companions ([companion-skills](../references/companion-skills.md)): `ponytail-audit`, `code-review`, `improve-codebase-architecture`, `seo-audit`, `humanizer`.
 
 ## Approvals needed
 

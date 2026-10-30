@@ -102,6 +102,21 @@ Overall result (recomputed by the script): FAIL if any gate is FAIL; else INCOMP
 - Anti-generic lint counts (rules owned by [design-intelligence](design-intelligence.md)): em-dashes in UI microcopy (target 0, report the count), eyebrow labels above headings (at most ceil(sections/3)), `transition-all`, `h-screen` on mobile heroes, arbitrary z-index values, mixed icon sets. Report counts as Gate C evidence; they are signals, not automatic FAILs.
 - Optional scored audits (impeccable audit /20, ECC design-system ten dimensions 0-10) may be attached as context, but every score must cite file:line or screenshot evidence. Never use a score as the Gate C verdict.
 
+### Video deliverables (a rendered film; rules in [hyperframes-video](hyperframes-video.md))
+
+A film is not a page. Report these separately and never present the planned runtime as the measured one.
+
+| Gate | Evidence for a rendered film |
+|---|---|
+| B functional | `scripts/video-check.mjs --render` measured the duration within 0.5 s of the plan, and at least 60 s for a minute-plus film; the file is non-empty; plan, composition and render agree |
+| C visual | A snapshot of every scene and the final frame was viewed and the findings logged with severity |
+| D accessibility | Captions or a transcript for any speech; at most three flashes in any second; text contrast measured by the engine's `check` |
+| G assets | Real sources named; music, sound and font licences recorded in the manifest |
+| H reliability and security | Telemetry off and no skills installed without approval; no keys or private data in frames or logs; hosted render, publish and paid media approved |
+| E, F | `NOT_APPLICABLE` with the reason: a rendered film has no page performance or viewport matrix (a page that embeds it is checked on its own) |
+
+If the render did not run, Gate B for the length claim is `NOT_TESTED` or `BLOCKED` with the reason.
+
 ## Implementation
 
 ### Report lifecycle

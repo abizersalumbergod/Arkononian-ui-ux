@@ -3,12 +3,13 @@
 Produce UI media (images, illustrations, icons, video, audio, textures, 3D models) through the cheapest route that meets the need: existing or native first, procedural next, retrieved licensed media, then external generation. Paid or third-party generation always needs explicit approval with the expected cost, and every asset is validated before it is integrated.
 
 **Load when:** route `asset-production` is primary or secondary, or any workflow reaches stage 6 with media to create. **Owns:** the approval and validation procedure for producing assets; route selection, manifest and acceptance criteria live in asset-generation; format detail in the image, video and audio pipeline modules.
-**Related:** [SKILL.md](../SKILL.md), [cinematic-3d](cinematic-3d.md), [landing-page](landing-page.md), [ecommerce](ecommerce.md)
+**Related:** [SKILL.md](../SKILL.md), [demo-video](demo-video.md), [cinematic-3d](cinematic-3d.md), [landing-page](landing-page.md), [ecommerce](ecommerce.md)
 
 ## When to use
 
 - "Generate a hero image", "make a background video", "create an icon set", "add sound", "I need a GLB of the product".
 - Any stage 6 of another workflow that needs new media.
+- Not for a planned demo, launch or marketing film of a minute or more: use [demo-video](demo-video.md).
 - Not for optimising media that already exists only; that is in [image-pipelines](../references/image-pipelines.md), [video-pipelines](../references/video-pipelines.md), [audio-pipelines](../references/audio-pipelines.md) (still validate with step 8).
 
 ## Inputs
@@ -70,7 +71,7 @@ Produce UI media (images, illustrations, icons, video, audio, textures, 3D model
 - Always: [quality-gates](../references/quality-gates.md), [capability-registry](../references/capability-registry.md).
 - Route: [asset-generation](../references/asset-generation.md), [image-pipelines](../references/image-pipelines.md), [video-pipelines](../references/video-pipelines.md), [audio-pipelines](../references/audio-pipelines.md), [security-and-privacy](../references/security-and-privacy.md). Load only the pipeline modules for media types actually in the list.
 - As needed: [shader-and-creative-coding](../references/shader-and-creative-coding.md) (procedural), [three-dimensional-web](../references/three-dimensional-web.md) (GLB), [image-to-3d-pipeline](../references/image-to-3d-pipeline.md) (a GLB made from a reference image), [performance](../references/performance.md), [troubleshooting](../references/troubleshooting.md).
-- Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `canvas-design` for posters, illustrations and static art (the router suggests it through the `illustration-art` modifier), never for photography or product shots.
+- Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `canvas-design` for posters, illustrations and static art (the router suggests it through the `illustration-art` modifier), never for photography or product shots. `media-use` (HyperFrames) for free local media routes first (speech, transcription, background removal); its hosted or paid routes need the approvals in [asset-generation](../references/asset-generation.md).
 
 ## Approvals needed
 

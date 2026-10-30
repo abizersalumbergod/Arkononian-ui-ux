@@ -39,6 +39,7 @@ Build or improve a store: listing pages, product detail pages, cart and checkout
    - Build one product's journey first: PLP card → PDP (gallery, variant selection, price, stock, add to cart) → cart (quantity, remove, totals) → checkout handoff → confirmation, on real or `FIXTURE` data.
    - **Exit check:** one product can be bought end to end in test mode (or reaches the provider's test checkout).
 5. **Build (stage 5).**
+   - Companion skills, if installed ([companion-skills](../references/companion-skills.md)): `copywriting` then `humanizer` for product and policy copy (never alter prices, sizes, materials, shipping or return terms); `schema` for Product and Offer structured data; `tdd` for cart, price and tax logic; `ponytail` for the smallest sufficient code.
    - Read [interaction-design](../references/interaction-design.md). Variant selectors: unavailable combinations disabled with reason; price and image update on selection; selection reflected in the URL where the platform supports it.
    - Add-to-cart feedback is announced to screen readers and visible without blocking; cart count updates.
    - States: out of stock, low stock, loading, empty cart, payment failure, network error, price change between cart and checkout.
@@ -60,6 +61,7 @@ Build or improve a store: listing pages, product detail pages, cart and checkout
    - Critique with [visual-critique](../references/visual-critique.md): price, variant and add-to-cart visible without scrolling on mobile PDP; product grid alignment.
    - **Exit check:** findings logged with severity.
 10. **Validate and repair (stage 10).**
+    - Companion skills, if installed: `seo-audit` on PLP and PDP (structured data must match the visible price and stock), `cro` on the PDP and checkout entry, `code-review` on the diff; offer `/improve-codebase-architecture` (user-invoked) once the cart and checkout modules exist.
     - Gates B-H per [quality-gates](../references/quality-gates.md). [accessibility](../references/accessibility.md): variant controls labelled, gallery operable by keyboard, cart updates announced, checkout form labels and errors. [performance](../references/performance.md): LCP ≤ 2.5 s and CLS ≤ 0.1 on PLP and PDP (lab labelled lab). [responsive-design](../references/responsive-design.md): matrix, touch target sizes, 320 px reflow.
     - Recompute a sample cart total (items, tax, shipping, discount) and compare with what the UI shows.
     - **Exit check:** no unresolved critical findings; totals match.
@@ -71,7 +73,7 @@ Build or improve a store: listing pages, product detail pages, cart and checkout
 
 - Always: [quality-gates](../references/quality-gates.md), [capability-registry](../references/capability-registry.md).
 - Route: [product-discovery](../references/product-discovery.md), [landing-page-engineering](../references/landing-page-engineering.md), [interaction-design](../references/interaction-design.md), [image-pipelines](../references/image-pipelines.md), [design-tokens](../references/design-tokens.md), [responsive-design](../references/responsive-design.md), [accessibility](../references/accessibility.md), [performance](../references/performance.md), [security-and-privacy](../references/security-and-privacy.md).
-- Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `frontend-design`, `ui-ux-pro-max`, `impeccable`, `design-taste-frontend`.
+- Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `frontend-design`, `ui-ux-pro-max`, `impeccable`, `design-taste-frontend`. Companions ([companion-skills](../references/companion-skills.md)): `copywriting`, `humanizer`, `schema`, `seo-audit`, `cro`, `tdd`, `ponytail`.
 
 ## Approvals needed
 

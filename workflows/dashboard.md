@@ -70,7 +70,7 @@ Build a dashboard, SaaS app, admin panel or internal tool. Build the single most
 - Always: [quality-gates](../references/quality-gates.md), [capability-registry](../references/capability-registry.md).
 - Route: [product-discovery](../references/product-discovery.md), [dashboard-engineering](../references/dashboard-engineering.md), [interaction-design](../references/interaction-design.md), [design-tokens](../references/design-tokens.md), [typography-and-layout](../references/typography-and-layout.md), [responsive-design](../references/responsive-design.md), [accessibility](../references/accessibility.md), [performance](../references/performance.md), [security-and-privacy](../references/security-and-privacy.md).
 - Modifiers as returned (for example [motion-engineering](../references/motion-engineering.md), [frontend-architecture](../references/frontend-architecture.md) for a named stack).
-- Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `dataviz`, `ui-ux-pro-max`, `impeccable`, `transitions-dev`, `ecc:frontend-a11y`.
+- Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `dataviz`, `ui-ux-pro-max`, `impeccable`, `transitions-dev`, `ecc:frontend-a11y`. Companions ([companion-skills](../references/companion-skills.md)): `tdd`, `ponytail`, `improve-codebase-architecture` (user-invoked).
 
 ## Approvals needed
 

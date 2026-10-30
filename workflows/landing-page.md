@@ -25,6 +25,7 @@ Build a conversion-focused landing page or marketing site: one clear audience, o
    - Inspect any existing project (framework, styling, analytics already installed). Read [frontend-architecture](../references/frontend-architecture.md) if the router added it.
    - **Exit check:** stack, run command and verified capabilities named.
 2. **Understand (stage 2).**
+   - Companion skills, if installed ([companion-skills](../references/companion-skills.md)): `product-marketing` for positioning and `customer-research` for audience language; for a vague or risky brief the user can run `/grill-me` first.
    - Read [product-discovery](../references/product-discovery.md). Define the audience, the single primary conversion event, objections to answer and the proof available. Fill [design-brief](../templates/design-brief.md).
    - Never invent testimonials, customer logos, user counts or metrics. Use clearly labelled placeholders and tell the user.
    - **Exit check:** primary CTA, audience and proof inventory written; fabricated proof is absent.
@@ -40,6 +41,7 @@ Build a conversion-focused landing page or marketing site: one clear audience, o
    - Read [typography-and-layout](../references/typography-and-layout.md). Build the hero plus primary CTA first, with real or draft copy, at mobile width.
    - **Exit check:** tokens in code; hero and primary CTA render at 375 px and 1280 px.
 5. **Build (stage 5).**
+   - Companion skills, if installed: draft copy with `copywriting`, then run `humanizer` on it (facts, numbers, quotes and legal text stay as supplied); `schema` for structured data; `signup` and `popups` for the conversion flow; `tdd` for logic that can break; `ponytail` for the smallest sufficient code, never at the cost of a gate item.
    - Build remaining sections as reusable components with semantic landmarks (`header`, `main`, `section` with headings, `footer`).
    - Read [interaction-design](../references/interaction-design.md) for the form: labels, inline validation, submitting, success, error and duplicate-submit handling. Read [security-and-privacy](../references/security-and-privacy.md) when the router adds it (forms, payments, user data): no keys in the client, server-side submission, consent where required.
    - Every CTA links to a real destination or a working form. Anchor links scroll to existing targets.
@@ -61,9 +63,11 @@ Build a conversion-focused landing page or marketing site: one clear audience, o
    - Critique with [visual-critique](../references/visual-critique.md): is the value proposition and CTA visible in the first viewport at 375 and 1280 px? Is hierarchy clear?
    - **Exit check:** findings logged with severity.
 10. **Validate and repair (stage 10).**
+    - Companion skills, if installed: `seo-audit` and `cro` on the built page, `copy-editing` with `humanizer` for a copy sweep, `code-review` or `ponytail-review` on the diff, `diagnosing-bugs` for a failing gate. Once the app runs and has grown past a handful of components, offer `/improve-codebase-architecture` (user-invoked) and refactor only the candidate the user picks.
     - Gates B-H per [quality-gates](../references/quality-gates.md). [accessibility](../references/accessibility.md): form labels, error announcement, focus order, contrast. [performance](../references/performance.md): LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1 (Core Web Vitals, p75 field; lab labelled lab). [responsive-design](../references/responsive-design.md): matrix plus 320 px reflow.
     - **Exit check:** no unresolved critical findings in scope.
 11. **Deliver (stage 11).**
+    - Companion skills, if installed: `launch` for the launch checklist (the publish itself still needs approval); `analytics` or `conversion-tracking` only with approval for any script that sends visitor data; `pr` for a pull-request body; `/handoff` when the session ends.
     - Validate the report with `node <skill-dir>/scripts/quality-report.mjs --report <path>` ([quality-report.mjs](../scripts/quality-report.mjs)). Do not deploy without approval.
     - **Exit check:** report validates; placeholder copy and proof are listed for the user to replace.
 
@@ -72,7 +76,7 @@ Build a conversion-focused landing page or marketing site: one clear audience, o
 - Always: [quality-gates](../references/quality-gates.md), [capability-registry](../references/capability-registry.md).
 - Route: [product-discovery](../references/product-discovery.md), [design-intelligence](../references/design-intelligence.md), [landing-page-engineering](../references/landing-page-engineering.md), [visual-systems](../references/visual-systems.md), [typography-and-layout](../references/typography-and-layout.md), [design-tokens](../references/design-tokens.md), [interaction-design](../references/interaction-design.md), [responsive-design](../references/responsive-design.md), [accessibility](../references/accessibility.md), [performance](../references/performance.md).
 - Common modifiers: [security-and-privacy](../references/security-and-privacy.md) (forms, signup, payments), [motion-engineering](../references/motion-engineering.md), [image-pipelines](../references/image-pipelines.md), [video-pipelines](../references/video-pipelines.md).
-- Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `frontend-design`, `design-taste-frontend`, `impeccable`, `ui-ux-pro-max`, `emil-design-eng`.
+- Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `frontend-design`, `design-taste-frontend`, `impeccable`, `ui-ux-pro-max`, `emil-design-eng`. Companions ([companion-skills](../references/companion-skills.md)): `product-marketing`, `site-architecture`, `copywriting`, `humanizer`, `schema`, `seo-audit`, `cro`, `launch`, `tdd`, `ponytail`.
 
 ## Approvals needed
 

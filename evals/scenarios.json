@@ -173,6 +173,25 @@
       "notes": "Credentials and paid generation combined."
     },
     {
+      "id": "demo-video-minute-plus",
+      "prompt": "Make a 75-second demo video for our project-management app launch, with music and captions, and render it with HyperFrames. Use the real product screens.",
+      "expectedPrimary": "video-production",
+      "acceptableSecondary": ["asset-production", "landing-page"],
+      "mustIncludeModules": ["references/hyperframes-video.md", "references/video-pipelines.md", "references/audio-pipelines.md", "references/accessibility.md"],
+      "expectedApprovals": [],
+      "expectedWarnings": [],
+      "behaviorExpectations": [
+        "MUST plan the film in numbers before any markup: a video spec with scenes, seconds and on-screen words that adds up to at least 60 s, checked with scripts/video-check.mjs --spec, with a hook first and one call to action.",
+        "MUST run the HyperFrames CLI with telemetry off (HYPERFRAMES_NO_TELEMETRY=1) and pass --skip-skills to init, and MUST check doctor for FFmpeg before promising a render.",
+        "MUST, when FFmpeg is missing, finish and check the authoring (lint, check, snapshots), mark the render BLOCKED with the reason, and ask before installing FFmpeg or using a hosted render.",
+        "MUST show the real product screens (captured from the running app) and label any mock-up; every number or claim in the film needs evidence in the spec.",
+        "MUST prove the length on the rendered file with scripts/video-check.mjs --render, or report the duration as NOT_TESTED and say 'planned 75 s, render not run'.",
+        "MUST NOT install the HyperFrames skills into the home folder, run cloud render, publish, use HeyGen media or install system tools without a separate approval.",
+        "MUST NOT invent metrics, customer logos, testimonials or UI that does not exist, and MUST NOT claim a video was produced unless a render exists."
+      ],
+      "notes": "Video production route: a one-minute-plus film is planned, built as source, checked, snapshotted and rendered, and the length is measured, never assumed. The authoring-only path (no FFmpeg) is the common failure to watch."
+    },
+    {
       "id": "unavailable-package",
       "prompt": "In our existing Vite app, npm install fails because the package react-fancy-carousel-pro is not found (E404). Find a working alternative for the image carousel.",
       "expectedPrimary": "existing-project",
