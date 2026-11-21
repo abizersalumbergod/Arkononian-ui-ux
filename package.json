@@ -1,6 +1,6 @@
 {
   "name": "arkononion-ui-ux",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Agent skill to plan, build, redesign or audit web interfaces: routing, design tokens, asset pipelines and honest quality gates (WCAG 2.2 AA, Core Web Vitals, responsive, assets).",
   "keywords": [
     "agent-skill",
@@ -52,11 +52,13 @@
     "arkononion-visual-check": "scripts/visual-check.mjs",
     "arkononion-asset-validation": "scripts/asset-validation.mjs",
     "arkononion-quality-report": "scripts/quality-report.mjs",
-    "arkononion-video-check": "scripts/video-check.mjs"
+    "arkononion-video-check": "scripts/video-check.mjs",
+    "arkononion-baseline-check": "scripts/baseline-check.mjs"
   },
   "scripts": {
     "test": "node --test \"tests/*.test.mjs\"",
     "validate": "node scripts/validate-skill.mjs",
+    "baseline": "node scripts/baseline-check.mjs",
     "test:py": "python -B -I -m unittest discover -s tests/image-to-3d -p \"test_*.py\"",
     "docs": "node scripts/build-docs.mjs",
     "docs:check": "node scripts/build-docs.mjs --check",
