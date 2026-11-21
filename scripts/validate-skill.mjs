@@ -178,6 +178,11 @@ export function checkSkillFrontmatter(text) {
     const len = [...description].length;
     if (len > 1024) errors.push(`"description" has ${len} characters; the maximum is 1024`);
     if (/<\/?[A-Za-z][A-Za-z0-9-]*(?:\s[^<>]*)?\/?>/.test(description)) errors.push('"description" must not contain XML/HTML tags');
+    const rawLine = text.split(/\r?\n/).find((l) => l.startsWith('description:'));
+    const rawValue = rawLine ? rawLine.slice('description:'.length).trim() : '';
+    if (rawValue && !/^["'|>]/.test(rawValue) && /(: | #)/.test(rawValue)) {
+      errors.push('"description" is an unquoted YAML value containing ": " or " #", which strict parsers reject (the skills CLI then cannot find the skill); reword it or quote the whole value');
+    }
   }
   return errors;
 }

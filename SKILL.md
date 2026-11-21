@@ -1,6 +1,6 @@
 ---
 name: arkononion-ui-ux
-description: Plan, build, redesign, or audit web interfaces using a complete UI/UX engineering workflow. Use for landing pages, dashboards, e-commerce, portfolios, design systems, responsive UI, 3D experiences, demo and marketing videos of a minute or more (built with HyperFrames), and accessibility or visual QA. Every site or app build is production-minded by default: security, performance, scalability, data integrity, privacy and release readiness scale with a risk tier. Routes to focused references, checks available tools, and reports verification honestly.
+description: Plan, build, redesign, or audit web interfaces using a complete UI/UX engineering workflow. Use for landing pages, dashboards, e-commerce, portfolios, design systems, responsive UI, 3D experiences, demo and marketing videos of a minute or more (built with HyperFrames), and accessibility or visual QA. Every site or app build is production-minded by default, and its security, performance, scalability, data integrity, privacy and release-readiness work scales with a risk tier. Routes to focused references, checks available tools, and reports verification honestly.
 compatibility: Node.js 18 or newer is required for bundled scripts; the documented manual workflow works without Node.js.
 ---
 

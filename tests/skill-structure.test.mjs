@@ -67,6 +67,8 @@ test('checkSkillFrontmatter unit rules', () => {
   assert.ok(checkSkillFrontmatter(`---\nname: ${'a'.repeat(65)}\ndescription: ok\n---\n`).length > 0);
   assert.ok(checkSkillFrontmatter(`---\nname: ok-name\ndescription: ${'d'.repeat(1025)}\n---\n`).length > 0);
   assert.ok(checkSkillFrontmatter('# no front matter\n').length > 0);
+  assert.ok(checkSkillFrontmatter('---\nname: ok-name\ndescription: Does a thing: with a colon.\n---\n').length > 0, 'unquoted colon-space in the description is rejected');
+  assert.deepEqual(checkSkillFrontmatter('---\nname: ok-name\ndescription: "Does a thing: quoted is fine."\n---\n'), []);
 });
 
 test('validateSkill rejects a missing root', async () => {

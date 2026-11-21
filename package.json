@@ -1,6 +1,6 @@
 {
   "name": "arkononion-ui-ux",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Agent skill to plan, build, redesign or audit web interfaces: routing, design tokens, asset pipelines and honest quality gates (WCAG 2.2 AA, Core Web Vitals, responsive, assets).",
   "keywords": [
     "agent-skill",

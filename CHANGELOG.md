@@ -2,6 +2,12 @@
 
 All notable changes to the `arkononion-ui-ux` skill. Dates are ISO 8601.
 
+## 0.3.1 — 2026-11-21
+
+### Fixed
+- The SKILL.md description added in 0.3.0 contained an unquoted colon followed by a space, which strict YAML parsers reject, so the skills CLI could not find the skill. Reworded.
+- validate-skill.mjs now rejects an unquoted description that contains a colon followed by a space or a space followed by a hash, with a unit test.
+
 ## 0.3.0 — 2026-11-21
 
 Also covers changes made since 0.1.0 that never got their own heading (0.2.0 was published to npm on 2026-10-29).
