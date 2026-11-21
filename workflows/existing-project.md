@@ -33,12 +33,14 @@ Improve, polish or redesign an interface that already works, without breaking it
    - List the working functionality to preserve: critical journeys, routes, forms, integrations, keyboard paths.
    - **Exit check:** a baseline record exists (build/test status, screenshots or NOT_TESTED reason, journey list).
 3. **Understand and audit (stage 2).**
+   - Production audit (read-only first): follow the Phase 0 recipe in [production-readiness](../references/production-readiness.md) §5. Inventory the real stack, endpoints, tables, jobs, third parties and CI before changing anything, set the tier, run `node <skill-dir>/scripts/baseline-check.mjs --project <dir> --tier <n>` and put the findings in the issue register. Preserve behaviour, design and architecture.
    - Read [visual-critique](../references/visual-critique.md) and critique the before-screenshots: hierarchy, spacing, type, colour, states, consistency. Assign severities.
    - Read [accessibility](../references/accessibility.md): run axe results from step 2 plus manual keyboard, focus-visible and contrast checks on the critical journeys.
    - Read [performance](../references/performance.md): record lab LCP, INP proxy (TBT or interaction traces) and CLS where tooling is verified; label as lab. If Chrome DevTools MCP `lighthouse_audit` is `available-verified`, use it; otherwise NOT_TESTED.
    - Ask the user only about findings that change scope or direction.
    - **Exit check:** an audit list with severity, location and evidence for each finding; root causes noted (for example "spacing is ad hoc because no scale exists").
 4. **Plan (stage 3).**
+   - Triage the audit findings by severity and exploitability; plan the smallest root-cause fix for each with a regression test; keep accepted risks in the register with an owner and a review date ([production-readiness](../references/production-readiness.md) §5).
    - Read [design-intelligence](../references/design-intelligence.md). Decide what to keep, what to adjust and what to replace. Default: keep brand, IA and working components; change the smallest set of things that fixes the highest-severity findings.
    - Order changes in increments, each independently shippable: (1) critical accessibility and functional defects, (2) tokens and consistency (spacing, type, colour), (3) component states, (4) layout and hierarchy, (5) motion and polish.
    - Record the direction in a [design decision record](../templates/design-decision-record.md), including what was deliberately left unchanged.
@@ -48,6 +50,7 @@ Improve, polish or redesign an interface that already works, without breaking it
    - Do not import a preset over the project's tokens unless the user asks for a rebrand.
    - **Exit check:** token changes are additive or mapped; no existing token name removed without a migration.
 6. **Build in increments (stage 5).**
+   - Fix findings one at a time: failing test first, smallest root-cause change, re-run the check that found it. Never rebuild, and never suppress a warning to pass.
    - For each increment: change, run the build, run the tests, re-check the affected journeys. Commit or checkpoint per increment if the user uses git and agreed to commits.
    - Follow the project's conventions (file layout, naming, lint rules). Do not add a second styling system or animation library when one exists.
    - If an increment breaks a preserved journey, revert that increment and redo it smaller.
@@ -64,10 +67,12 @@ Improve, polish or redesign an interface that already works, without breaking it
    - Re-run the step 3 audits and compare counts and severities.
    - **Exit check:** a before/after table per page: findings fixed, findings remaining, new findings.
 10. **Validate and repair (stage 10).**
-    - Companion skills, if installed: `ponytail-audit` for a whole-repo quality report that changes nothing, `code-review` on the diff, `seo-audit` when the site is public; when the user wants structure improved, offer `/improve-codebase-architecture` (user-invoked), refactor only the candidate they pick, and keep the preserved-journey tests green.
+   - Production checks: run `node <skill-dir>/scripts/baseline-check.mjs --project <dir> --tier <n> [--built <build-dir>]`, the dependency audit and a secret scan, check headers with `curl -sI` on the preview, run the authorisation and validation tests and, from T2, the load test at expected peak ([load-and-qa-testing](../references/load-and-qa-testing.md)) against an authorised target only. Fix failures at the root; a missing tool is NOT_TESTED, not a pass.
+    - Craft modules: [lean-code](../references/lean-code.md) for a whole-repo quality report that changes nothing, [review-and-handoff](../references/review-and-handoff.md) on the diff, [seo-and-discoverability](../references/seo-and-discoverability.md) when the site is public; when the user wants structure improved, offer the architecture scan in [codebase-design](../references/codebase-design.md), refactor only the candidate they pick, and keep the preserved-journey tests green.
     - Run gates B-H per [quality-gates](../references/quality-gates.md). A regression in a preserved journey is critical. Fix and re-run; never lower a threshold or delete a failing test to pass.
     - **Exit check:** no unresolved critical findings and no regression against the baseline.
 11. **Deliver (stage 11).**
+   - Readiness report: fill [the template](../templates/production-readiness-report.md), scaled to the tier. READY only when every applicable checklist row has evidence ([production-readiness](../references/production-readiness.md) §4). Deploying needs the user's approval naming the target; the sign-off line is written only against a named owner who said so.
     - Validate with `node <skill-dir>/scripts/quality-report.mjs --report <path>` ([quality-report.mjs](../scripts/quality-report.mjs)); write the report below.
     - **Exit check:** report validates; every claimed improvement has before and after evidence.
 
@@ -76,7 +81,8 @@ Improve, polish or redesign an interface that already works, without breaking it
 - Always: [quality-gates](../references/quality-gates.md), [capability-registry](../references/capability-registry.md).
 - Route: [frontend-architecture](../references/frontend-architecture.md), [visual-critique](../references/visual-critique.md), [design-intelligence](../references/design-intelligence.md), [accessibility](../references/accessibility.md), [performance](../references/performance.md), [visual-testing](../references/visual-testing.md).
 - Plus the secondary route's modules and any modifiers the router returns (for example [design-tokens](../references/design-tokens.md) for theming, [motion-engineering](../references/motion-engineering.md) for animation, [troubleshooting](../references/troubleshooting.md) for failing builds).
-- Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `impeccable`, `design:design-critique`, `design-taste-frontend`, `emil-design-eng`. Companions ([companion-skills](../references/companion-skills.md)): `ponytail-audit`, `code-review`, `improve-codebase-architecture`, `seo-audit`, `humanizer`.
+- Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `impeccable`, `design:design-critique`, `design-taste-frontend`, `emil-design-eng`. Modules ([craft-library](../references/craft-library.md)): lean-code, review-and-handoff, codebase-design, seo-and-discoverability, prose-humanizing.
+- Production: [production-readiness](../references/production-readiness.md) for every site or app build; add [security-hardening](../references/security-hardening.md), [api-protection](../references/api-protection.md), [database-integrity](../references/database-integrity.md), [backend-performance](../references/backend-performance.md), [scalability-and-reliability](../references/scalability-and-reliability.md), [devsecops-and-deployment](../references/devsecops-and-deployment.md), [observability-and-alerting](../references/observability-and-alerting.md), [load-and-qa-testing](../references/load-and-qa-testing.md) and [privacy-and-compliance](../references/privacy-and-compliance.md) as the tier and the router direct.
 
 ## Approvals needed
 
@@ -84,6 +90,7 @@ Improve, polish or redesign an interface that already works, without breaking it
 - Committing, pushing, opening PRs, or force operations on the user's repository unless already requested.
 - Upgrading major dependency versions (can break working code); propose, do not just do.
 - Deploying or publishing; paid asset generation; sending data to new external services.
+- Security probing or load tests against anything but localhost or the user's own staging; rotating or changing secrets; changing production infrastructure, permissions or account settings; production data migrations or deletions; provisioning paid infrastructure or a new monitoring service ([production-readiness](../references/production-readiness.md) rules 7-8).
 
 ## Done when
 
@@ -93,6 +100,7 @@ Improve, polish or redesign an interface that already works, without breaking it
 - Gate E: no lab metric worse than baseline beyond noise (default tolerance 10% — adjust per product), labelled lab.
 - Gate F PASS across 375, 768, 1280, 1920 px and 320 px reflow; Gate G PASS or NOT_APPLICABLE; Gate H PASS with no new console errors.
 - Pre-existing failures are listed separately, not counted as fixed or hidden.
+- The risk tier is recorded; every applicable row of the readiness checklist has evidence or a reason ([production-readiness](../references/production-readiness.md) §4); `baseline-check` reports no failures.
 
 ## Report
 

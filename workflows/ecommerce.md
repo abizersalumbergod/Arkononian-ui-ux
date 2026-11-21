@@ -26,10 +26,12 @@ Build or improve a store: listing pages, product detail pages, cart and checkout
    - Identify the commerce backend, cart storage (server, cookie, local), and whether checkout is hosted by the provider or embedded.
    - **Exit check:** stack, commerce backend, payment mode (test or none) and verified capabilities named.
 2. **Understand (stage 2).**
+   - Production tier: read [production-readiness](../references/production-readiness.md), set the risk tier (T0-T3) from the facts (server code, personal data, accounts, payments, uploads, tenants, traffic) and record it in the brief or the design decision record. Every build is production-minded; the tier decides the depth.
    - Read [product-discovery](../references/product-discovery.md). Define the shopper, the hero products, the primary conversion (purchase) and secondary (add to wishlist, newsletter).
    - Profile the catalogue: product count, variant combinations, image count per product, out-of-stock behaviour. Without a backend, write fixture products that match the platform schema and label them `FIXTURE`.
    - **Exit check:** buying journey written step by step with success condition; catalogue profile or fixture plan exists.
 3. **Plan (stage 3).**
+   - Production baseline: plan what the tier needs ([production-readiness](../references/production-readiness.md) §1-2): endpoints and tables, what the host already provides, secrets by name, third parties and the data they receive, the backup and rollback path, the alerts. T1+: [api-protection](../references/api-protection.md); T2+: [security-hardening](../references/security-hardening.md), [database-integrity](../references/database-integrity.md), [devsecops-and-deployment](../references/devsecops-and-deployment.md), [observability-and-alerting](../references/observability-and-alerting.md); T3: [scalability-and-reliability](../references/scalability-and-reliability.md). Privacy starts with the data inventory in [privacy-and-compliance](../references/privacy-and-compliance.md).
    - Read [landing-page-engineering](../references/landing-page-engineering.md) for PLP, PDP, cart and checkout patterns and SEO (product structured data, canonical URLs for variants).
    - Read [security-and-privacy](../references/security-and-privacy.md): prefer the provider's hosted checkout or hosted payment fields so card data never reaches your servers; secret keys only server-side; prices and totals recomputed server-side, never trusted from the client.
    - Record decisions in a [design decision record](../templates/design-decision-record.md); acceptance criteria via [acceptance-checklist](../templates/acceptance-checklist.md).
@@ -39,7 +41,8 @@ Build or improve a store: listing pages, product detail pages, cart and checkout
    - Build one product's journey first: PLP card → PDP (gallery, variant selection, price, stock, add to cart) → cart (quantity, remove, totals) → checkout handoff → confirmation, on real or `FIXTURE` data.
    - **Exit check:** one product can be bought end to end in test mode (or reaches the provider's test checkout).
 5. **Build (stage 5).**
-   - Companion skills, if installed ([companion-skills](../references/companion-skills.md)): `copywriting` then `humanizer` for product and policy copy (never alter prices, sizes, materials, shipping or return terms); `schema` for Product and Offer structured data; `tdd` for cart, price and tax logic; `ponytail` for the smallest sufficient code.
+   - Production defaults: build to the sixteen defaults in [production-readiness](../references/production-readiness.md) §2 from the first commit (secrets server-side, authorisation per record, schema validation, rate limits, security headers and CSP, bounded queries and timeouts, no mock data in production paths, a health endpoint, a privacy notice that matches the site). Verify every package name before installing it. Server speed and caching follow [backend-performance](../references/backend-performance.md).
+   - Craft modules ([craft-library](../references/craft-library.md)): [copywriting](../references/copywriting.md) then [prose-humanizing](../references/prose-humanizing.md) for product and policy copy (never alter prices, sizes, materials, shipping or return terms); [seo-and-discoverability](../references/seo-and-discoverability.md) for Product and Offer structured data; [test-driven-development](../references/test-driven-development.md) for cart, price and tax logic; [lean-code](../references/lean-code.md) for the smallest sufficient code.
    - Read [interaction-design](../references/interaction-design.md). Variant selectors: unavailable combinations disabled with reason; price and image update on selection; selection reflected in the URL where the platform supports it.
    - Add-to-cart feedback is announced to screen readers and visible without blocking; cart count updates.
    - States: out of stock, low stock, loading, empty cart, payment failure, network error, price change between cart and checkout.
@@ -61,11 +64,13 @@ Build or improve a store: listing pages, product detail pages, cart and checkout
    - Critique with [visual-critique](../references/visual-critique.md): price, variant and add-to-cart visible without scrolling on mobile PDP; product grid alignment.
    - **Exit check:** findings logged with severity.
 10. **Validate and repair (stage 10).**
-    - Companion skills, if installed: `seo-audit` on PLP and PDP (structured data must match the visible price and stock), `cro` on the PDP and checkout entry, `code-review` on the diff; offer `/improve-codebase-architecture` (user-invoked) once the cart and checkout modules exist.
+   - Production checks: run `node <skill-dir>/scripts/baseline-check.mjs --project <dir> --tier <n> [--built <build-dir>]`, the dependency audit and a secret scan, check headers with `curl -sI` on the preview, run the authorisation and validation tests and, from T2, the load test at expected peak ([load-and-qa-testing](../references/load-and-qa-testing.md)) against an authorised target only. Fix failures at the root; a missing tool is NOT_TESTED, not a pass.
+    - Craft modules: [seo-and-discoverability](../references/seo-and-discoverability.md) on PLP and PDP (structured data must match the visible price and stock), [conversion-optimization](../references/conversion-optimization.md) on the PDP and checkout entry, [review-and-handoff](../references/review-and-handoff.md) on the diff; offer the architecture scan in [codebase-design](../references/codebase-design.md) once the cart and checkout modules exist.
     - Gates B-H per [quality-gates](../references/quality-gates.md). [accessibility](../references/accessibility.md): variant controls labelled, gallery operable by keyboard, cart updates announced, checkout form labels and errors. [performance](../references/performance.md): LCP ≤ 2.5 s and CLS ≤ 0.1 on PLP and PDP (lab labelled lab). [responsive-design](../references/responsive-design.md): matrix, touch target sizes, 320 px reflow.
     - Recompute a sample cart total (items, tax, shipping, discount) and compare with what the UI shows.
     - **Exit check:** no unresolved critical findings; totals match.
 11. **Deliver (stage 11).**
+   - Readiness report: fill [the template](../templates/production-readiness-report.md), scaled to the tier. READY only when every applicable checklist row has evidence ([production-readiness](../references/production-readiness.md) §4). Deploying needs the user's approval naming the target; the sign-off line is written only against a named owner who said so.
     - Validate with `node <skill-dir>/scripts/quality-report.mjs --report <path>` ([quality-report.mjs](../scripts/quality-report.mjs)).
     - **Exit check:** report validates; test-mode vs live status stated plainly.
 
@@ -73,7 +78,8 @@ Build or improve a store: listing pages, product detail pages, cart and checkout
 
 - Always: [quality-gates](../references/quality-gates.md), [capability-registry](../references/capability-registry.md).
 - Route: [product-discovery](../references/product-discovery.md), [landing-page-engineering](../references/landing-page-engineering.md), [interaction-design](../references/interaction-design.md), [image-pipelines](../references/image-pipelines.md), [design-tokens](../references/design-tokens.md), [responsive-design](../references/responsive-design.md), [accessibility](../references/accessibility.md), [performance](../references/performance.md), [security-and-privacy](../references/security-and-privacy.md).
-- Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `frontend-design`, `ui-ux-pro-max`, `impeccable`, `design-taste-frontend`. Companions ([companion-skills](../references/companion-skills.md)): `copywriting`, `humanizer`, `schema`, `seo-audit`, `cro`, `tdd`, `ponytail`.
+- Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `frontend-design`, `ui-ux-pro-max`, `impeccable`, `design-taste-frontend`. Modules ([craft-library](../references/craft-library.md)): copywriting, prose-humanizing, seo-and-discoverability, conversion-optimization, test-driven-development, lean-code.
+- Production: [production-readiness](../references/production-readiness.md) for every site or app build; add [security-hardening](../references/security-hardening.md), [api-protection](../references/api-protection.md), [database-integrity](../references/database-integrity.md), [backend-performance](../references/backend-performance.md), [scalability-and-reliability](../references/scalability-and-reliability.md), [devsecops-and-deployment](../references/devsecops-and-deployment.md), [observability-and-alerting](../references/observability-and-alerting.md), [load-and-qa-testing](../references/load-and-qa-testing.md) and [privacy-and-compliance](../references/privacy-and-compliance.md) as the tier and the router direct.
 
 ## Approvals needed
 
@@ -82,6 +88,7 @@ Build or improve a store: listing pages, product detail pages, cart and checkout
 - Paid generation of product imagery; publishing generated images that depict real products.
 - Connecting new third-party services (reviews, analytics, recommendation engines); deploying.
 - Editing the live catalogue or theme on a hosted platform.
+- Security probing or load tests against anything but localhost or the user's own staging; rotating or changing secrets; changing production infrastructure, permissions or account settings; production data migrations or deletions; provisioning paid infrastructure or a new monitoring service ([production-readiness](../references/production-readiness.md) rules 7-8).
 
 ## Done when
 
@@ -90,6 +97,7 @@ Build or improve a store: listing pages, product detail pages, cart and checkout
 - Gate E lab LCP and CLS recorded for PLP and PDP; Gate F PASS across the matrix.
 - Gate G PASS: every product image in scope resolves, within budget, licensed, accurate.
 - Gate H PASS: no secret keys client-side, server-side price computation, no console errors.
+- The risk tier is recorded; every applicable row of the readiness checklist has evidence or a reason ([production-readiness](../references/production-readiness.md) §4); `baseline-check` reports no failures.
 
 ## Report
 

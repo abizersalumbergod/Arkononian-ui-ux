@@ -25,11 +25,13 @@ Build a conversion-focused landing page or marketing site: one clear audience, o
    - Inspect any existing project (framework, styling, analytics already installed). Read [frontend-architecture](../references/frontend-architecture.md) if the router added it.
    - **Exit check:** stack, run command and verified capabilities named.
 2. **Understand (stage 2).**
-   - Companion skills, if installed ([companion-skills](../references/companion-skills.md)): `product-marketing` for positioning and `customer-research` for audience language; for a vague or risky brief the user can run `/grill-me` first.
+   - Production tier: read [production-readiness](../references/production-readiness.md), set the risk tier (T0-T3) from the facts (server code, personal data, accounts, payments, uploads, tenants, traffic) and record it in the brief or the design decision record. Every build is production-minded; the tier decides the depth.
+   - Craft modules ([craft-library](../references/craft-library.md)): [positioning-and-research](../references/positioning-and-research.md) for positioning and audience language; for a vague or risky brief run the decision-tree interview in [interview-and-specs](../references/interview-and-specs.md) first.
    - Read [product-discovery](../references/product-discovery.md). Define the audience, the single primary conversion event, objections to answer and the proof available. Fill [design-brief](../templates/design-brief.md).
    - Never invent testimonials, customer logos, user counts or metrics. Use clearly labelled placeholders and tell the user.
    - **Exit check:** primary CTA, audience and proof inventory written; fabricated proof is absent.
 3. **Plan (stage 3).**
+   - Production baseline: plan what the tier needs ([production-readiness](../references/production-readiness.md) §1-2): endpoints and tables, what the host already provides, secrets by name, third parties and the data they receive, the backup and rollback path, the alerts. T1+: [api-protection](../references/api-protection.md); T2+: [security-hardening](../references/security-hardening.md), [database-integrity](../references/database-integrity.md), [devsecops-and-deployment](../references/devsecops-and-deployment.md), [observability-and-alerting](../references/observability-and-alerting.md); T3: [scalability-and-reliability](../references/scalability-and-reliability.md). Privacy starts with the data inventory in [privacy-and-compliance](../references/privacy-and-compliance.md).
    - Read [landing-page-engineering](../references/landing-page-engineering.md). Choose the section order (value proposition, proof, how it works, objections or FAQ, pricing if relevant, final CTA) from that module, adapted to the offer.
    - Plan the conversion path end to end: CTA → form or destination → success and error states → confirmation. Decide where form data goes; a new external service needs approval.
    - Plan SEO basics (title, meta description, Open Graph image, headings, structured data where relevant) per landing-page-engineering.
@@ -41,7 +43,8 @@ Build a conversion-focused landing page or marketing site: one clear audience, o
    - Read [typography-and-layout](../references/typography-and-layout.md). Build the hero plus primary CTA first, with real or draft copy, at mobile width.
    - **Exit check:** tokens in code; hero and primary CTA render at 375 px and 1280 px.
 5. **Build (stage 5).**
-   - Companion skills, if installed: draft copy with `copywriting`, then run `humanizer` on it (facts, numbers, quotes and legal text stay as supplied); `schema` for structured data; `signup` and `popups` for the conversion flow; `tdd` for logic that can break; `ponytail` for the smallest sufficient code, never at the cost of a gate item.
+   - Production defaults: build to the sixteen defaults in [production-readiness](../references/production-readiness.md) §2 from the first commit (secrets server-side, authorisation per record, schema validation, rate limits, security headers and CSP, bounded queries and timeouts, no mock data in production paths, a health endpoint, a privacy notice that matches the site). Verify every package name before installing it. Server speed and caching follow [backend-performance](../references/backend-performance.md).
+   - Craft modules: draft copy with [copywriting](../references/copywriting.md), then run [prose-humanizing](../references/prose-humanizing.md) on it (facts, numbers, quotes and legal text stay as supplied); [seo-and-discoverability](../references/seo-and-discoverability.md) for structured data; [conversion-optimization](../references/conversion-optimization.md) for forms, sign-up and overlays; [test-driven-development](../references/test-driven-development.md) for logic that can break; [lean-code](../references/lean-code.md) for the smallest sufficient code, never at the cost of a gate item.
    - Build remaining sections as reusable components with semantic landmarks (`header`, `main`, `section` with headings, `footer`).
    - Read [interaction-design](../references/interaction-design.md) for the form: labels, inline validation, submitting, success, error and duplicate-submit handling. Read [security-and-privacy](../references/security-and-privacy.md) when the router adds it (forms, payments, user data): no keys in the client, server-side submission, consent where required.
    - Every CTA links to a real destination or a working form. Anchor links scroll to existing targets.
@@ -63,11 +66,13 @@ Build a conversion-focused landing page or marketing site: one clear audience, o
    - Critique with [visual-critique](../references/visual-critique.md): is the value proposition and CTA visible in the first viewport at 375 and 1280 px? Is hierarchy clear?
    - **Exit check:** findings logged with severity.
 10. **Validate and repair (stage 10).**
-    - Companion skills, if installed: `seo-audit` and `cro` on the built page, `copy-editing` with `humanizer` for a copy sweep, `code-review` or `ponytail-review` on the diff, `diagnosing-bugs` for a failing gate. Once the app runs and has grown past a handful of components, offer `/improve-codebase-architecture` (user-invoked) and refactor only the candidate the user picks.
+   - Production checks: run `node <skill-dir>/scripts/baseline-check.mjs --project <dir> --tier <n> [--built <build-dir>]`, the dependency audit and a secret scan, check headers with `curl -sI` on the preview, run the authorisation and validation tests and, from T2, the load test at expected peak ([load-and-qa-testing](../references/load-and-qa-testing.md)) against an authorised target only. Fix failures at the root; a missing tool is NOT_TESTED, not a pass.
+    - Craft modules: [seo-and-discoverability](../references/seo-and-discoverability.md) and [conversion-optimization](../references/conversion-optimization.md) on the built page, the seven sweeps in [copywriting](../references/copywriting.md) with [prose-humanizing](../references/prose-humanizing.md) for a copy sweep, [review-and-handoff](../references/review-and-handoff.md) on the diff, [bug-diagnosis](../references/bug-diagnosis.md) for a failing gate. Once the app runs and has grown past a handful of components, offer the architecture scan in [codebase-design](../references/codebase-design.md) and refactor only the candidate the user picks.
     - Gates B-H per [quality-gates](../references/quality-gates.md). [accessibility](../references/accessibility.md): form labels, error announcement, focus order, contrast. [performance](../references/performance.md): LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1 (Core Web Vitals, p75 field; lab labelled lab). [responsive-design](../references/responsive-design.md): matrix plus 320 px reflow.
     - **Exit check:** no unresolved critical findings in scope.
 11. **Deliver (stage 11).**
-    - Companion skills, if installed: `launch` for the launch checklist (the publish itself still needs approval); `analytics` or `conversion-tracking` only with approval for any script that sends visitor data; `pr` for a pull-request body; `/handoff` when the session ends.
+   - Readiness report: fill [the template](../templates/production-readiness-report.md), scaled to the tier. READY only when every applicable checklist row has evidence ([production-readiness](../references/production-readiness.md) §4). Deploying needs the user's approval naming the target; the sign-off line is written only against a named owner who said so.
+    - Craft modules: [launch-and-distribution](../references/launch-and-distribution.md) for the launch checklist (the publish itself still needs approval); [measurement-and-tracking](../references/measurement-and-tracking.md) only with approval for any script that sends visitor data; [review-and-handoff](../references/review-and-handoff.md) for a pull-request body and the handoff note when the session ends.
     - Validate the report with `node <skill-dir>/scripts/quality-report.mjs --report <path>` ([quality-report.mjs](../scripts/quality-report.mjs)). Do not deploy without approval.
     - **Exit check:** report validates; placeholder copy and proof are listed for the user to replace.
 
@@ -76,7 +81,8 @@ Build a conversion-focused landing page or marketing site: one clear audience, o
 - Always: [quality-gates](../references/quality-gates.md), [capability-registry](../references/capability-registry.md).
 - Route: [product-discovery](../references/product-discovery.md), [design-intelligence](../references/design-intelligence.md), [landing-page-engineering](../references/landing-page-engineering.md), [visual-systems](../references/visual-systems.md), [typography-and-layout](../references/typography-and-layout.md), [design-tokens](../references/design-tokens.md), [interaction-design](../references/interaction-design.md), [responsive-design](../references/responsive-design.md), [accessibility](../references/accessibility.md), [performance](../references/performance.md).
 - Common modifiers: [security-and-privacy](../references/security-and-privacy.md) (forms, signup, payments), [motion-engineering](../references/motion-engineering.md), [image-pipelines](../references/image-pipelines.md), [video-pipelines](../references/video-pipelines.md).
-- Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `frontend-design`, `design-taste-frontend`, `impeccable`, `ui-ux-pro-max`, `emil-design-eng`. Companions ([companion-skills](../references/companion-skills.md)): `product-marketing`, `site-architecture`, `copywriting`, `humanizer`, `schema`, `seo-audit`, `cro`, `launch`, `tdd`, `ponytail`.
+- Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `frontend-design`, `design-taste-frontend`, `impeccable`, `ui-ux-pro-max`, `emil-design-eng`. Modules ([craft-library](../references/craft-library.md)): positioning-and-research, site-structure-and-content, copywriting, prose-humanizing, seo-and-discoverability, conversion-optimization, launch-and-distribution, test-driven-development, lean-code.
+- Production: [production-readiness](../references/production-readiness.md) for every site or app build; add [security-hardening](../references/security-hardening.md), [api-protection](../references/api-protection.md), [database-integrity](../references/database-integrity.md), [backend-performance](../references/backend-performance.md), [scalability-and-reliability](../references/scalability-and-reliability.md), [devsecops-and-deployment](../references/devsecops-and-deployment.md), [observability-and-alerting](../references/observability-and-alerting.md), [load-and-qa-testing](../references/load-and-qa-testing.md) and [privacy-and-compliance](../references/privacy-and-compliance.md) as the tier and the router direct.
 
 ## Approvals needed
 
@@ -85,6 +91,7 @@ Build a conversion-focused landing page or marketing site: one clear audience, o
 - Paid generation of hero media; buying fonts, stock images or domains (`spend`).
 - Deploying or publishing (`publish-deploy`).
 - Using real customer names, logos or quotes the user has not confirmed permission for.
+- Security probing or load tests against anything but localhost or the user's own staging; rotating or changing secrets; changing production infrastructure, permissions or account settings; production data migrations or deletions; provisioning paid infrastructure or a new monitoring service ([production-readiness](../references/production-readiness.md) rules 7-8).
 
 ## Done when
 
@@ -93,6 +100,7 @@ Build a conversion-focused landing page or marketing site: one clear audience, o
 - Gate D PASS or NOT_TESTED with reason: form fully keyboard operable with labelled fields and announced errors.
 - Gate E: lab LCP, CLS and an interaction measure recorded and labelled; field data NOT_TESTED before launch.
 - Gate F PASS across the matrix; Gate G PASS for hero and OG assets; Gate H PASS (no secrets client-side, no console errors).
+- The risk tier is recorded; every applicable row of the readiness checklist has evidence or a reason ([production-readiness](../references/production-readiness.md) §4); `baseline-check` reports no failures.
 
 ## Report
 

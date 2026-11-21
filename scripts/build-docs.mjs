@@ -20,11 +20,16 @@ Usage: node scripts/build-docs.mjs [--root <skill-dir>] [--only registry|master]
 Exit codes: 0 ok, 1 stale/missing (with --check) or source error, 2 bad arguments.`;
 
 const MODULE_ORDER = [
-  'capability-registry', 'skill-delegation', 'companion-skills', 'product-discovery', 'design-intelligence', 'visual-systems',
+  'capability-registry', 'skill-delegation', 'craft-library', 'product-discovery', 'design-intelligence', 'visual-systems',
   'typography-and-layout', 'design-tokens', 'interaction-design', 'motion-engineering', 'responsive-design',
   'landing-page-engineering', 'dashboard-engineering', 'three-dimensional-web', 'shader-and-creative-coding',
   'asset-generation', 'image-to-3d-pipeline', 'image-pipelines', 'video-pipelines', 'hyperframes-video', 'audio-pipelines', 'accessibility', 'performance',
   'visual-testing', 'visual-critique', 'frontend-architecture', 'security-and-privacy', 'troubleshooting',
+  'test-driven-development', 'bug-diagnosis', 'codebase-design', 'domain-model', 'prototyping', 'interview-and-specs',
+  'delivery-orchestration', 'review-and-handoff', 'repo-guardrails', 'agent-writing', 'lean-code', 'prose-humanizing',
+  'terse-mode', 'copywriting', 'seo-and-discoverability', 'site-structure-and-content', 'conversion-optimization',
+  'positioning-and-research', 'measurement-and-tracking', 'launch-and-distribution', 'growth-channels',
+  'production-readiness', 'security-hardening', 'api-protection', 'database-integrity', 'backend-performance', 'scalability-and-reliability', 'devsecops-and-deployment', 'observability-and-alerting', 'load-and-qa-testing', 'privacy-and-compliance',
   'quality-gates', 'skill-audit',
 ];
 const WORKFLOW_ORDER = [

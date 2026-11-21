@@ -68,6 +68,12 @@ export const CLI_SPECS = Object.freeze([
   { name: 'playwright', category: 'cli', fallback: 'visual-check exits 4 (BLOCKED); use the in-session browser tools or manual screenshots.' },
   { name: 'lighthouse', category: 'cli', fallback: 'Use Chrome DevTools MCP lighthouse_audit or performance traces, else mark Gate E NOT_TESTED.' },
   { name: 'vercel', category: 'cli', fallback: 'Deploying is publishing and needs approval; hand the user build output instead.' },
+  { name: 'k6', category: 'cli', versionArgs: ['version'], fallback: 'Mark the load-test row BLOCKED with the install command; use a Node script or autocannon for a labelled smoke figure.' },
+  { name: 'gitleaks', category: 'cli', versionArgs: ['version'], fallback: 'Mark the secret-history scan NOT_TESTED; scripts/baseline-check.mjs scans the working tree only.' },
+  { name: 'semgrep', category: 'cli', versionArgs: ['--version'], fallback: 'Mark static analysis NOT_TESTED; rely on baseline-check.mjs and code review.' },
+  { name: 'osv-scanner', category: 'cli', versionArgs: ['--version'], fallback: 'Use npm audit; mark the cross-ecosystem dependency scan NOT_TESTED.' },
+  { name: 'trivy', category: 'cli', versionArgs: ['--version'], fallback: 'Mark container and infrastructure-file scanning NOT_TESTED.' },
+  { name: 'docker', category: 'cli', versionArgs: ['--version'], fallback: 'Use the host build; mark container checks NOT_TESTED.' },
 ]);
 
 // ---------------------------------------------------------------------------------------------

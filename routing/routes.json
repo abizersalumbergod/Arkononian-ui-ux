@@ -40,9 +40,13 @@
         "references/responsive-design.md",
         "references/accessibility.md",
         "references/performance.md",
-        "references/companion-skills.md"
+        "references/copywriting.md",
+        "references/conversion-optimization.md",
+        "references/seo-and-discoverability.md",
+        "references/craft-library.md",
+        "references/production-readiness.md"
       ],
-      "delegateSkills": ["frontend-design", "design-taste-frontend", "impeccable", "ui-ux-pro-max", "emil-design-eng", "copywriting", "humanizer", "cro", "seo-audit", "schema", "ponytail"],
+      "delegateSkills": ["frontend-design", "design-taste-frontend", "impeccable", "ui-ux-pro-max", "emil-design-eng"],
       "presets": ["precision-saas", "monochrome-editorial", "warm-commerce"],
       "note": "Conversion-focused single pages and marketing sites."
     },
@@ -78,9 +82,15 @@
         "references/accessibility.md",
         "references/performance.md",
         "references/security-and-privacy.md",
-        "references/companion-skills.md"
+        "references/test-driven-development.md",
+        "references/craft-library.md",
+        "references/production-readiness.md",
+        "references/security-hardening.md",
+        "references/api-protection.md",
+        "references/database-integrity.md",
+        "references/privacy-and-compliance.md"
       ],
-      "delegateSkills": ["dataviz", "ui-ux-pro-max", "impeccable", "transitions-dev", "ecc:frontend-a11y", "tdd", "ponytail", "improve-codebase-architecture"],
+      "delegateSkills": ["dataviz", "ui-ux-pro-max", "impeccable", "transitions-dev", "ecc:frontend-a11y"],
       "presets": ["precision-saas"],
       "note": "Data-dense product UI: IA, tables, charts, CRUD and data integrity."
     },
@@ -113,9 +123,18 @@
         "references/accessibility.md",
         "references/performance.md",
         "references/security-and-privacy.md",
-        "references/companion-skills.md"
+        "references/copywriting.md",
+        "references/conversion-optimization.md",
+        "references/seo-and-discoverability.md",
+        "references/test-driven-development.md",
+        "references/craft-library.md",
+        "references/production-readiness.md",
+        "references/security-hardening.md",
+        "references/api-protection.md",
+        "references/database-integrity.md",
+        "references/privacy-and-compliance.md"
       ],
-      "delegateSkills": ["frontend-design", "ui-ux-pro-max", "impeccable", "design-taste-frontend", "copywriting", "humanizer", "schema", "seo-audit", "cro", "tdd", "ponytail"],
+      "delegateSkills": ["frontend-design", "ui-ux-pro-max", "impeccable", "design-taste-frontend"],
       "presets": ["warm-commerce"],
       "note": "Product listing/detail pages, cart and checkout patterns."
     },
@@ -147,7 +166,8 @@
         "references/performance.md",
         "references/accessibility.md",
         "references/responsive-design.md",
-        "references/visual-testing.md"
+        "references/visual-testing.md",
+        "references/production-readiness.md"
       ],
       "delegateSkills": ["cinematic-noir-studio", "frontend-design", "emil-design-eng", "design-taste-frontend"],
       "presets": ["cinematic-noir"],
@@ -177,9 +197,12 @@
         "references/responsive-design.md",
         "references/accessibility.md",
         "references/performance.md",
-        "references/companion-skills.md"
+        "references/copywriting.md",
+        "references/seo-and-discoverability.md",
+        "references/craft-library.md",
+        "references/production-readiness.md"
       ],
-      "delegateSkills": ["monochrome-editorial-portfolio", "cinematic-noir-studio", "design-taste-frontend", "frontend-design", "humanizer", "copywriting", "seo-audit", "schema", "ponytail"],
+      "delegateSkills": ["monochrome-editorial-portfolio", "cinematic-noir-studio", "design-taste-frontend", "frontend-design"],
       "presets": ["monochrome-editorial", "cinematic-noir"],
       "note": "Type-led personal, portfolio and publishing sites."
     },
@@ -241,9 +264,12 @@
         "references/accessibility.md",
         "references/performance.md",
         "references/visual-testing.md",
-        "references/companion-skills.md"
+        "references/lean-code.md",
+        "references/review-and-handoff.md",
+        "references/craft-library.md",
+        "references/production-readiness.md"
       ],
-      "delegateSkills": ["impeccable", "design:design-critique", "design-taste-frontend", "emil-design-eng", "improve-codebase-architecture", "ponytail-audit", "code-review", "seo-audit", "humanizer"],
+      "delegateSkills": ["impeccable", "design:design-critique", "design-taste-frontend", "emil-design-eng"],
       "presets": [],
       "note": "Audit first, keep what works, change incrementally; the project's conventions win over presets."
     },
@@ -335,7 +361,8 @@
         "references/interaction-design.md",
         "references/accessibility.md",
         "references/performance.md",
-        "references/typography-and-layout.md"
+        "references/typography-and-layout.md",
+        "references/production-readiness.md"
       ],
       "delegateSkills": ["ui-ux-pro-max", "impeccable", "emil-design-eng", "transitions-dev", "ecc:frontend-a11y"],
       "presets": ["precision-saas", "warm-commerce"],
@@ -389,9 +416,11 @@
         "references/responsive-design.md",
         "references/accessibility.md",
         "references/performance.md",
-        "references/companion-skills.md"
+        "references/test-driven-development.md",
+        "references/craft-library.md",
+        "references/production-readiness.md"
       ],
-      "delegateSkills": ["frontend-design", "design-taste-frontend", "ui-ux-pro-max", "impeccable", "grill-me", "tdd", "ponytail", "copywriting", "humanizer"],
+      "delegateSkills": ["frontend-design", "design-taste-frontend", "ui-ux-pro-max", "impeccable"],
       "presets": ["precision-saas", "monochrome-editorial", "warm-commerce", "cinematic-noir"],
       "note": "Used when nothing more specific matches."
     }
@@ -459,14 +488,17 @@
         "\\b(user data|personal data|pii|gdpr|ccpa|consent|cookie banners?)\\b",
         "\\bapi[\\s-]?keys?\\b"
       ],
-      "modules": ["references/security-and-privacy.md", "references/interaction-design.md"],
+      "modules": ["references/security-and-privacy.md", "references/interaction-design.md",
+        "references/api-protection.md",
+        "references/security-hardening.md",
+        "references/privacy-and-compliance.md"],
       "note": "Connecting a form, sign-in, booking, payment or API key to a provider sends user data or secrets to a third party: ask first (SKILL.md section 1) and keep keys server-side. Until approved, post to a local stub and report it as not connected."
     },
     {
       "id": "seo",
       "patterns": ["\\b(seo|search engines?|meta (tags?|descriptions?)|open[\\s-]?graph|structured data|schema\\.org|sitemaps?|canonical urls?)\\b"],
-      "modules": ["references/landing-page-engineering.md", "references/companion-skills.md"],
-      "delegateSkills": ["seo-audit", "schema", "ai-seo", "site-architecture", "ecc:seo"]
+      "modules": ["references/seo-and-discoverability.md", "references/site-structure-and-content.md", "references/landing-page-engineering.md"],
+      "delegateSkills": ["ecc:seo"]
     },
     {
       "id": "copy-and-voice",
@@ -475,45 +507,250 @@
         "\\b(sounds? like (ai|a robot|chatgpt)|ai[\\s-]?(slop|tells?|sounding|written)|humani[sz]\\w*|make it sound (human|natural))\\b",
         "\\b(website|site|home|homepage|page|landing|hero|about|product) copy\\b"
       ],
-      "modules": ["references/companion-skills.md"],
-      "delegateSkills": ["copywriting", "copy-editing", "humanizer"],
-      "note": "Site copy: draft with copywriting, then run humanizer. Numbers, names, quotes and legal text stay exactly as supplied, and nothing invents proof, scarcity or urgency."
+      "modules": ["references/copywriting.md", "references/prose-humanizing.md"],
+      "note": "Site copy: draft with copywriting, then run the humanizing pass. Numbers, names, quotes and legal text stay exactly as supplied, and nothing invents proof, scarcity or urgency."
     },
     {
-      "id": "growth-and-conversion",
+      "id": "conversion",
       "patterns": [
-        "\\b(cro|conversion[\\s-]rate|a/b tests?|split tests?|lead magnets?|opt[\\s-]?ins?)\\b",
-        "\\b(product hunt|launch plan|go[\\s-]to[\\s-]market|content strategy|content calendar|backlinks?|link[\\s-]building|programmatic seo)\\b",
-        "\\b(ga4|google analytics|tag manager|gtm|utm|conversion tracking|tracking pixels?)\\b"
+        "\\b(cro|conversion[\\s-]rates?|lead magnets?|opt[\\s-]?ins?|exit[\\s-]intent|pop[\\s-]?ups?|paywalls?|upgrade (screens?|prompts?)|form (abandonment|conversion))\\b",
+        "\\b(isn'?t|not|doesn'?t|stopped) converting\\b",
+        "\\b(signup|sign[\\s-]up|registration) (flows?|friction|drop[\\s-]?off|conversion)\\b"
       ],
-      "modules": ["references/companion-skills.md"],
-      "delegateSkills": ["cro", "ab-testing", "launch", "content-strategy", "analytics", "conversion-tracking"],
-      "note": "Analytics, pixels and tracking scripts send visitor data to a third party: ask first (SKILL.md section 1). Marketing advice never licenses invented proof or urgency."
+      "modules": ["references/conversion-optimization.md"],
+      "note": "Conversion work never licenses dark patterns, invented proof or fake urgency: scarcity must be real and verifiable."
     },
     {
-      "id": "code-quality",
+      "id": "measurement",
       "patterns": [
-        "\\b(architecture|architectural|deep modules?|tech(nical)? debt|testability|test[\\s-]driven|tdd|red[\\s-]green)\\b",
-        "\\b(over[\\s-]?engineer\\w*|bloat\\w*|too much code|yagni|lean code|dead code)\\b",
-        "\\b(code review|review (the |my |this )?(diff|pr|pull request|code))\\b"
+        "\\b(ga4|google analytics|tag manager|gtm|utm|conversion tracking|tracking pixels?|tracking plan|attribution|a/b tests?|ab[\\s-]tests?|split tests?)\\b"
       ],
-      "modules": ["references/companion-skills.md"],
-      "delegateSkills": ["improve-codebase-architecture", "codebase-design", "tdd", "ponytail", "ponytail-review", "code-review"],
-      "note": "improve-codebase-architecture is user-invoked only: name the slash command, or read its SKILL.md and follow it when the user asks, and refactor only the candidate the user picks. Lean code never removes what the quality gates require."
+      "modules": ["references/measurement-and-tracking.md", "references/security-and-privacy.md"],
+      "note": "Analytics, pixels and tracking scripts send visitor data to a third party: ask first (SKILL.md section 1) and honour consent before the first tag fires."
     },
     {
-      "id": "session-tools",
+      "id": "launch-distribution",
       "patterns": [
-        "\\bclaude[\\s-]?mem\\b",
-        "\\b(across|between) sessions\\b",
-        "\\b(persistent|long[\\s-]term) memory\\b",
-        "\\bwhere we left off\\b",
-        "\\bcaveman\\b",
-        "\\b(be brief|fewer tokens|less tokens|save tokens|token[\\s-]saving)\\b"
+        "\\b(product hunt|launch plan|launch checklist|go[\\s-]to[\\s-]market|release notes|changelog|press release|press kit|site launch|pre[\\s-]launch|go[\\s-]live checklist)\\b",
+        "\\b(social media (posts?|plan|calendar)|community (plan|strategy)|referral (programs?|plan)|affiliate (programs?|plan)|influencer\\w*)\\b"
       ],
-      "modules": ["references/companion-skills.md"],
-      "delegateSkills": ["claude-mem:mem-search", "caveman", "ponytail"],
-      "note": "Memory is advice and the repo wins on conflict. Caveman shapes chat replies only: approvals, warnings and anything saved to files stay in plain prose. Never type secrets into a session that a memory tool records."
+      "modules": ["references/launch-and-distribution.md"],
+      "note": "Preparing launch material is workspace work; publishing, posting, sending or contacting people needs approval naming the action, the destination and the exact text."
+    },
+    {
+      "id": "content-and-links",
+      "patterns": [
+        "\\b(content strategy|content calendar|content plan|content pillars?|topic clusters?|editorial calendar)\\b",
+        "\\b(backlinks?|link[\\s-]building|programmatic seo|directory submissions?|information architecture|site architecture|navigation (structure|design)|url (structure|strategy)|internal linking)\\b"
+      ],
+      "modules": ["references/site-structure-and-content.md"],
+      "note": "Links are earned, never bought for ranking credit; outreach and directory submissions are drafted for approval, not sent."
+    },
+    {
+      "id": "positioning-research",
+      "patterns": [
+        "\\b(positioning|ideal customer|icp|customer (research|interviews?|personas?)|voice of customer|buyer personas?|jobs to be done)\\b",
+        "\\b(competitor (analysis|research|profiles?|comparison|pages?)|competitive (analysis|landscape)|alternatives? pages?|vs pages?|marketing plan|growth plan|market (size|sizing))\\b"
+      ],
+      "modules": ["references/positioning-and-research.md"],
+      "note": "Competitor claims are dated and layered (observed, inferred, implication); research on people needs consent, and any outreach needs approval."
+    },
+    {
+      "id": "outbound-and-paid",
+      "patterns": [
+        "\\b(email (sequences?|campaigns?|automation)|drip campaigns?|lifecycle emails?|welcome (emails?|series)|cold (e-?mail|outreach)|newsletter sequence)\\b",
+        "\\b(sms|text message|whatsapp) (marketing|campaigns?|flows?|sequences?)\\b",
+        "\\b(google ads|meta ads|facebook ads|linkedin ads|ppc|paid (ads|media|social|search)|ad (creative|copy|campaigns?))\\b",
+        "\\b(churn|cancel(lation)? flows?|dunning|win[\\s-]?back|app store (listing|optimi[sz]ation)|aso)\\b",
+        "\\b(revops|lead scoring|lead routing|sales (deck|collateral|enablement)|pitch deck|battle ?cards?)\\b"
+      ],
+      "modules": ["references/growth-channels.md"],
+      "note": "Sending messages, running ads and changing billing or account settings need explicit approval with the audience, text and cost; consent comes first."
+    },
+    {
+      "id": "architecture-design",
+      "patterns": ["\\b(architecture|architectural|deep modules?|tech(nical)? debt|testability|seams?|interface design|module design|deepening)\\b"],
+      "modules": ["references/codebase-design.md"],
+      "note": "Architecture scans are offered, not forced: refactor only the candidate the user picks, with the preserved-journey tests green."
+    },
+    {
+      "id": "test-first",
+      "patterns": ["\\b(test[\\s-]driven|tdd|red[\\s-]green|test[\\s-]first|write (the )?tests first|regression tests?)\\b"],
+      "modules": ["references/test-driven-development.md"]
+    },
+    {
+      "id": "lean-code",
+      "patterns": ["\\b(over[\\s-]?engineer\\w*|bloat\\w*|too much code|yagni|lean code|dead code|simplest (solution|thing|change)|minimal (change|diff))\\b"],
+      "modules": ["references/lean-code.md"],
+      "note": "Lean code never removes what the quality gates require."
+    },
+    {
+      "id": "code-review",
+      "patterns": ["\\b(code review|review (the |my |this )?(diff|pr|pull request|code|branch|changes)|pull request (body|description)|pr (body|description))\\b"],
+      "modules": ["references/review-and-handoff.md"]
+    },
+    {
+      "id": "diagnose",
+      "patterns": ["\\b(diagnos(e|ing)|debug(ging)?|root cause|intermittent(ly)?|hard to reproduce|can'?t reproduce|only (happens|fails) (sometimes|in (prod|production)|on (mobile|safari|ios)))\\b"],
+      "modules": ["references/bug-diagnosis.md"]
+    },
+    {
+      "id": "specs-planning",
+      "patterns": [
+        "\\b(user stories|specs?|specifications?|prd|questionnaires?|grill me|stress[\\s-]test)\\b",
+        "\\b(break|split|turn|cut)\\b.{0,25}?\\binto (tickets?|issues?|tasks)\\b"
+      ],
+      "modules": ["references/interview-and-specs.md"],
+      "note": "Write specs, tickets and questionnaires as files in the workspace; publishing them to a tracker or sending them to someone needs approval."
+    },
+    {
+      "id": "prototype-explore",
+      "patterns": ["\\bprototyp\\w*\\b", "\\b(throwaway|a few (options|variations|variants)|several (options|variations|variants)|design (options|variations|variants))\\b"],
+      "modules": ["references/prototyping.md"]
+    },
+    {
+      "id": "domain-language",
+      "patterns": ["\\b(glossary|ubiquitous language|domain model(l?ing)?|adrs?|architecture decision records?|decision records?|out[\\s-]of[\\s-]scope list)\\b"],
+      "modules": ["references/domain-model.md"]
+    },
+    {
+      "id": "repo-guardrails",
+      "patterns": ["\\b(pre[\\s-]?commit|husky|lint[\\s-]?staged|git hooks?|dependency[\\s-]cruiser|guardrails?|block(ing)? (dangerous|destructive) (git )?(commands?|operations?))\\b"],
+      "modules": ["references/repo-guardrails.md"],
+      "note": "Installing hooks or changing agent or repository configuration needs approval naming the file, the scope and what it blocks; merge into existing configuration, never overwrite it."
+    },
+    {
+      "id": "delivery",
+      "patterns": ["\\b(integration branch|task graph|implement (the |this )?(spec|tickets?|plan)|build (it |this )?from (the )?(spec|tickets?)|in parallel (agents?|workers?)|human[\\s-]only steps?|setup wizard)\\b"],
+      "modules": ["references/delivery-orchestration.md"]
+    },
+    {
+      "id": "agent-docs",
+      "patterns": ["\\b(agents\\.md|claude\\.md|skill\\.md|(write|edit|create|improve) (a |the |this |our )?(agent )?skills?|agent instructions|context pointers?)\\b"],
+      "modules": ["references/agent-writing.md"]
+    },
+    {
+      "id": "terse-chat",
+      "patterns": ["\\bcaveman\\b", "\\b(be brief|fewer tokens|less tokens|save tokens|token[\\s-]saving|terse (mode|replies|answers))\\b"],
+      "modules": ["references/terse-mode.md"],
+      "note": "Terse mode shapes chat replies only: approvals, warnings and anything saved to files stay in plain prose."
+    },
+    {
+      "id": "handoff-memory",
+      "patterns": ["\\b(across|between) sessions\\b", "\\b(persistent|long[\\s-]term) memory\\b", "\\bwhere we left off\\b", "\\bhand[\\s-]?offs?\\b"],
+      "modules": ["references/review-and-handoff.md", "references/domain-model.md"],
+      "note": "Memory lives in project files (decision records, glossary, positioning, handoff notes); a host memory feature is advice and the repository wins. Never put secrets in anything that persists."
+    },
+    {
+      "id": "production-readiness",
+      "patterns": [
+        "\\b(production[\\s-]?(ready|readiness|grade)|pre[\\s-]?production|go[\\s-]live|harden\\w*|vibe[\\s-]?cod\\w*|ai[\\s-]generated (code|app|site|website)|security (audit|review|posture)|pen[\\s-]?test\\w*|penetration test\\w*)\\b"
+      ],
+      "modules": [
+        "references/production-readiness.md",
+        "references/security-hardening.md"
+      ],
+      "note": "Every site or app build is production-minded: set the risk tier at Stage 2, build the baseline for it, and claim readiness only with evidence for each checklist row."
+    },
+    {
+      "id": "security-hardening",
+      "patterns": [
+        "\\b(owasp|xss|csrf|ssrf|sql ?injection|nosql injection|command injection|path traversal|idor|bola|mass assignment|open redirect|request smuggling|clickjacking)\\b",
+        "\\b(vulnerab\\w+|cve[\\s-]?\\d*|exploit\\w*|threat model\\w*|attack surface|brute[\\s-]?force)\\b",
+        "\\b(jwt|json web tokens?|session (management|fixation|hijack\\w*)|password (hashing|storage|reset)|refresh tokens?|2fa|mfa|passkeys?|oauth|oidc)\\b",
+        "\\b(leaked|exposed|committed|hard[\\s-]?coded) (api )?(keys?|secrets?|tokens?|credentials?|passwords?)\\b",
+        "\\b(content security policy|csp|hsts|security headers?|cors)\\b",
+        "\\b(sbom|supply chain|dependency (audit|vulnerabilit\\w+)|npm audit|slopsquat\\w*)\\b"
+      ],
+      "modules": [
+        "references/security-hardening.md",
+        "references/security-and-privacy.md"
+      ]
+    },
+    {
+      "id": "api-protection",
+      "patterns": [
+        "\\b(api (security|design|endpoints?|routes?|protection|keys?)|endpoints?|route handlers?|server actions?|rest api|graphql|trpc)\\b",
+        "\\b(webhooks?|rate[\\s-]?limit\\w*|throttl\\w+|idempoten\\w+|pagination|api versioning|request validation|input validation)\\b"
+      ],
+      "modules": [
+        "references/api-protection.md",
+        "references/security-hardening.md"
+      ]
+    },
+    {
+      "id": "database-integrity",
+      "patterns": [
+        "\\b(database|postgres(ql)?|mysql|sqlite|mongodb|supabase|firebase|firestore|dynamodb|neon|planetscale|turso)\\b",
+        "\\b(prisma|drizzle|sequelize|typeorm|knex|orm)\\b",
+        "\\b(database schema|migrations?|row[\\s-]level security|rls|multi[\\s-]?tenan\\w+|tenant isolation|foreign keys?|database transactions?|race conditions?|data integrity|backups?|point[\\s-]in[\\s-]time|data retention)\\b"
+      ],
+      "modules": [
+        "references/database-integrity.md"
+      ]
+    },
+    {
+      "id": "backend-performance",
+      "patterns": [
+        "\\b(slow (api|quer\\w+|endpoints?|requests?|backend)|api latency|query (performance|optimi[sz]ation)|n\\+1|connection pool\\w*|p95|p99|ttfb|throughput)\\b",
+        "\\b(redis|memcached|caching|cache invalidation|cdn cache|stale[\\s-]while[\\s-]revalidate|isr|cache[\\s-]control)\\b",
+        "\\b(memory leaks?|profil(e|ing)|event loop|cpu[\\s-]bound)\\b"
+      ],
+      "modules": [
+        "references/backend-performance.md"
+      ]
+    },
+    {
+      "id": "scalability",
+      "patterns": [
+        "\\b(scal(e|ing|ability)|autoscal\\w+|load[\\s-]balanc\\w+|horizontal(ly)?|high[\\s-]availability|failover|fail over|redundan\\w+|traffic spikes?|surges?)\\b",
+        "\\b(queues?|workers?|background jobs?|job queues?|cron jobs?|schedulers?|retries|retry|backoff|dead[\\s-]letter|circuit[\\s-]breakers?|graceful shutdown|health checks?|readiness|liveness)\\b",
+        "\\b(disaster recovery|rto|rpo|fault[\\s-]toleran\\w+|resilien\\w+|degrade\\w*)\\b"
+      ],
+      "modules": [
+        "references/scalability-and-reliability.md"
+      ]
+    },
+    {
+      "id": "devsecops",
+      "patterns": [
+        "\\b(ci[\\s/-]?cd|ci pipeline|pipelines?|github actions|gitlab ci|continuous (integration|delivery|deployment))\\b",
+        "\\b(docker\\w*|containers?|kubernetes|k8s|helm|terraform|infrastructure as code|iac)\\b",
+        "\\b(rollbacks?|canary|blue[\\s-]green|rolling (deploy|release|update)|release process|deploy(ment)? (strategy|pipeline)|feature flags?|sbom|dependabot|renovate)\\b"
+      ],
+      "modules": [
+        "references/devsecops-and-deployment.md"
+      ]
+    },
+    {
+      "id": "observability",
+      "patterns": [
+        "\\b(monitor(ing)?|observab\\w+|logging|structured logs?|log (retention|aggregation)|sentry|opentelemetry|otel|prometheus|grafana|datadog|new relic|error tracking|tracing|uptime|status page|alerts?|alerting|slos?|sla|incident|on[\\s-]call|runbooks?)\\b"
+      ],
+      "modules": [
+        "references/observability-and-alerting.md"
+      ]
+    },
+    {
+      "id": "load-and-qa-testing",
+      "patterns": [
+        "\\b(load tests?|load testing|stress tests?|soak tests?|spike tests?|k6|jmeter|locust|artillery|gatling|capacity (plan\\w*|test\\w*)|concurrent users|requests per second|rps)\\b",
+        "\\b(regression (tests?|suite)|integration tests?|end[\\s-]to[\\s-]end tests?|e2e|qa (plan|pass|testing)|test plan|compatibility testing|cross[\\s-]browser)\\b"
+      ],
+      "modules": [
+        "references/load-and-qa-testing.md"
+      ]
+    },
+    {
+      "id": "privacy-compliance",
+      "patterns": [
+        "\\b(gdpr|uk gdpr|dpdp|digital personal data protection|ccpa|cpra|pdpa|lgpd|hipaa|ferpa|coppa|dpia)\\b",
+        "\\b(privacy (policy|notice|policies)|terms (of service|and conditions)|cookie (consent|banner|polic\\w+|notice)|consent (management|banner|records?)|data (protection|retention|export|deletion|subject|processing agreement)|right to (be forgotten|erasure|access)|dsar|personal data|children'?s (data|privacy)|data processors?|sub[\\s-]?processors?|compliance)\\b"
+      ],
+      "modules": [
+        "references/privacy-and-compliance.md",
+        "references/security-and-privacy.md"
+      ]
     },
     {
       "id": "theming",
@@ -692,12 +929,77 @@
     {
       "id": "tracker-or-pr",
       "patterns": [
-        "\\b(to-spec|to-tickets)\\b",
+        "\\b(publish|post|push|file) (the |this |a |our )?(spec|prd|tickets?|issues?)\\b",
         "\\b(create|file|open|publish|post|raise|push)\\b.{0,30}?\\b(issues?|tickets?|pull requests?|prs?)\\b",
         "\\b(github|gitlab|linear|jira) (issues?|tickets?|pull requests?)\\b"
       ],
       "modules": ["references/security-and-privacy.md"],
       "note": "Publishing a spec, ticket, issue or pull request to a tracker or remote is outward-facing: show the exact content and the destination and get explicit approval. Without approval, write specs and tickets to files in the workspace."
+    },
+    {
+      "id": "tracking-scripts",
+      "patterns": [
+        "\\b(add|install|set ?up|embed|insert|enable)\\b.{0,30}?\\b(google analytics|ga4|tag manager|gtm|meta pixel|facebook pixel|tiktok pixel|linkedin insight|hotjar|clarity|plausible|posthog|mixpanel|segment|tracking (pixels?|scripts?|snippets?|code)|analytics)\\b"
+      ],
+      "modules": ["references/measurement-and-tracking.md", "references/security-and-privacy.md"],
+      "note": "Analytics, pixels and tracking scripts send visitor data to a third party: name the vendor, the data sent and the consent behaviour, and get explicit approval before adding one."
+    },
+    {
+      "id": "paid-media-or-outreach",
+      "patterns": [
+        "\\b(launch|run|start|publish|pause|scale)\\b.{0,25}?\\b(ads?|ad campaigns?|campaigns?|drip|sequences?)\\b",
+        "\\bcold (e-?mail|outreach)\\b",
+        "\\b(sms|text message|whatsapp) (campaigns?|blasts?|marketing)\\b"
+      ],
+      "modules": ["references/growth-channels.md"],
+      "note": "Ads, sequences, cold outreach and text campaigns spend money or message real people: show the exact audience, text, schedule and cost, check consent first, and get explicit approval."
+    },
+    {
+      "id": "security-or-load-test",
+      "patterns": [
+        "\\b(pen[\\s-]?test\\w*|penetration test\\w*|vulnerability scan\\w*|port scan\\w*|exploit\\w*|fuzz\\w*|brute[\\s-]?force|ddos)\\b",
+        "\\b(load|stress|soak|spike|capacity) (tests?|testing)\\b",
+        "\\b(k6|jmeter|gatling|locust|artillery)\\b"
+      ],
+      "modules": [
+        "references/production-readiness.md",
+        "references/security-hardening.md",
+        "references/load-and-qa-testing.md"
+      ],
+      "note": "Security probing and load generation run only against localhost, the user's own staging, or a host they name as theirs. Anything else, and production, needs explicit approval naming the target, the method and the time window. Never test third-party systems."
+    },
+    {
+      "id": "credential-change",
+      "patterns": [
+        "\\b(rotate|revoke|reissue|regenerate|reset)\\b.{0,30}?\\b(keys?|secrets?|tokens?|credentials?|passwords?|certificates?)\\b",
+        "\\b(leaked|exposed|compromised|committed)\\b.{0,30}?\\b(keys?|secrets?|tokens?|credentials?|passwords?)\\b"
+      ],
+      "modules": [
+        "references/security-hardening.md"
+      ],
+      "note": "Rotating or changing a secret is the user's action, or needs their approval naming the secret and the provider. Removing a leaked value from code does not revoke it: report it to the user at once."
+    },
+    {
+      "id": "production-data-change",
+      "patterns": [
+        "\\b(migrat\\w+|drop|truncate|delete|purge|backfill|restore|alter)\\b.{0,40}?\\b(production|prod|live)\\b.{0,25}?\\b(data|database|db|tables?|schema)\\b",
+        "\\b(production|prod|live) (data|database|db)\\b.{0,30}?\\b(migrat\\w+|drop|truncate|delete|purge|backfill|restore|alter)\\b"
+      ],
+      "modules": [
+        "references/database-integrity.md"
+      ],
+      "note": "Changing production data or schema needs a verified backup, a compatibility check, a recovery plan and explicit approval. Test migrations and restores on a scratch copy first."
+    },
+    {
+      "id": "infrastructure-provisioning",
+      "patterns": [
+        "\\b(provision|spin up|set up|create|enable|add|configure)\\b.{0,30}?\\b(load balancers?|autoscal\\w+|kubernetes|clusters?|read replicas?|redis|queues?|waf|cdn|monitoring|sentry|datadog|multi[\\s-]region)\\b"
+      ],
+      "modules": [
+        "references/scalability-and-reliability.md",
+        "references/devsecops-and-deployment.md"
+      ],
+      "note": "Provisioning infrastructure or a new monitoring or security service costs money or sends data to a third party: name the service, the data and the cost, and get approval. Prefer what the host already provides."
     },
     {
       "id": "third-party-upload",
@@ -721,8 +1023,7 @@
         "\\bsudo\\b",
         "\\b(upgrade|update|install) (node(\\.?js)?|the node version)\\b",
         "\\b(npx )?skills (add|install)\\b",
-        "\\bplugin (install|marketplace add)\\b",
-        "\\bclaude-mem (install|update|uninstall)\\b"
+        "\\bplugin (install|marketplace add)\\b"
       ],
       "modules": ["references/security-and-privacy.md"],
       "note": "System-wide installs and upgrades change the user's machine: name the tool, the exact command and where it writes, and get a clear yes. Installing skills, plugins or hooks changes agent configuration: name the source, the target agent and where it writes, and limit the target to one agent. Ordinary project dependencies do not need this."

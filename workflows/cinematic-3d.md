@@ -25,10 +25,12 @@ Build immersive experiences: Three.js/R3F scenes, shaders, scroll-driven cinemat
    - Detect existing 3D and animation stack (three, @react-three/fiber, drei, GSAP, Motion, Lenis) and versions; verify versions at runtime with `npm view <pkg> version`, do not assume. Read [frontend-architecture](../references/frontend-architecture.md) if loaded.
    - **Exit check:** stack, versions, run command and verified capabilities (browser for screenshots, GPU-capable environment or not) named.
 2. **Understand (stage 2).**
+   - Production tier: read [production-readiness](../references/production-readiness.md), set the risk tier (T0-T3) from the facts (server code, personal data, accounts, payments, uploads, tenants, traffic) and record it in the brief or the design decision record. Every build is production-minded; the tier decides the depth.
    - Read [design-intelligence](../references/design-intelligence.md). Confirm 3D earns its place: name the job the effect does (explain a product, set a mood, enable configuration). If no job, recommend a lighter technique and ask.
    - List the content that must remain accessible without the effect (headline, copy, CTA, product facts).
    - **Exit check:** purpose of the effect written; essential content list exists.
 3. **Plan: motion and interaction plan before code (stage 3).**
+   - Production baseline: plan what the tier needs ([production-readiness](../references/production-readiness.md) §1-2): endpoints and tables, what the host already provides, secrets by name, third parties and the data they receive, the backup and rollback path, the alerts. T1+: [api-protection](../references/api-protection.md); T2+: [security-hardening](../references/security-hardening.md), [database-integrity](../references/database-integrity.md), [devsecops-and-deployment](../references/devsecops-and-deployment.md), [observability-and-alerting](../references/observability-and-alerting.md); T3: [scalability-and-reliability](../references/scalability-and-reliability.md). Privacy starts with the data inventory in [privacy-and-compliance](../references/privacy-and-compliance.md).
    - Write the plan in the [design decision record](../templates/design-decision-record.md) or a section of the [design-brief](../templates/design-brief.md). It must contain:
      - beats or scenes in order, each with trigger (load, scroll range, pointer, click), duration or scroll distance, what moves, and easing (tokens per [motion-engineering](../references/motion-engineering.md));
      - interaction model: input methods (pointer, touch, keyboard), what is controllable, camera limits;
@@ -44,6 +46,7 @@ Build immersive experiences: Three.js/R3F scenes, shaders, scroll-driven cinemat
    - Build the static fallback first: the poster frame plus all essential content, laid out and readable. This is the baseline every tier must at least equal.
    - **Exit check:** the static fallback page works on its own.
 5. **Build (stage 5).**
+   - Production defaults: build to the sixteen defaults in [production-readiness](../references/production-readiness.md) §2 from the first commit (secrets server-side, authorisation per record, schema validation, rate limits, security headers and CSP, bounded queries and timeouts, no mock data in production paths, a health endpoint, a privacy notice that matches the site). Verify every package name before installing it. Server speed and caching follow [backend-performance](../references/backend-performance.md).
    - Implement the scene per [three-dimensional-web](../references/three-dimensional-web.md): lazy-load the 3D bundle after essential content, detect WebGL/WebGPU support and fall back, cap DPR, pause rendering when off-screen or tab hidden, dispose geometries, materials, textures and render targets on unmount, handle context loss.
    - Implement choreography per [motion-engineering](../references/motion-engineering.md) (GSAP with `@gsap/react` `useGSAP` cleanup, Motion, Lenis or CSS scroll-driven animation as chosen), with cleanup on unmount and route change.
    - Keyboard and touch parity for every interactive control; nothing hover-only.
@@ -64,10 +67,12 @@ Build immersive experiences: Three.js/R3F scenes, shaders, scroll-driven cinemat
    - Critique beats with [visual-critique](../references/visual-critique.md) per [visual-testing](../references/visual-testing.md) (capture at multiple scroll positions for scroll stories).
    - **Exit check:** findings logged with severity per tier and per beat.
 10. **Validate and repair (stage 10).**
+   - Production checks: run `node <skill-dir>/scripts/baseline-check.mjs --project <dir> --tier <n> [--built <build-dir>]`, the dependency audit and a secret scan, check headers with `curl -sI` on the preview, run the authorisation and validation tests and, from T2, the load test at expected peak ([load-and-qa-testing](../references/load-and-qa-testing.md)) against an authorised target only. Fix failures at the root; a missing tool is NOT_TESTED, not a pass.
     - Gates B-H per [quality-gates](../references/quality-gates.md). Gate E for immersive pages needs device budgets and a cheaper fallback (SKILL.md §8). Measure frame time and long tasks with a performance trace if DevTools MCP is verified; otherwise NOT_TESTED. LCP must come from content, not the canvas.
     - [accessibility](../references/accessibility.md): canvas has a text alternative or is `aria-hidden` with equivalent content nearby; no flashing above three per second (WCAG 2.3.1); controls keyboard operable. [responsive-design](../references/responsive-design.md): matrix and touch.
     - **Exit check:** no unresolved critical findings; budgets met or exceptions recorded with reason.
 11. **Deliver (stage 11).**
+   - Readiness report: fill [the template](../templates/production-readiness-report.md), scaled to the tier. READY only when every applicable checklist row has evidence ([production-readiness](../references/production-readiness.md) §4). Deploying needs the user's approval naming the target; the sign-off line is written only against a named owner who said so.
     - Validate with `node <skill-dir>/scripts/quality-report.mjs --report <path>` ([quality-report.mjs](../scripts/quality-report.mjs)).
     - **Exit check:** report validates; untested tiers and devices named.
 
@@ -77,12 +82,14 @@ Build immersive experiences: Three.js/R3F scenes, shaders, scroll-driven cinemat
 - Route: [design-intelligence](../references/design-intelligence.md), [three-dimensional-web](../references/three-dimensional-web.md), [shader-and-creative-coding](../references/shader-and-creative-coding.md), [motion-engineering](../references/motion-engineering.md), [asset-generation](../references/asset-generation.md), [performance](../references/performance.md), [accessibility](../references/accessibility.md), [responsive-design](../references/responsive-design.md), [visual-testing](../references/visual-testing.md).
 - As needed: [image-to-3d-pipeline](../references/image-to-3d-pipeline.md) for a GLB made from a reference image, [video-pipelines](../references/video-pipelines.md) for pre-rendered fallbacks, [audio-pipelines](../references/audio-pipelines.md) for sound, [troubleshooting](../references/troubleshooting.md).
 - Delegate skills, only if installed ([skill-delegation](../references/skill-delegation.md)): `cinematic-noir-studio`, `frontend-design`, `emil-design-eng`, `design-taste-frontend`.
+- Production: [production-readiness](../references/production-readiness.md) for every site or app build; add [security-hardening](../references/security-hardening.md), [api-protection](../references/api-protection.md), [database-integrity](../references/database-integrity.md), [backend-performance](../references/backend-performance.md), [scalability-and-reliability](../references/scalability-and-reliability.md), [devsecops-and-deployment](../references/devsecops-and-deployment.md), [observability-and-alerting](../references/observability-and-alerting.md), [load-and-qa-testing](../references/load-and-qa-testing.md) and [privacy-and-compliance](../references/privacy-and-compliance.md) as the tier and the router direct.
 
 ## Approvals needed
 
 - Paid generation of models, textures, HDRIs, footage or audio (see [asset-production](asset-production.md)).
 - Uploading private models or brand files to a third-party converter or generator (`third-party-upload`).
 - Licensed assets with cost (`spend`); deploying or publishing.
+- Security probing or load tests against anything but localhost or the user's own staging; rotating or changing secrets; changing production infrastructure, permissions or account settings; production data migrations or deletions; provisioning paid infrastructure or a new monitoring service ([production-readiness](../references/production-readiness.md) rules 7-8).
 
 ## Done when
 
@@ -91,6 +98,7 @@ Build immersive experiences: Three.js/R3F scenes, shaders, scroll-driven cinemat
 - Device budgets met per tier, or each exception recorded; Gate E includes a cheaper fallback.
 - Gate B PASS (controls and CTAs work on all tiers), Gate D PASS or NOT_TESTED with reason, Gate F PASS, Gate G PASS for critical 3D assets, Gate H PASS (no leaks after unmount, no console errors, context loss handled).
 - Gate C PASS, or scene visuals NOT_TESTED where only headless rendering was available.
+- The risk tier is recorded; every applicable row of the readiness checklist has evidence or a reason ([production-readiness](../references/production-readiness.md) §4); `baseline-check` reports no failures.
 
 ## Report
 

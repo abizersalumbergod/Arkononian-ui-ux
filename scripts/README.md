@@ -324,6 +324,26 @@ node scripts/video-check.mjs --spec video-spec.json --project video --render vid
 
 Optional external tool: `ffprobe` (only for non-MP4 files or `--ffprobe`). Exports: `checkSpec`, `scanProject`, `probeRender`, `mp4Info`, `runChecks`, `formatReport`, `DEFAULTS`, `EXIT`. Tests: `tests/video-check.test.mjs`.
 
+## baseline-check.mjs
+
+Read-only, zero-dependency heuristic scan of a site or app for the production defects that generated code most often ships. It feeds Gate H and rows 11 and 12 of the readiness checklist in [production-readiness](../references/production-readiness.md). It never prints secret values, makes no network call and writes nothing. A pass is not a security audit.
+
+```bash
+node scripts/baseline-check.mjs --project <dir> [--tier 0-3] [--built <build-dir>] [--strict] [--json] [--max-findings <n>]
+```
+
+| Option | Meaning |
+|---|---|
+| `--project` | Project root (default: current directory) |
+| `--tier` | Risk tier 0-3 (default 1); operational checks (health endpoint, CI, containers) apply from tier 2 |
+| `--built` | A production build output: scans for secrets, source maps, `.env` and `.git` |
+| `--strict` | Treat warnings as failures |
+| `--json` | Machine-readable report (`tool`, `root`, `tier`, `summary`, `checks[]`, `limitations`) |
+
+Checks: environment files ignored and not tracked, secret-like strings (patterns only), secret-named public variables, service-role keys in browser-reachable code, lockfile and install scripts, security headers in the repository, dangerous HTML and code sinks, production source maps, `target="_blank"` links, debug leftovers, privacy page and trackers behind consent, wildcard CORS with credentials, string-built SQL and shell commands, request-controlled redirects, endpoint rate limits, schema validation and authentication, row-level security and open Firebase rules, health endpoint and graceful shutdown, CI hardening, Dockerfile hygiene.
+
+Exit codes: 0 no failures, 1 failures (or warnings with `--strict`), 64 usage error. Limits: it reads source text only, does not read git history, cannot verify that package names exist and examines the root `package.json` only.
+
 ## lib/schema.mjs (library)
 
 A zero-dependency subset of JSON Schema. Supported keywords:

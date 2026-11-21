@@ -3,7 +3,7 @@
 Defines gates A-H, what each one accepts, how to run it with the tools that really exist in this session, the severity scale, the status rules and the quality-report format. Use it in stage 10 (Validate and repair) and stage 11 (Deliver) of [SKILL.md](../SKILL.md).
 
 **Load when:** any task that ends in a deliverable, any audit or QA request, before writing the final report. **Owns:** gates A-H and their pass criteria, severity levels, gate statuses (PASS/FAIL/BLOCKED/NOT_TESTED/NOT_APPLICABLE), evidence rules, justified exceptions, the quality-report format and `quality-report.mjs` exit codes.
-**Related:** [visual-critique](visual-critique.md), [visual-testing](visual-testing.md), [accessibility](accessibility.md), [performance](performance.md), [responsive-design](responsive-design.md), [asset-generation](asset-generation.md), [security-and-privacy](security-and-privacy.md), [capability-registry](capability-registry.md), [troubleshooting](troubleshooting.md), [acceptance checklist](../templates/acceptance-checklist.md), [report template](../templates/quality-report.json), [report script](../scripts/quality-report.mjs)
+**Related:** [visual-critique](visual-critique.md), [visual-testing](visual-testing.md), [accessibility](accessibility.md), [performance](performance.md), [responsive-design](responsive-design.md), [asset-generation](asset-generation.md), [security-and-privacy](security-and-privacy.md), [production-readiness](production-readiness.md), [capability-registry](capability-registry.md), [troubleshooting](troubleshooting.md), [acceptance checklist](../templates/acceptance-checklist.md), [report template](../templates/quality-report.json), [report script](../scripts/quality-report.mjs)
 
 ## Decision rules
 
@@ -38,7 +38,7 @@ Defines gates A-H, what each one accepts, how to run it with the tools that real
 | E. Performance | Any UI | LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1 at p75 field data (web.dev Core Web Vitals); immersive pages have a device budget and a cheaper fallback ([performance](performance.md)) | Lighthouse/trace (lab), field data if available, bundle and media weight |
 | F. Responsive | Any UI | No unintended horizontal overflow, clipped text, overlapping controls or hover-only functions at 375, 768, 1280, 1920 px, plus 320 px reflow (WCAG 2.2 SC 1.4.10, equivalent to 400% zoom at 1280 px) | overflow scan, screenshots, touch/hover review |
 | G. Asset integrity | Any shipped media/3D asset | 100% of critical assets resolve, valid format, within budget, licensed, have a fallback | `asset-validation.mjs` on the manifest |
-| H. Reliability and security | Always | 0 console errors in tested flows; 0 failed critical requests; 0 exposed secrets; no unescaped user content; destructive actions confirm; listeners, timers, observers, WebGL contexts cleaned up | console/network capture, bundle secret grep, code review of cleanup |
+| H. Reliability and security | Always | 0 console errors in tested flows; 0 failed critical requests; 0 exposed secrets; no unescaped user content; destructive actions confirm; listeners, timers, observers, WebGL contexts cleaned up; the tier's readiness rows have evidence ([production-readiness](production-readiness.md) §4) | console/network capture, bundle secret grep, code review of cleanup, [baseline-check](../scripts/baseline-check.mjs) |
 
 Gate A sub-limits come from the skill validator: `name` lowercase letters, digits and hyphens, at most 64 characters; `description` non-empty, at most 1024 characters (skill-creator quick_validate, synced copy).
 

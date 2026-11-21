@@ -21,11 +21,15 @@ The router (real output, abridged) returns:
 
 - primary `immersive-3d`, secondary `landing-page`
 - workflows `cinematic-3d.md` and `landing-page.md`
-- 18 modules, including three-dimensional-web, shader-and-creative-coding, motion-engineering, asset-generation, landing-page-engineering, performance, accessibility and responsive-design
+- 22 modules, including three-dimensional-web, shader-and-creative-coding, motion-engineering, asset-generation, landing-page-engineering, performance, accessibility and responsive-design
 - delegate skills (if installed) cinematic-noir-studio, frontend-design, emil-design-eng, design-taste-frontend, impeccable, ui-ux-pro-max, transitions-dev
 - approvals `publish-deploy`, so the agent must ask before deploying
 
 The agent then writes a motion and interaction plan before any code. It picks the cheapest 3D technology that achieves the effect, from a ladder that runs CSS 3D → model-viewer → OGL → Spline → three.js/R3F, and sets device budgets. Content and calls to action are built first, and the 3D scene is added after with disposal, visibility pausing and a non-3D fallback. It then runs `scripts/visual-check.mjs` across the viewport matrix with and without reduced motion, takes a performance trace if a browser tool is verified, records the gates, and asks before deploying.
+
+### Production-minded by default
+
+Every site or app build sets a risk tier at Stage 2 (T0 static, T1 site with inputs, T2 app with accounts or data, T3 scaled, multi-tenant or regulated) and is built to sixteen defaults for AI-assisted ("vibe coded") builds: secrets server-side, authorisation per record, validated and bounded input, security headers and a CSP, row-level security, rate limits, observability, a privacy notice that matches reality, and a tested backup and rollback where data exists. `scripts/baseline-check.mjs` is a read-only heuristic scan for the defects generated code most often ships, and `templates/production-readiness-report.md` collects the evidence. Security probing and load tests touch only authorised targets; a deploy, a credential rotation or a production data change always needs your approval. See [production-readiness](references/production-readiness.md).
 
 ## Package layout
 
@@ -33,12 +37,12 @@ The agent then writes a motion and interaction plan before any code. It picks th
 |---|---|
 | `SKILL.md` | Orchestrator: rules, approval boundaries, precedence, the 11 stages, routing table, gate summary, report format, indexes |
 | `MASTER_INSTRUCTIONS.md` | Every rule in one document. **Generated** from SKILL.md, each module's "Decision rules" and each workflow's "Steps" |
-| `references/` | 30 specialist modules, two of them optional routes (image-to-3d-pipeline, hyperframes-video) and one map of companion skills (companion-skills). Each topic has exactly one owner (see the index in SKILL.md) |
+| `references/` | 61 specialist modules: two optional routes (image-to-3d-pipeline, hyperframes-video), 22 craft modules (the craft-library hub plus engineering discipline, lean code, plain prose, terse chat, copy, SEO, conversion, measurement, launch and growth channels) and 10 production-readiness modules (the production-readiness hub plus security, APIs, data integrity, backend speed, scaling and reliability, CI and deployment, observability, load and QA testing, privacy and compliance). All ship inside the package, so no other skill has to be installed for them. Each topic has exactly one owner (see the index in SKILL.md) |
 | `workflows/` | 10 procedures: new-product, existing-project, landing-page, dashboard, ecommerce, cinematic-3d, design-system, asset-production, demo-video, visual-regression |
 | `routing/routes.json` | Task types, triggers, modifiers, approval triggers, warning patterns |
 | `presets/` | Starting token sets: cinematic-noir, monochrome-editorial, precision-saas, warm-commerce |
 | `schemas/` | JSON Schemas: capability registry, asset manifest, quality report, routes, presets, video spec |
-| `templates/` | Design brief, design decision record, asset manifest, quality report, acceptance checklist, video spec |
+| `templates/` | Design brief, design decision record, asset manifest, quality report, acceptance checklist, video spec, production readiness report |
 | `scripts/` | Zero-dependency Node tools (documented in `scripts/README.md`), plus the optional Python image-to-3D toolkit in `scripts/image-to-3d/` |
 | `tests/` | `node:test` suites and fixtures |
 | `evals/` | 17 behaviour scenarios and how to run them |

@@ -18,9 +18,15 @@ const SPEC_REFERENCES = [
   'capability-registry.md', 'capability-registry.json', 'skill-audit.md', 'skill-delegation.md', 'design-intelligence.md',
   'product-discovery.md', 'visual-systems.md', 'typography-and-layout.md', 'design-tokens.md', 'dashboard-engineering.md',
   'landing-page-engineering.md', 'interaction-design.md', 'motion-engineering.md', 'three-dimensional-web.md',
-  'shader-and-creative-coding.md', 'asset-generation.md', 'image-to-3d-pipeline.md', 'image-pipelines.md', 'video-pipelines.md', 'hyperframes-video.md', 'companion-skills.md', 'audio-pipelines.md',
+  'shader-and-creative-coding.md', 'asset-generation.md', 'image-to-3d-pipeline.md', 'image-pipelines.md', 'video-pipelines.md', 'hyperframes-video.md', 'audio-pipelines.md',
   'responsive-design.md', 'accessibility.md', 'performance.md', 'visual-testing.md', 'visual-critique.md',
   'frontend-architecture.md', 'security-and-privacy.md', 'troubleshooting.md', 'quality-gates.md',
+  'craft-library.md', 'test-driven-development.md', 'bug-diagnosis.md', 'codebase-design.md', 'domain-model.md',
+  'prototyping.md', 'interview-and-specs.md', 'delivery-orchestration.md', 'review-and-handoff.md', 'repo-guardrails.md',
+  'agent-writing.md', 'lean-code.md', 'prose-humanizing.md', 'terse-mode.md', 'copywriting.md', 'seo-and-discoverability.md',
+  'site-structure-and-content.md', 'conversion-optimization.md', 'positioning-and-research.md', 'measurement-and-tracking.md',
+  'launch-and-distribution.md', 'growth-channels.md',
+  'production-readiness.md', 'security-hardening.md', 'api-protection.md', 'database-integrity.md', 'backend-performance.md', 'scalability-and-reliability.md', 'devsecops-and-deployment.md', 'observability-and-alerting.md', 'load-and-qa-testing.md', 'privacy-and-compliance.md',
 ].map((f) => `references/${f}`);
 const SPEC_WORKFLOWS = [
   'new-product.md', 'existing-project.md', 'landing-page.md', 'dashboard.md', 'ecommerce.md', 'cinematic-3d.md',
@@ -106,17 +112,41 @@ test('canvas-design is suggested for posters, not for product photography', () =
   assert.ok(!route('Generate 40 product photos for the catalog').delegateSkills.includes('canvas-design'));
 });
 
-test('companion skills reach site builds, copy, code quality, media and session tools', () => {
+test('craft modules reach site builds, copy, code quality, media and handoff', () => {
   const site = route('Build a landing page for our bakery with homepage copy and SEO');
-  for (const s of ['copywriting', 'humanizer', 'seo-audit', 'schema']) assert.ok(site.delegateSkills.includes(s), `${s}: ${site.delegateSkills.join(', ')}`);
-  assert.ok(site.modules.includes('references/companion-skills.md'));
+  for (const m of ['references/copywriting.md', 'references/seo-and-discoverability.md', 'references/craft-library.md']) {
+    assert.ok(site.modules.includes(m), `${m}: ${site.modules.join(', ')}`);
+  }
   const copy = route('Make the about page copy sound human, it reads like AI slop');
-  assert.ok(copy.modifiers.includes('copy-and-voice') && copy.delegateSkills.includes('humanizer'), copy.modifiers.join(', '));
+  assert.ok(copy.modifiers.includes('copy-and-voice') && copy.modules.includes('references/prose-humanizing.md'), copy.modifiers.join(', '));
   const arch = route('Improve the architecture of my site and cut the tech debt');
-  assert.ok(arch.modifiers.includes('code-quality') && arch.delegateSkills.includes('improve-codebase-architecture'), arch.modifiers.join(', '));
+  assert.ok(arch.modifiers.includes('architecture-design') && arch.modules.includes('references/codebase-design.md'), arch.modifiers.join(', '));
   assert.ok(route('Create background music for the site').delegateSkills.includes('media-use'));
   const session = route('Use caveman mode and remember this across sessions');
-  assert.ok(session.modifiers.includes('session-tools') && session.delegateSkills.includes('caveman'), session.modifiers.join(', '));
+  assert.ok(session.modifiers.includes('terse-chat') && session.modifiers.includes('handoff-memory'), session.modifiers.join(', '));
+  assert.ok(session.modules.includes('references/terse-mode.md') && session.modules.includes('references/review-and-handoff.md'), session.modules.join(', '));
+});
+
+const CRAFT_MODULES = [
+  'craft-library', 'test-driven-development', 'bug-diagnosis', 'codebase-design', 'domain-model', 'prototyping',
+  'interview-and-specs', 'delivery-orchestration', 'review-and-handoff', 'repo-guardrails', 'agent-writing', 'lean-code',
+  'prose-humanizing', 'terse-mode', 'copywriting', 'seo-and-discoverability', 'site-structure-and-content',
+  'conversion-optimization', 'positioning-and-research', 'measurement-and-tracking', 'launch-and-distribution', 'growth-channels',
+].map((m) => `references/${m}.md`);
+
+test('every craft module is routed, and none depends on an external skill', () => {
+  const routed = new Set([
+    ...routes.routes.flatMap((r) => r.modules ?? []),
+    ...(routes.modifiers ?? []).flatMap((m) => m.modules ?? []),
+    ...(routes.approvalTriggers ?? []).flatMap((a) => a.modules ?? []),
+  ]);
+  for (const m of CRAFT_MODULES) assert.ok(routed.has(m), `${m} is not reachable from any route, modifier or approval trigger`);
+  const external = ['ponytail', 'humanizer', 'caveman', 'tdd', 'grill-me', 'seo-audit', 'copywriting', 'cro', 'schema', 'improve-codebase-architecture', 'claude-mem:mem-search'];
+  const delegates = new Set([
+    ...routes.routes.flatMap((r) => r.delegateSkills ?? []),
+    ...(routes.modifiers ?? []).flatMap((m) => m.delegateSkills ?? []),
+  ]);
+  for (const s of external) assert.ok(!delegates.has(s), `routes.json still delegates to external skill ${s}`);
 });
 
 test('installing skills and publishing specs or tickets need approval', () => {
@@ -141,4 +171,51 @@ test('every module and workflow path in routes.json is in the spec file list', (
   for (const m of modules) assert.ok(SPEC_REFERENCES.includes(m), `module not in spec file list: ${m}`);
   const workflows = [...routes.routes.map((r) => r.workflow), routes.fallback?.workflow].filter(Boolean);
   for (const w of workflows) assert.ok(SPEC_WORKFLOWS.includes(w), `workflow not in spec file list: ${w}`);
+});
+
+const PRODUCTION_MODULES = [
+  'production-readiness', 'security-hardening', 'api-protection', 'database-integrity', 'backend-performance',
+  'scalability-and-reliability', 'devsecops-and-deployment', 'observability-and-alerting', 'load-and-qa-testing', 'privacy-and-compliance',
+].map((m) => `references/${m}.md`);
+
+test('every site and app route carries the production-readiness hub; app routes also carry the security modules', () => {
+  for (const id of ['landing-page', 'dashboard-saas', 'ecommerce', 'portfolio-editorial', 'immersive-3d', 'existing-project', 'mobile-responsive', 'new-product']) {
+    const r = routes.routes.find((x) => x.id === id);
+    assert.ok(r.modules.includes('references/production-readiness.md'), `${id} is missing the production-readiness hub`);
+  }
+  for (const id of ['dashboard-saas', 'ecommerce']) {
+    const r = routes.routes.find((x) => x.id === id);
+    for (const m of ['security-hardening', 'api-protection', 'database-integrity', 'privacy-and-compliance']) assert.ok(r.modules.includes(`references/${m}.md`), `${id} lacks ${m}`);
+  }
+});
+
+test('every production module is reachable from a route, modifier or approval trigger', () => {
+  const routed = new Set([
+    ...routes.routes.flatMap((r) => r.modules ?? []),
+    ...(routes.modifiers ?? []).flatMap((m) => m.modules ?? []),
+    ...(routes.approvalTriggers ?? []).flatMap((a) => a.modules ?? []),
+  ]);
+  for (const m of PRODUCTION_MODULES) assert.ok(routed.has(m), `${m} is not routed`);
+});
+
+test('production keywords load their modules, and risky production actions need an approval', () => {
+  assert.ok(route('Harden my vibe coded app before launch').modules.includes('references/production-readiness.md'));
+  assert.ok(route('Add rate limiting and webhook signature checks to our API endpoints').modules.includes('references/api-protection.md'));
+  assert.ok(route('Review our Supabase row level security and migrations').modules.includes('references/database-integrity.md'));
+  assert.ok(route('Why is the checkout API slow? Add Redis caching').modules.includes('references/backend-performance.md'));
+  assert.ok(route('Plan autoscaling, load balancing and a background job queue').modules.includes('references/scalability-and-reliability.md'));
+  assert.ok(route('Set up a CI pipeline with GitHub Actions and rollbacks').modules.includes('references/devsecops-and-deployment.md'));
+  assert.ok(route('Add Sentry error tracking and uptime alerts').modules.includes('references/observability-and-alerting.md'));
+  assert.ok(route('Make the site DPDP and GDPR compliant with a cookie banner').modules.includes('references/privacy-and-compliance.md'));
+  assert.ok(route('Set up a k6 load test for the checkout').approvals.includes('security-or-load-test'));
+  assert.ok(route('Rotate the leaked Stripe key').approvals.includes('credential-change'));
+  assert.ok(route('Migrate the production database tables tonight').approvals.includes('production-data-change'));
+  assert.ok(route('Provision a Redis cache and a load balancer').approvals.includes('infrastructure-provisioning'));
+});
+
+test('a login and form site pulls in the API, security and privacy modules', () => {
+  const r = route('Build a marketing site with a contact form and a login');
+  for (const m of ['references/production-readiness.md', 'references/api-protection.md', 'references/security-hardening.md', 'references/privacy-and-compliance.md']) {
+    assert.ok(r.modules.includes(m), `${m}: ${r.modules.join(', ')}`);
+  }
 });
